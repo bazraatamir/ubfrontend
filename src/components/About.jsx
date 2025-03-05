@@ -11,6 +11,8 @@ import SideBar from "./SideBar";
 import Search from "./Search";
 import ImageUpload from "./ImageUpload";
 import IUpload from "./ImageUpload";
+import LocationSection from "./LocationSection";
+import TextAreaComponent from "./icons/TextAreaComponent";
 
 // Register FilePond plugins
 registerPlugin(FilePondPluginImagePreview, FilePondPluginFileValidateType);
@@ -56,10 +58,7 @@ const About = () => {
                       />
                     </div>
                     <div className="w-full min-h-[120px] bg-[#2F323C] rounded-[10px]">
-                      <textarea
-                        placeholder="Байгууллагын танилцуулга"
-                        className="w-full h-full bg-transparent text-white p-3 placeholder-gray-400 focus:outline-none resize-none"
-                      ></textarea>
+                      <TextAreaComponent></TextAreaComponent>
                     </div>
                   </div>
                 </div>
@@ -91,27 +90,30 @@ const About = () => {
                   </div>
                 </div>
               </div>
-
+           
               {/* Image Grid Section */}
               <div className="w-full bg-[#0E131D] rounded-[10px] p-4 md:p-6">
                 <div className="grid grid-cols-3 gap-3 md:gap-4">
                   {[1, 2, 3, 4, 5, 6].map((item) => (
                     <IUpload
+                    
                       key={item}
                       className="aspect-square bg-[#2F323C] rounded-[10px] flex items-center justify-center hover:bg-[#3a3e4a] transition-colors duration-300"
                     ></IUpload>
+
+                    
                   ))}
                 </div>
               </div>
             </div>
           </div>
-
-          {/* Save Button Section */}
-          <div className="flex justify-center mt-6 md:mt-8">
-            <button className="w-40 h-11 bg-[#8CBC01] rounded-[7px] text-white font-bold hover:bg-[#7aab01] transition-colors duration-300">
-              Хадгалах
-            </button>
-          </div>
+          {/*location section */}
+          <LocationSection />
+                  </div>
+                </div>
+                <div className="ml-4 w-[44%] max-md:ml-0 max-md:w-full">
+                  <div className="grow mt-1 max-md:mt-10 max-md:max-w-full">
+                    
         </div>
       </div>
     </div>
