@@ -16,14 +16,6 @@ import IUpload from "./ImageUpload";
 registerPlugin(FilePondPluginImagePreview, FilePondPluginFileValidateType);
 
 const About = () => {
-  const [files, setFiles] = useState([]);
-  const [uploadedImageUrl, setUploadedImageUrl] = useState(null);
-
-  // Optional: Handle the file upload completion
-  const handleFilePondInit = () => {
-    console.log("FilePond has initialized");
-  };
-
   return (
     <div className="min-h-screen w-full bg-[#1A1B1E] p-4 sm:p-6 md:p-8">
       <div className="container mx-auto max-w-7xl relative">
@@ -104,14 +96,10 @@ const About = () => {
               <div className="w-full bg-[#0E131D] rounded-[10px] p-4 md:p-6">
                 <div className="grid grid-cols-3 gap-3 md:gap-4">
                   {[1, 2, 3, 4, 5, 6].map((item) => (
-                    <div
+                    <IUpload
                       key={item}
                       className="aspect-square bg-[#2F323C] rounded-[10px] flex items-center justify-center hover:bg-[#3a3e4a] transition-colors duration-300"
-                    >
-                      <div className="w-8 md:w-10 h-8 md:h-10">
-                        <IUpload></IUpload>
-                      </div>
-                    </div>
+                    ></IUpload>
                   ))}
                 </div>
               </div>
