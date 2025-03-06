@@ -1,1 +1,10 @@
 @import "tailwindcss";
+
+.custom-filepond .filepond--panel-root {
+  background-color: #2f323c !important;
+}
+.filepond--label-action {
+  font-size: 10px;
+  color: white;
+  text-decoration: none !important;
+}

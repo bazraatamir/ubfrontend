@@ -5,14 +5,13 @@ import FilePondPluginImagePreview from "filepond-plugin-image-preview";
 import "filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css";
 import FilePondPluginFileValidateType from "filepond-plugin-file-validate-type";
 
-import PlusIcon from "./icons/PlusIcon";
-import ImageIcon from "./icons/ImageIcon";
-import SideBar from "./SideBar";
+import SideBar from "../sideBar/SideBar";
 import Search from "./Search";
-import ImageUpload from "./ImageUpload";
-import IUpload from "./ImageUpload";
-import LocationSection from "./LocationSection";
-import TextAreaComponent from "./icons/TextAreaComponent";
+import PlusIcon from "../../shared/icons/PlusIcon";
+import IUpload from "../../shared/ImageUpload";
+import TextAreaComponent from "../../shared/icons/TextAreaComponent";
+import ImageIcon from "../../shared/icons/ImageIcon";
+import LocationSection from "../../shared/LocationSection";
 
 // Register FilePond plugins
 registerPlugin(FilePondPluginImagePreview, FilePondPluginFileValidateType);
@@ -47,7 +46,7 @@ const About = () => {
 
               {/* Main Content Areas */}
               <div className="w-full bg-[#0E131D] rounded-[10px] shadow-md p-4 md:p-6">
-                <div className="flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-6">
+                <div className="flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-6 ">
                   <IUpload></IUpload>
                   <div className="w-full space-y-4">
                     <div className="w-full h-10 bg-[#2F323C] rounded-[5px]">
@@ -90,31 +89,26 @@ const About = () => {
                   </div>
                 </div>
               </div>
-           
+
               {/* Image Grid Section */}
               <div className="w-full bg-[#0E131D] rounded-[10px] p-4 md:p-6">
                 <div className="grid grid-cols-3 gap-3 md:gap-4">
                   {[1, 2, 3, 4, 5, 6].map((item) => (
                     <IUpload
-                    
                       key={item}
                       className="aspect-square bg-[#2F323C] rounded-[10px] flex items-center justify-center hover:bg-[#3a3e4a] transition-colors duration-300"
                     ></IUpload>
-
-                    
                   ))}
                 </div>
               </div>
             </div>
           </div>
           {/*location section */}
-          <LocationSection />
-                  </div>
-                </div>
-                <div className="ml-4 w-[44%] max-md:ml-0 max-md:w-full">
-                  <div className="grow mt-1 max-md:mt-10 max-md:max-w-full">
-                    
+          <LocationSection></LocationSection>
         </div>
+      </div>
+      <div className="ml-4 w-[44%] max-md:ml-0 max-md:w-full">
+        <div className="grow mt-1 max-md:mt-10 max-md:max-w-full"></div>
       </div>
     </div>
   );
