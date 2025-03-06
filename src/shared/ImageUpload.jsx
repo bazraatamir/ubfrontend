@@ -13,30 +13,29 @@ const IUpload = () => {
   // Optional: Handle the file upload completion
 
   return (
-    <div className="w-[100%] ">
-      <FilePond
-        className="custom-filepond"
-        files={files}
-        stylePanelLayout="compact"
-        stylePanelAspectRatio="1:1"
-        styleButtonRemoveItemPosition="right"
-        onupdatefiles={(fileItems) => {
-          setFiles(fileItems);
-          if (fileItems.length > 0) {
-            const file = fileItems[0].file;
-            const reader = new FileReader();
-            reader.onload = (e) => setUploadedImageUrl(e.target.result);
-            reader.readAsDataURL(file);
-          } else {
-            setUploadedImageUrl(null);
-          }
-        }}
-        allowMultiple={false}
-        maxFiles={1}
-        acceptedFileTypes={["image/*"]}
-        credits={false}
-        imagePreviewHeight={160}
-        labelIdle={`
+    <FilePond
+      className="custom-filepond"
+      files={files}
+      stylePanelLayout="compact"
+      stylePanelAspectRatio="1:1"
+      styleButtonRemoveItemPosition="right"
+      onupdatefiles={(fileItems) => {
+        setFiles(fileItems);
+        if (fileItems.length > 0) {
+          const file = fileItems[0].file;
+          const reader = new FileReader();
+          reader.onload = (e) => setUploadedImageUrl(e.target.result);
+          reader.readAsDataURL(file);
+        } else {
+          setUploadedImageUrl(null);
+        }
+      }}
+      allowMultiple={false}
+      maxFiles={1}
+      acceptedFileTypes={["image/*"]}
+      credits={false}
+      imagePreviewHeight={160}
+      labelIdle={`
           <div style="
             display: flex; 
             align-items: center;
@@ -46,7 +45,7 @@ const IUpload = () => {
             color: #8CBC01;
             font-weight: bold;
           ">
-            <p class="filepond--label-action" style="margin: 0;">Upload Image</p>
+            
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 24"
@@ -62,10 +61,10 @@ const IUpload = () => {
               <circle cx="8.5" cy="8.5" r="1.5"></circle>
               <polyline points="21 15 16 10 5 21"></polyline>
             </svg>
+            <p class="filepond--label-action" style="margin: 0;">Лого</p>
           </div>
         `}
-      />
-    </div>
+    />
   );
 };
 

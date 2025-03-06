@@ -11,10 +11,10 @@ const SideBar = () => {
         <Logo></Logo>
       </div>
 
-      <nav className="flex flex-col gap-8 mb-[200px] bg-[#2F323C] rounded-[20px] py-[50px] px-[10px]  font-thin">
-        <NavItem icon={<RiHome2Line size={26} />} text="Нүүр" />
-        <NavItem icon={<FaPencil size={24} />} text="Засвар" />
-        <NavItem icon={<IoLocationOutline size={25} />} text="Салбар" />
+      <nav className="flex flex-col gap-2 mb-[200px] bg-[#2F323C] rounded-[20px] py-[20px] px-[10px]  font-thin">
+        <NavItem icon={<RiHome2Line size={16} />} text="Нүүр" />
+        <NavItem icon={<FaPencil size={14} />} text="Засвар" />
+        <NavItem icon={<IoLocationOutline size={15} />} text="Салбар" />
       </nav>
 
       <Footer></Footer>

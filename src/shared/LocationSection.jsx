@@ -334,7 +334,7 @@ function LocationSection() {
       {savedLocations.length > 0 && (
         <div className="mt-4">
           <h3 className="text-white text-lg mb-2">Хадгалсан байршлууд:</h3>
-          <div className="flex items-center gap-4 px-7 py-3.5 bg-zinc-900 rounded-xl shadow-lg w-full sm:w-[529px] max-md:flex-col max-md:gap-3 max-md:px-4">
+          <div className=" bg-[#0E131D] flex items-center gap-4 px-7 py-3.5  rounded-xl shadow-lg w-full sm:w-[529px] max-md:flex-col max-md:gap-3 max-md:px-4">
             <ul className="w-full space-y-2">
               {savedLocations.map((savedLocation) => (
                 <li

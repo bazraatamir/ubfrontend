@@ -12,6 +12,7 @@ import IUpload from "../../shared/ImageUpload";
 import TextAreaComponent from "../../shared/icons/TextAreaComponent";
 import ImageIcon from "../../shared/icons/ImageIcon";
 import LocationSection from "../../shared/LocationSection";
+import InputDesign from "../RestaurantOwner/components/InputDesign";
 
 // Register FilePond plugins
 registerPlugin(FilePondPluginImagePreview, FilePondPluginFileValidateType);
@@ -23,7 +24,7 @@ const About = () => {
         {/* Sidebar */}
         <SideBar></SideBar>
 
-        <div className="md:pl-16 lg:pl-52">
+        <div className="md:pl-16  w-[1400px]">
           {/* Header Search */}
           <Search></Search>
 
@@ -44,8 +45,8 @@ const About = () => {
               </div>
 
               {/* baiguulgiin logo  */}
-              <div className="w-full bg-[#0E131D] rounded-[10px] shadow-md p-4 md:p-6">
-                <div className="flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-6">
+              <div className="w-full bg-[#0E131D] rounded-[10px] shadow-md p-4 md:p-6 ">
+                <div className="flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-6 ">
                   <div className="w-[500px]">
                     <IUpload></IUpload>
                   </div>
@@ -64,15 +65,18 @@ const About = () => {
                   </div>
                 </div>
                 {/* bichleg oruulah */}
-                <div className="w-full bg-[#2F323C] rounded-[10px] shadow-md p-4 md:p-6">
+                <div className="w-full bg-[#2F323C] rounded-[10px] shadow-md p-4 md:p-6 h-[200px]">
                   <div className="flex items-center">
                     <div className="w-8 h-8 mr-3">
                       <ImageIcon></ImageIcon>
                     </div>
-                    <span className="text-white text-base">Бичлэг оруулах</span>
+                    <span className="text-white text-base">
+                      Бичлэг , зураг оруулах
+                    </span>
                   </div>
                 </div>
               </div>
+              <LocationSection></LocationSection>
 
               {/* Description Section */}
             </div>
@@ -91,7 +95,7 @@ const About = () => {
               </div>
 
               {/* Image Grid Section */}
-              <div className="w-full bg-[#0E131D] rounded-[10px] p-4 md:p-6">
+              <div className="w-full bg-[#0E131D] rounded-[10px] md:p-6">
                 <div className="grid grid-cols-3 gap-3 md:gap-4">
                   {[1, 2, 3, 4, 5, 6].map((item) => (
                     <IUpload
@@ -100,15 +104,11 @@ const About = () => {
                     ></IUpload>
                   ))}
                 </div>
+                <InputDesign></InputDesign>
               </div>
             </div>
           </div>
-          {/*location section */}
-          <LocationSection></LocationSection>
         </div>
-      </div>
-      <div className="ml-4 w-[44%] max-md:ml-0 max-md:w-full">
-        <div className="grow mt-1 max-md:mt-10 max-md:max-w-full"></div>
       </div>
     </div>
   );

@@ -3,8 +3,15 @@
 .custom-filepond .filepond--panel-root {
   background-color: #2f323c !important;
 }
+.custom-filepond {
+  width: 100%;
+}
 .filepond--label-action {
   font-size: 10px;
   color: white;
   text-decoration: none !important;
+}
+.custom-filepond .filepond--drop-label {
+  display: flex;
+  height: 100%;
 }
