@@ -1,22 +1,33 @@
 import React from "react";
-import HomeIcon from "./icons/HomeIcon";
-import LogoutIcon from "./icons/LogoutIcon";
+import { FaPencil } from "react-icons/fa6";
+import { RiHome2Line } from "react-icons/ri";
+import { IoLocationOutline } from "react-icons/io5";
+import Logo from "./Logo";
+import Footer from "./footer";
 
 const SideBar = () => {
   return (
-    <div className="fixed left-0 top-0 bottom-0 w-16 md:w-52 bg-gradient-to-b from-[rgba(80,79,79,0.08)] to-[rgba(182,181,181,0.02)] hidden md:block z-10">
-      {/* Sidebar Navigation */}
-      <div className="absolute w-14 md:w-36 left-3 md:left-8 top-1/3 bg-[#2E3033] rounded-[10px] shadow-md">
-        <div className="flex flex-col items-center justify-center space-y-6 py-6">
-          <div className="w-8 md:w-10 h-8 md:h-10">
-            <HomeIcon></HomeIcon>
-          </div>
-          <div className="w-4 h-0.5 border-t border-white"></div>
-          <div className="w-8 md:w-10 h-8 md:h-10">
-            <LogoutIcon></LogoutIcon>
-          </div>
-        </div>
+    <div className="fixed left-0 top-0 bottom-0 w-60 bg-gradient-to-b from-[#2E2E2E] to-[#1A1A1A] text-white shadow-lg flex flex-col justify-between p-6 z-20">
+      <div className="flex justify-center mb-6">
+        <Logo></Logo>
       </div>
+
+      <nav className="flex flex-col gap-8 mb-[200px] bg-[2F323C]">
+        <NavItem icon={<RiHome2Line size={28} />} text="Нүүр" />
+        <NavItem icon={<FaPencil size={26} />} text="Засвар" />
+        <NavItem icon={<IoLocationOutline size={28} />} text="Салбар" />
+      </nav>
+
+      <Footer></Footer>
+    </div>
+  );
+};
+
+const NavItem = ({ icon, text }) => {
+  return (
+    <div className="flex items-center gap-4 text-gray-300 hover:text-white hover:bg-gray-700 transition-all duration-300 px-6 py-4 rounded-xl cursor-pointer text-xl font-semibold">
+      {icon}
+      <span>{text}</span>
     </div>
   );
 };
