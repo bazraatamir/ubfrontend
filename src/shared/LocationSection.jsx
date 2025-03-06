@@ -17,19 +17,113 @@ function LocationSection() {
   const [savedLocations, setSavedLocations] = useState([]);
   const [mapLocation, setMapLocation] = useState(null);
   const [showMapModal, setShowMapModal] = useState(false);
-  const [mapCenter, setMapCenter] = useState([47.8864, 106.9057]);
+  const [mapCenter, setMapCenter] = useState([47.8864, 106.9057]); // Ulaanbaatar coordinates
   const [markerPosition, setMarkerPosition] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [searchError, setSearchError] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const [isSearching, setIsSearching] = useState(false);
 
+  // Transliteration mappings for Mongolian Cyrillic to Latin
+  const transliterationMap = {
+    а: "a",
+    б: "b",
+    в: "v",
+    г: "g",
+    д: "d",
+    е: "e",
+    ё: "yo",
+    ж: "j",
+    з: "z",
+    и: "i",
+    й: "i",
+    к: "k",
+    л: "l",
+    м: "m",
+    н: "n",
+    о: "o",
+    ө: "o",
+    п: "p",
+    р: "r",
+    с: "s",
+    т: "t",
+    у: "u",
+    ү: "u",
+    ф: "f",
+    х: "h",
+    ц: "ts",
+    ч: "ch",
+    ш: "sh",
+    щ: "sch",
+    ъ: "",
+    ы: "y",
+    ь: "",
+    э: "e",
+    ю: "yu",
+    я: "ya",
+    А: "A",
+    Б: "B",
+    В: "V",
+    Г: "G",
+    Д: "D",
+    Е: "E",
+    Ё: "Yo",
+    Ж: "J",
+    З: "Z",
+    И: "I",
+    Й: "I",
+    К: "K",
+    Л: "L",
+    М: "M",
+    Н: "N",
+    О: "O",
+    Ө: "O",
+    П: "P",
+    Р: "R",
+    С: "S",
+    Т: "T",
+    У: "U",
+    Ү: "U",
+    Ф: "F",
+    Х: "H",
+    Ц: "Ts",
+    Ч: "Ch",
+    Ш: "Sh",
+    Щ: "Sch",
+    Ъ: "",
+    Ы: "Y",
+    Ь: "",
+    Э: "E",
+    Ю: "Yu",
+    Я: "Ya",
+  };
+
+  // Function to transliterate Cyrillic to Latin
+  const transliterateCyrillicToLatin = (text) => {
+    return text
+      .split("")
+      .map((char) => transliterationMap[char] || char)
+      .join("");
+  };
+
+  // Function to check if a string contains Cyrillic characters
+  const containsCyrillic = (text) => {
+    return /[а-яА-ЯөӨүҮёЁ]/.test(text);
+  };
+
   const fetchLocationName = async (lat, lng) => {
     try {
+      // Add country=mn parameter to ensure we're only getting Mongolia results
       const response = await fetch(
-        `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}&zoom=18&addressdetail=1`
+        `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}&zoom=18&addressdetail=1&countrycodes=mn`
       );
       const data = await response.json();
+
+      // Check if the returned location is in Mongolia
+      if (data.error || !data.address || data.address.country_code !== "mn") {
+        setLocationName("Монголын гадна байршил");
+        return "Монголын гадна байршил";
+      }
 
       const displayName = data.display_name || "Тодорхойгүй байршил";
       setLocationName(displayName);
@@ -84,20 +178,52 @@ function LocationSection() {
     if (!query.trim()) return;
 
     setIsSearching(true);
-    try {
-      const response = await fetch(
-        `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(
-          query
-        )}&limit=5`
-      );
-      const data = await response.json();
 
-      if (data && data.length > 0) {
-        setSearchResults(data);
+    try {
+      // Check if the query contains Cyrillic characters
+      const hasCyrillic = containsCyrillic(query);
+      let queries = [query];
+
+      // If Cyrillic, add a transliterated version. If Latin, don't transliterate
+      if (hasCyrillic) {
+        const latinQuery = transliterateCyrillicToLatin(query);
+        queries.push(latinQuery);
+      }
+
+      // Make parallel requests for both the original query and its transliteration
+      const searchResults = await Promise.all(
+        queries.map(async (q) => {
+          const response = await fetch(
+            `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(
+              q
+            )}&countrycodes=mn&limit=5`
+          );
+          return response.json();
+        })
+      );
+
+      // Combine and deduplicate results
+      const combinedResults = [];
+      const seenPlaceIds = new Set();
+
+      searchResults.forEach((results) => {
+        if (results && results.length > 0) {
+          results.forEach((place) => {
+            // Use place_id to deduplicate (same location found in both searches)
+            if (!seenPlaceIds.has(place.place_id)) {
+              seenPlaceIds.add(place.place_id);
+              combinedResults.push(place);
+            }
+          });
+        }
+      });
+
+      if (combinedResults.length > 0) {
+        setSearchResults(combinedResults);
         setSearchError("");
       } else {
         setSearchResults([]);
-        setSearchError("Хайлтаар үр дүн олдсонгүй");
+        setSearchError("Монгол улсаас хайлтаар үр дүн олдсонгүй");
       }
     } catch (error) {
       console.error("Хайлт хийх үед алдаа гарлаа:", error);
@@ -166,7 +292,7 @@ function LocationSection() {
   }, [mapLocation, locationName, location]);
 
   function LocationMarker() {
-    useMapEvents({
+    const map = useMapEvents({
       click(e) {
         const { lat, lng } = e.latlng;
         const locationString = `${lat.toFixed(6)}, ${lng.toFixed(6)}`;
@@ -175,9 +301,26 @@ function LocationSection() {
         setMapLocation(locationString);
         setLocation(locationString);
 
-        fetchLocationName(lat, lng);
+        fetchLocationName(lat, lng).then((name) => {
+          // If location is outside Mongolia, show a warning
+          if (name === "Монголын гадна байршил") {
+            setSearchError("Зөвхөн Монгол улсын доторх байршил сонгоно уу");
+          } else {
+            setSearchError("");
+          }
+        });
       },
     });
+
+    // Restrict the visible area to Mongolia's bounding box
+    useEffect(() => {
+      if (map) {
+        // Mongolia's approximate bounds
+        const southWest = [41.5, 87.8];
+        const northEast = [52.1, 119.9];
+        map.setMaxBounds([southWest, northEast]);
+      }
+    }, [map]);
 
     return markerPosition ? (
       <Marker position={markerPosition}>
@@ -227,6 +370,7 @@ function LocationSection() {
                 setShowMapModal(false);
                 setSearchQuery("");
                 setSearchResults([]);
+                setSearchError("");
               }}
               className="absolute top-4 right-4 flex items-center justify-center w-6 h-6 bg-gray-700 rounded-full text-white hover:bg-gray-600 transition-colors"
               aria-label="Close"
@@ -248,7 +392,7 @@ function LocationSection() {
             </button>
 
             {/* Title */}
-            <h3 className="text-white text-lg mb-4 pr-6">Байршил сонгох</h3>
+            <h3 className="text-white text-lg mb-4 pr-6">Байршил Сонгох</h3>
 
             {/* Search bar - adjusted to prevent overlap */}
             <div className="mb-4 flex gap-2">
@@ -258,7 +402,7 @@ function LocationSection() {
               >
                 <input
                   type="text"
-                  placeholder="Байршил хайх..."
+                  placeholder="Кирилл эсвэл Латин үсгээр хайх..."
                   value={searchQuery}
                   onChange={handleSearchQueryChange}
                   className="w-full px-4 py-2 bg-gray-800 rounded-md text-sm text-white shadow-md focus:outline-none"
@@ -294,6 +438,7 @@ function LocationSection() {
             {isSearching && (
               <div className="text-gray-300 text-sm mb-2">Хайж байна...</div>
             )}
+            <div className="text-gray-300 text-sm mb-2"></div>
 
             <div className="mt-2 relative z-10">
               <MapContainer
@@ -320,7 +465,9 @@ function LocationSection() {
               <div className="flex justify-end mt-4">
                 <button
                   onClick={handleSaveLocation}
-                  disabled={!mapLocation}
+                  disabled={
+                    !mapLocation || locationName === "Монголын гадна байршил"
+                  }
                   className="bg-[#8CBC01] text-white px-4 py-2 rounded disabled:opacity-50"
                 >
                   Хадгалах

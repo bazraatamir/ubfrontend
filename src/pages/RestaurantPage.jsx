@@ -4,20 +4,18 @@ import "filepond/dist/filepond.min.css"; // FilePond styles
 import FilePondPluginImagePreview from "filepond-plugin-image-preview";
 import "filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css";
 import FilePondPluginFileValidateType from "filepond-plugin-file-validate-type";
-
-import SideBar from "../sideBar/SideBar";
-import Search from "./Search";
-import PlusIcon from "../../shared/icons/PlusIcon";
-import IUpload from "../../shared/ImageUpload";
-import TextAreaComponent from "../../shared/icons/TextAreaComponent";
-import ImageIcon from "../../shared/icons/ImageIcon";
-import LocationSection from "../../shared/LocationSection";
-import InputDesign from "../RestaurantOwner/components/InputDesign";
+import SideBar from "../modules/RestaurantOwner/sideBar/SideBar";
+import Search from "../shared/Search";
+import IUpload from "../shared/ImageUpload";
+import TextAreaComponent from "../shared/TextAreaComponent";
+import ImageIcon from "../shared/icons/ImageIcon";
+import LocationSection from "../shared/LocationSection";
+import InputDesign from "../modules/RestaurantOwner/components/InputDesign";
 
 // Register FilePond plugins
 registerPlugin(FilePondPluginImagePreview, FilePondPluginFileValidateType);
 
-const About = () => {
+const RestaurantPage = () => {
   return (
     <div className="min-h-screen w-full bg-[#1A1B1E] p-4 sm:p-6 md:p-8">
       <div className="container mx-auto max-w-7xl relative">
@@ -31,16 +29,11 @@ const About = () => {
           <div className="grid md:grid-cols-2 gap-4 md:gap-6">
             <div className="space-y-4 md:space-y-6">
               {/* taniltsuulga nemeh  */}
-              <div className="w-full h-14 bg-[#0E131D] rounded-[5px] shadow-inner">
+              <div className="w-[200px] h-12   bg-[#2F323C] rounded-[5px] shadow-inner">
                 <div className="flex items-center justify-between px-4 py-2 h-full">
                   <span className="text-white font-bold text-base md:text-lg">
                     Танилцуулга нэмэх
                   </span>
-                  <div className="w-6 h-6 bg-[#8CBC01] rounded-full flex items-center justify-center">
-                    <div className="w-4 h-4">
-                      <PlusIcon></PlusIcon>
-                    </div>
-                  </div>
                 </div>
               </div>
 
@@ -81,16 +74,11 @@ const About = () => {
               {/* Description Section */}
             </div>
             <div className="space-y-4 md:space-y-6">
-              <div className="w-full h-14 bg-[#2F323C] rounded-[5px] shadow-md">
+              <div className="w-[220px] h-12   bg-[#2F323C] rounded-[5px] shadow-inner">
                 <div className="flex items-center justify-between px-4 py-2 h-full">
                   <span className="text-white font-bold text-base md:text-lg">
                     Орчны зураг нэмэх
                   </span>
-                  <div className="w-6 h-6 bg-[#8CBC01] rounded-full flex items-center justify-center">
-                    <div className="w-4 h-4">
-                      <PlusIcon></PlusIcon>
-                    </div>
-                  </div>
                 </div>
               </div>
 
@@ -114,4 +102,4 @@ const About = () => {
   );
 };
 
-export default About;
+export default RestaurantPage;
