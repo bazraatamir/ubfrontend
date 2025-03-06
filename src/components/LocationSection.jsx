@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import { MapContainer, TileLayer, Marker, Popup, useMapEvents } from "react-leaflet";
 import SaveButton from "./icons/SaveButton";
 import PlusIcon from "./icons/PlusIcon";
@@ -13,6 +13,10 @@ function LocationSection() {
   const [showMapModal, setShowMapModal] = useState(false);
   const [mapCenter, setMapCenter] = useState([47.8864, 106.9057]);
   const [markerPosition, setMarkerPosition] = useState(null);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [searchError, setSearchError] = useState("");
+  const [searchResults, setSearchResults] = useState([]);
+  const [isSearching, setIsSearching] = useState(false);
 
   const fetchLocationName = async (lat, lng) => {
     try {
@@ -35,6 +39,98 @@ function LocationSection() {
     setLocation(e.target.value);
   };
 
+  const handleSearchQueryChange = (e) => {
+    setSearchQuery(e.target.value);
+    setSearchError("");
+    
+    // If user clears the search query, clear search results
+    if (!e.target.value.trim()) {
+      setSearchResults([]);
+      return;
+    }
+    
+    // Debounce search
+    debouncedSearch(e.target.value);
+  };
+  
+  // Debounce search to avoid too many API calls
+  const debouncedSearch = useCallback(
+    debounce((query) => {
+      searchPlaces(query);
+    }, 500),
+    []
+  );
+  
+  // Debounce function
+  function debounce(func, wait) {
+    let timeout;
+    return function executedFunction(...args) {
+      const later = () => {
+        clearTimeout(timeout);
+        func(...args);
+      };
+      clearTimeout(timeout);
+      timeout = setTimeout(later, wait);
+    };
+  }
+
+  const searchPlaces = async (query) => {
+    if (!query.trim()) return;
+    
+    setIsSearching(true);
+    try {
+      const response = await fetch(
+        `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}&limit=5`
+      );
+      const data = await response.json();
+      
+      if (data && data.length > 0) {
+        setSearchResults(data);
+        setSearchError("");
+      } else {
+        setSearchResults([]);
+        setSearchError("Хайлтаар үр дүн олдсонгүй");
+      }
+    } catch (error) {
+      console.error("Хайлт хийх үед алдаа гарлаа:", error);
+      setSearchError("Хайлт хийх үед алдаа гарлаа");
+      setSearchResults([]);
+    } finally {
+      setIsSearching(false);
+    }
+  };
+
+  const handleSearch = async () => {
+    if (!searchQuery.trim()) {
+      setSearchError("Хайх үгээ оруулна уу");
+      return;
+    }
+
+    searchPlaces(searchQuery);
+  };
+  
+  const selectSearchResult = (result) => {
+    const { lat, lon, display_name } = result;
+    const newPosition = [parseFloat(lat), parseFloat(lon)];
+    
+    // Update map center to search result
+    setMapCenter(newPosition);
+    
+    // Update marker position
+    setMarkerPosition(newPosition);
+    
+    // Set location string
+    const locationString = `${parseFloat(lat).toFixed(6)}, ${parseFloat(lon).toFixed(6)}`;
+    setMapLocation(locationString);
+    setLocation(locationString);
+    
+    // Set location name
+    setLocationName(display_name);
+    
+    // Clear search results
+    setSearchResults([]);
+  };
+
   const handleSaveLocation = useCallback(() => {
     if (mapLocation) {
       const newSavedLocation = {
@@ -51,6 +147,8 @@ function LocationSection() {
       setMapLocation(null);
       setMarkerPosition(null);
       setShowMapModal(false);
+      setSearchQuery("");
+      setSearchResults([]);
     }
   }, [mapLocation, locationName, location]);
 
@@ -75,6 +173,22 @@ function LocationSection() {
     ) : null;
   }
 
+  // Close search results when clicking outside
+  useEffect(() => {
+    const handleClickOutside = () => {
+      setSearchResults([]);
+    };
+
+    document.addEventListener('click', handleClickOutside);
+    return () => {
+      document.removeEventListener('click', handleClickOutside);
+      // Clear any pending debounced searches
+      if (debouncedSearch.cancel) {
+        debouncedSearch.cancel();
+      }
+    };
+  }, []);
+
   return (
     <section className="mt-4">
       <button
@@ -92,19 +206,75 @@ function LocationSection() {
 
       {/* Map Modal */}
       {showMapModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+        <div className="fixed inset-0 z-40 flex items-center justify-center bg-black bg-opacity-50">
           <div className="bg-zinc-900 rounded-xl p-4 w-11/12 max-w-2xl relative">
+            {/* Improved X button styling - moved to a better position */}
             <button 
-              onClick={() => setShowMapModal(false)}
-              className="absolute top-2 right-2 text-white text-2xl"
+              onClick={() => {
+                setShowMapModal(false);
+                setSearchQuery("");
+                setSearchResults([]);
+              }}
+              className="absolute top-4 right-4 flex items-center justify-center w-6 h-6 bg-gray-700 rounded-full text-white hover:bg-gray-600 transition-colors"
+              aria-label="Close"
             >
-              ×
+              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+              </svg>
             </button>
-            <div className="mt-4">
+            
+            {/* Title */}
+            <h3 className="text-white text-lg mb-4 pr-6">Байршил сонгох</h3>
+            
+            {/* Search bar - adjusted to prevent overlap */}
+            <div className="mb-4 flex gap-2">
+              <div className="relative flex-grow" onClick={(e) => e.stopPropagation()}>
+                <input
+                  type="text"
+                  placeholder="Байршил хайх..."
+                  value={searchQuery}
+                  onChange={handleSearchQueryChange}
+                  className="w-full px-4 py-2 bg-gray-800 rounded-md text-sm text-white shadow-md focus:outline-none"
+                  onKeyPress={(e) => e.key === 'Enter' && handleSearch()}
+                />
+                {searchResults.length > 0 && (
+                  <div className="absolute mt-1 w-full bg-gray-800 rounded-md shadow-lg z-50 max-h-48 overflow-y-auto">
+                    {searchResults.map((result, index) => (
+                      <div 
+                        key={index}
+                        className="px-4 py-2 hover:bg-gray-700 cursor-pointer text-white text-sm border-b border-gray-700 last:border-b-0"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          selectSearchResult(result);
+                        }}
+                      >
+                        {result.display_name}
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+              <button 
+                onClick={handleSearch}
+                className="bg-[#8CBC01] text-white px-3 py-2 rounded text-sm min-w-16 flex-shrink-0"
+              >
+                Хайх
+              </button>
+            </div>
+            {searchError && (
+              <div className="text-red-500 text-sm mb-2">{searchError}</div>
+            )}
+            {isSearching && (
+              <div className="text-gray-300 text-sm mb-2">Хайж байна...</div>
+            )}
+            
+            <div className="mt-2 relative z-10">
               <MapContainer
                 center={mapCenter}
                 zoom={13}
-                style={{ width: "100%", height: "400px" }}
+                style={{ width: "100%", height: "350px" }}
+                key={mapCenter.toString()} // Force re-render when center changes
               >
                 <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
                 <LocationMarker />
@@ -114,7 +284,7 @@ function LocationSection() {
                 <div className="mt-2 text-white">
                   <div>Сонгосон координат: {mapLocation}</div>
                   {locationName && (
-                    <div>Байршлын нэр: {locationName}</div>
+                    <div className="text-sm text-gray-300 mt-1">Байршлын нэр: {locationName}</div>
                   )}
                 </div>
               )}
@@ -133,20 +303,7 @@ function LocationSection() {
         </div>
       )}
 
-      <div className="flex items-center gap-4 mt-3 px-7 py-3.5 bg-zinc-900 rounded-xl shadow-lg w-full sm:w-[529px] max-md:flex-col max-md:gap-3 max-md:px-4">
-        <input
-          type="text"
-          placeholder="Байршил оруулах..."
-          value={location}
-          onChange={handleInputChange}
-          className="flex-grow px-4 py-2 bg-gray-800 rounded-md text-sm text-white shadow-md focus:outline-none"
-        />
-        <div onClick={handleSaveLocation}>
-          <SaveButton
-            disabled={!mapLocation}
-          />
-        </div>
-      </div>
+      
 
       {savedLocations.length > 0 && (
         <div className="mt-4">
