@@ -20,7 +20,7 @@ const TextAreaComponent = () => {
         rows={4}
         className="w-full h-full bg-transparent text-white p-3 placeholder-gray-400 focus:outline-none resize-none"
       />
-      <div className="w-full h-full bg-transparent text-white p-3 placeholder-gray-400 focus:outline-none resize-none">
+      <div className="w-full h-full bg-transparent text-white  p-3 placeholder-gray-400 focus:outline-none resize-none">
         {text.length}/{MAX_LENGTH} тэмдэгт
       </div>
     </div>

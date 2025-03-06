@@ -28,9 +28,8 @@ const About = () => {
           <Search></Search>
 
           <div className="grid md:grid-cols-2 gap-4 md:gap-6">
-            {/* Left Column */}
             <div className="space-y-4 md:space-y-6">
-              {/* Add Introduction Section */}
+              {/* taniltsuulga nemeh  */}
               <div className="w-full h-14 bg-[#0E131D] rounded-[5px] shadow-inner">
                 <div className="flex items-center justify-between px-4 py-2 h-full">
                   <span className="text-white font-bold text-base md:text-lg">
@@ -44,11 +43,14 @@ const About = () => {
                 </div>
               </div>
 
-              {/* Main Content Areas */}
+              {/* baiguulgiin logo  */}
               <div className="w-full bg-[#0E131D] rounded-[10px] shadow-md p-4 md:p-6">
-                <div className="flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-6 ">
-                  <IUpload></IUpload>
-                  <div className="w-full space-y-4">
+                <div className="flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-6">
+                  <div className="w-[500px]">
+                    <IUpload></IUpload>
+                  </div>
+                  {/* baiguulga ner text */}
+                  <div className="w-full space-y-4 mb-[18px]">
                     <div className="w-full h-10 bg-[#2F323C] rounded-[5px]">
                       <input
                         type="text"
@@ -61,22 +63,20 @@ const About = () => {
                     </div>
                   </div>
                 </div>
+                {/* bichleg oruulah */}
+                <div className="w-full bg-[#2F323C] rounded-[10px] shadow-md p-4 md:p-6">
+                  <div className="flex items-center">
+                    <div className="w-8 h-8 mr-3">
+                      <ImageIcon></ImageIcon>
+                    </div>
+                    <span className="text-white text-base">Бичлэг оруулах</span>
+                  </div>
+                </div>
               </div>
 
               {/* Description Section */}
-              <div className="w-full bg-[#2F323C] rounded-[10px] shadow-md p-4 md:p-6">
-                <div className="flex items-center">
-                  <div className="w-8 h-8 mr-3">
-                    <ImageIcon></ImageIcon>
-                  </div>
-                  <span className="text-white text-base">Бичлэг оруулах</span>
-                </div>
-              </div>
             </div>
-
-            {/* Right Column */}
             <div className="space-y-4 md:space-y-6">
-              {/* Add Environment Map Section */}
               <div className="w-full h-14 bg-[#2F323C] rounded-[5px] shadow-md">
                 <div className="flex items-center justify-between px-4 py-2 h-full">
                   <span className="text-white font-bold text-base md:text-lg">
