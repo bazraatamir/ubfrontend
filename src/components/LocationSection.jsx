@@ -303,20 +303,7 @@ function LocationSection() {
         </div>
       )}
 
-      <div className="flex items-center gap-4 mt-3 px-7 py-3.5 bg-zinc-900 rounded-xl shadow-lg w-full sm:w-[529px] max-md:flex-col max-md:gap-3 max-md:px-4">
-        <input
-          type="text"
-          placeholder="Байршил оруулах..."
-          value={location}
-          onChange={handleInputChange}
-          className="flex-grow px-4 py-2 bg-gray-800 rounded-md text-sm text-white shadow-md focus:outline-none"
-        />
-        <div onClick={handleSaveLocation}>
-          <SaveButton
-            disabled={!mapLocation}
-          />
-        </div>
-      </div>
+      
 
       {savedLocations.length > 0 && (
         <div className="mt-4">
