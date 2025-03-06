@@ -30,16 +30,12 @@ const About = () => {
           <div className="grid md:grid-cols-2 gap-4 md:gap-6">
             <div className="space-y-4 md:space-y-6">
               {/* taniltsuulga nemeh  */}
-              <div className="w-full h-14 bg-[#0E131D] rounded-[5px] shadow-inner">
+              <div className="w-[200px] h-12   bg-[#2F323C] rounded-[5px] shadow-inner">
+
                 <div className="flex items-center justify-between px-4 py-2 h-full">
                   <span className="text-white font-bold text-base md:text-lg">
                     Танилцуулга нэмэх
                   </span>
-                  <div className="w-6 h-6 bg-[#8CBC01] rounded-full flex items-center justify-center">
-                    <div className="w-4 h-4">
-                      <PlusIcon></PlusIcon>
-                    </div>
-                  </div>
                 </div>
               </div>
 
@@ -77,16 +73,12 @@ const About = () => {
               {/* Description Section */}
             </div>
             <div className="space-y-4 md:space-y-6">
-              <div className="w-full h-14 bg-[#2F323C] rounded-[5px] shadow-md">
+            <div className="w-[220px] h-12   bg-[#2F323C] rounded-[5px] shadow-inner">
                 <div className="flex items-center justify-between px-4 py-2 h-full">
                   <span className="text-white font-bold text-base md:text-lg">
                     Орчны зураг нэмэх
                   </span>
-                  <div className="w-6 h-6 bg-[#8CBC01] rounded-full flex items-center justify-center">
-                    <div className="w-4 h-4">
-                      <PlusIcon></PlusIcon>
-                    </div>
-                  </div>
+                  
                 </div>
               </div>
 
