@@ -2,7 +2,7 @@ import React from "react";
 
 function HeroSection() {
   return (
-    <section className="flex relative flex-col items-center w-full">
+    <section className="flex relative flex-col items-center w-full bg-[#0E1B21]">
       <img
         src="https://cdn.builder.io/api/v1/image/assets/TEMP/4403dd2d1543134213ab63c015420cd4372ad679"
         className="object-cover w-full h-[832px] max-sm:h-[400px]"

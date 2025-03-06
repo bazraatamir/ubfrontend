@@ -29,9 +29,9 @@ const RestaurantPage = () => {
           <div className="grid md:grid-cols-2 gap-4 md:gap-6">
             <div className="space-y-4 md:space-y-6">
               {/* taniltsuulga nemeh  */}
-              <div className="w-[200px] h-12   bg-[#2F323C] rounded-[5px] shadow-inner">
-                <div className="flex items-center justify-between px-4 py-2 h-full">
-                  <span className="text-white font-bold text-base md:text-lg">
+              <div className="w-[170px] h-10 bg-[#2F323C] rounded-[5px] shadow-inner">
+                <div className="flex items-center justify-between px-4 h-full">
+                  <span className="text-white text-[14px] font-bold text-base ">
                     Танилцуулга нэмэх
                   </span>
                 </div>
@@ -74,9 +74,9 @@ const RestaurantPage = () => {
               {/* Description Section */}
             </div>
             <div className="space-y-4 md:space-y-6">
-              <div className="w-[220px] h-12   bg-[#2F323C] rounded-[5px] shadow-inner">
-                <div className="flex items-center justify-between px-4 py-2 h-full">
-                  <span className="text-white font-bold text-base md:text-lg">
+              <div className="w-[170px] h-10   bg-[#2F323C] rounded-[5px] shadow-inner">
+                <div className="flex items-center justify-between px-4 h-full">
+                  <span className="text-white font-bold text-base text-[14px]">
                     Орчны зураг нэмэх
                   </span>
                 </div>

@@ -11,7 +11,7 @@ const AddFoodHeader = () => {
         <img
           src="https://cdn.builder.io/api/v1/image/assets/TEMP/d83e99ac73f3370c6741c020585fde56c7b0a51dfbf51b18593b6bb0e3fc1694?placeholderIfAbsent=true&apiKey=8947fdbc91b3418387184c18824db628"
           alt="Add icon"
-          className="object-contain shrink-0 self-start aspect-square w-[18px]"
+          className="w-[38px]"
         />
       </div>
     </button>
