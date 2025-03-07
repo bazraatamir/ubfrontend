@@ -11,6 +11,7 @@ import TextAreaComponent from "../shared/TextAreaComponent";
 import ImageIcon from "../shared/icons/ImageIcon";
 import LocationSection from "../shared/LocationSection";
 import InputDesign from "../modules/RestaurantOwner/components/InputDesign";
+import Neriinhool from "../modules/RestaurantOwner/components/neriinhool";
 
 // Register FilePond plugins
 registerPlugin(FilePondPluginImagePreview, FilePondPluginFileValidateType);
@@ -83,7 +84,7 @@ const RestaurantPage = () => {
               </div>
 
               {/* Image Grid Section */}
-              <div className="w-full bg-[#0E131D] rounded-[10px] md:p-6">
+              <div className="w-[550px] bg-[#0E131D] rounded-[10px] md:p-12">
                 <div className="grid grid-cols-3 gap-3 md:gap-4">
                   {[1, 2, 3, 4, 5, 6].map((item) => (
                     <IUpload
@@ -92,8 +93,8 @@ const RestaurantPage = () => {
                     ></IUpload>
                   ))}
                 </div>
-                <InputDesign></InputDesign>
               </div>
+              <Neriinhool></Neriinhool>
             </div>
           </div>
         </div>
