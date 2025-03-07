@@ -5,7 +5,7 @@ import FilePondPluginImagePreview from "filepond-plugin-image-preview";
 import "filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css";
 import FilePondPluginFileValidateType from "filepond-plugin-file-validate-type";
 registerPlugin(FilePondPluginImagePreview, FilePondPluginFileValidateType);
-
+import "../App.css";
 const IUpload = () => {
   const [files, setFiles] = useState([]);
   const [uploadedImageUrl, setUploadedImageUrl] = useState(null);
