@@ -1,16 +1,25 @@
 import React from "react";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { loginUser } from "../redux/authSlice";
+import { Link, useNavigate } from "react-router-dom";
 
 const LoginPage = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { loading, error } = useSelector((state) => state.auth);
+
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (data) => {
-    console.log("Logging in...", data);
+  const onSubmit = async (data) => {
+    const result = await dispatch(loginUser(data));
+    if (result.meta.requestStatus === "fulfilled") {
+      navigate("/dashboard"); // Redirect after successful login
+    }
   };
 
   return (
@@ -19,6 +28,8 @@ const LoginPage = () => {
         <h2 className="text-2xl font-semibold text-center text-gray-700 mb-4">
           Login
         </h2>
+        {error && <p className="text-red-500 text-center">{error}</p>}{" "}
+        {/* Show error message */}
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           <div>
             <input
@@ -47,8 +58,9 @@ const LoginPage = () => {
           <button
             type="submit"
             className="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 transition"
+            disabled={loading}
           >
-            Login
+            {loading ? "Logging in..." : "Login"}
           </button>
         </form>
         <p className="mt-4 text-center text-gray-600">

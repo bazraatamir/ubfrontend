@@ -1,4 +1,6 @@
 import React from "react";
+import { Provider } from "react-redux";
+import store from "./redux/store";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import LoginPage from "./pages/LoginPage";
 import SignupPage from "./pages/SignupPage";
@@ -8,9 +10,12 @@ import AuthPage from "./pages/authPage";
 
 const App = () => {
   return (
-    <div>
-      <RestaurantPage></RestaurantPage>
-    </div>
+    <Routes>
+      <Route path="/" element={<AuthPage />} />
+      <Route path="/RestPage" element={<RestaurantPage />} />
+      <Route path="/Signup" element={<SignupPage />} />
+      <Route path="/Login" element={<LoginPage />} />
+    </Routes>
   );
 };
 
