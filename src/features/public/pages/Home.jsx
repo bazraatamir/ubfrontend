@@ -84,8 +84,8 @@ const Home = () => {
       </div>
 
       {/* Restaurant Grid Section */}
-      <div className="container mx-auto px-3 py-4">
-        <h2 className="text-[20px] font-mon-futuris mb-3 text-white uppercase tracking-wider">ИТАЛИ РЕСТОРАН</h2>
+      <div className="container mx-auto px-3 py-4 mt-[40px]">
+        <h2 className="text-[20px] font-[Futuris] mb-3 text-white uppercase tracking-wider ml-[5px]">ИТАЛИ РЕСТОРАН</h2>
         <div className="flex flex-wrap gap-24 justify-center">
           {restaurants.map((restaurant) => (
             <div key={restaurant.id} className="w-[304px]">
@@ -96,8 +96,8 @@ const Home = () => {
       </div>
 
       {/* Second Restaurant Grid Section */}
-      <div className="container mx-auto px-3 py-4">
-        <h2 className="text-[20px] font-mon-futuris mb-3 text-white uppercase tracking-wider">ИТАЛИ РЕСТОРАН</h2>
+      <div className="container mx-auto px-3 py-4 mt-[25px]">
+        <h2 className="text-[20px] font-[Futuris] mb-3 text-white uppercase tracking-wider ml-[5px]">ИТАЛИ РЕСТОРАН</h2>
         <div className="flex flex-wrap gap-24 justify-center">
           {restaurants.map((restaurant) => (
             <div key={`second-${restaurant.id}`} className="w-[304px]">

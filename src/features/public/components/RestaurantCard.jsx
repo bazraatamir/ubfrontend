@@ -10,10 +10,11 @@ const RestaurantCard = ({ restaurant }) => {
       <div className="absolute inset-0 bg-[#13252D] [clip-path:polygon(0_70%,100%_0,100%_100%,0_100%)]"></div>
       <div className="relative z-10">
         <div className="p-4">
-          <h3 className="text-white text-2xl font-medium">{name} ресторан</h3>
+          <h3 className="text-white text-2xl font-[Futuris] font-medium text-center">{name}</h3>
+          <p className='text-white text-2xl font-[Futuris] text-center mt-1'>ресторан</p>
         </div>
         
-        <div className="flex justify-center items-center h-[360px]">
+        <div className="flex justify-center items-center h-[330px]">
           <img
             src={image}
             alt={name}
