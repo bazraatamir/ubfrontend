@@ -1,13 +1,13 @@
 import React from "react";
-
-import LoginPage from "./pages/LoginPage";
-import SignupPage from "./pages/SignupPage";
-import RestaurantPage from "./pages/RestaurantPage";
-import AuthPage from "./pages/authPage";
-import HomePage from "./pages/HomePage";
+import { BrowserRouter } from "react-router-dom";
+import PublicRoutes from "./features/public/routes";
 
 const App = () => {
-  return <RestaurantPage />;
+  return (
+    <BrowserRouter>
+      <PublicRoutes />
+    </BrowserRouter>
+  );
 };
 
 export default App;
