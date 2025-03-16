@@ -30,9 +30,9 @@ const Sidebar = ({ onClose }) => {
             </Link>
           </nav>
         </div>
-
+        <div className="w-[2px] h-[820px] self-center bg-white/10 mr-[200px]" />
         {/* Right Content */}
-        <div className="w-[550px]  pt-18 pr-30 flex flex-col">
+        <div className="w-[550px]  pt-15 pr-15 flex flex-col">
           <div className="flex items-center justify-end">
             <div className="relative w-[450px] mr-8">
               <input 
@@ -46,7 +46,7 @@ const Sidebar = ({ onClose }) => {
               onClick={onClose}
               className="text-gray-400 hover:text-white"
             >
-              <IoCloseOutline size={24} />
+              <IoCloseOutline size={40} />
             </button>
           </div>
 

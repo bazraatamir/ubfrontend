@@ -44,27 +44,27 @@ const Home = () => {
         </div>
 
         <div className="relative z-10 flex items-center justify-center h-full">
-          <h1 className="text-white text-5xl md:text-6xl font-mon-university text-center px-4 tracking-wide leading-relaxed">
+          <h1 className="text-white text-5xl md:text-8xl font-[Mon_University] text-center px-4 tracking-wide leading-relaxed">
             Хамгийн амттай шилдэг<br />хоол, төгс уур амьсгалтай<br />бүгд нэг дор
           </h1>
         </div>
 
         {/* UBFOODZONE line */}
-        <div className='absolute bottom-0 left-0 right-0 bg-[#111315]/80'>
+        <div className='absolute bottom-0 left-0 right-0 bg-[#F5F7DC]'>
           <div className='flex'>
-            <div className='flex-1 text-[#7CFF6B] text-[10px] py-1 text-center tracking-wider'>
+            <div className='flex-1 text-[#8CBC01] text-[30px] font-[Godber-3lxoz] py-5 text-center tracking-wider'>
               UBFOODZONE
             </div>
-            <div className='flex-1 text-[#7CFF6B] text-[10px] py-1 text-center tracking-wider'>
+            <div className='flex-1 text-[#FDDD2C] text-[30px] font-[Godber-3lxoz] py-5 text-center tracking-wider'>
               UBFOODZONE
             </div>
-            <div className='flex-1 text-[#7CFF6B] text-[10px] py-1 text-center tracking-wider'>
+            <div className='flex-1 text-[#8CBC01] text-[30px] font-[Godber-3lxoz] py-5 text-center tracking-wider'>
               UBFOODZONE
             </div>
-            <div className='flex-1 text-[#7CFF6B] text-[10px] py-1 text-center tracking-wider'>
+            <div className='flex-1 text-[#FDDD2C] text-[30px] font-[Godber-3lxoz] py-5 text-center tracking-wider'>
               UBFOODZONE
             </div>
-            <div className='flex-1 text-[#7CFF6B] text-[10px] py-1 text-center tracking-wider'>
+            <div className='flex-1 text-[#8CBC01] text-[30px] font-[Godber-3lxoz] py-5 text-center tracking-wider'>
               UBFOODZONE
             </div>
           </div>
@@ -74,22 +74,23 @@ const Home = () => {
       {/* Restaurant Grid Section */}
       <div className="container mx-auto px-3 py-4">
         <h2 className="text-[20px] font-mon-futuris mb-3 text-white uppercase tracking-wider">ИТАЛИ РЕСТОРАН</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
+        <div className="flex flex-wrap gap-24 justify-center">
           {restaurants.map((restaurant) => (
-            <RestaurantCard key={restaurant.id} restaurant={restaurant} />
+            <div key={restaurant.id} className="w-[304px]">
+              <RestaurantCard restaurant={restaurant} />
+            </div>
           ))}
         </div>
       </div>
 
       {/* Second Restaurant Grid Section */}
       <div className="container mx-auto px-3 py-4">
-        <h2 className="text-[10px] font-mon-futuris mb-3 text-white uppercase tracking-wider">ИТАЛИ РЕСТОРАН</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
+        <h2 className="text-[20px] font-mon-futuris mb-3 text-white uppercase tracking-wider">ИТАЛИ РЕСТОРАН</h2>
+        <div className="flex flex-wrap gap-24 justify-center">
           {restaurants.map((restaurant) => (
-            <RestaurantCard
-              key={`second-${restaurant.id}`}
-              restaurant={{...restaurant, id: restaurant.id + 4}}
-            />
+            <div key={`second-${restaurant.id}`} className="w-[304px]">
+              <RestaurantCard restaurant={{...restaurant, id: restaurant.id + 4}} />
+            </div>
           ))}
         </div>
       </div>

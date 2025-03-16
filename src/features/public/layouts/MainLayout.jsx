@@ -11,9 +11,9 @@ const MainLayout = () => {
       {/* Menu Button */}
       <button 
         onClick={() => setIsSidebarOpen(true)}
-        className="fixed top-6 right-6 z-50 text-white hover:text-[#7CFF6B]"
+        className="fixed top-[56px] right-[56px] z-50 text-white hover:text-[#7CFF6B]"
       >
-        <IoMenuOutline size={32} />
+        <IoMenuOutline size={50} />
       </button>
 
       {/* Sidebar */}
