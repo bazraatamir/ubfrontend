@@ -1,14 +1,13 @@
 import { useState } from "react";
 import { FaPlus, FaEdit, FaChevronLeft, FaChevronRight } from "react-icons/fa";
 
-export default function Neriinhool() {
+const Neriinhool = () => {
   const [foods, setFoods] = useState([
     { id: 1, name: "Будаатай хуурга", description: "Будаатай хуурга" },
     { id: 2, name: "Будаатай хуурга", description: "Будаатай хуурга" },
   ]);
-
   return (
-    <div className="bg-gray-900 p-4 rounded-lg text-white w-full max-w-lg mx-auto">
+    <div className="bg-gray-900 p-4 rounded-lg text-white">
       {/* Header */}
       <button className="flex items-center gap-2 bg-gray-700 p-2 rounded-lg w-full mb-4">
         <span className="font-bold">Нэрийн хоол нэмэх</span> <FaPlus />
@@ -56,4 +55,6 @@ export default function Neriinhool() {
       </div>
     </div>
   );
-}
+};
+
+export default Neriinhool;
