@@ -1,16 +1,24 @@
 import React from "react";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { registerUser } from "../redux/authSlice"; // Import registerUser action
 
 const SignupPage = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (data) => {
-    console.log("Signing up...", data);
+  const onSubmit = async (data) => {
+    const result = await dispatch(registerUser(data)); // Dispatch registerUser action
+    if (result.meta.requestStatus === "fulfilled") {
+      navigate("/dashboard"); // Redirect after successful registration
+    }
   };
 
   return (
