@@ -44,7 +44,7 @@ const Home = () => {
         </div>
 
         <div className="relative z-10 flex items-center justify-center h-full">
-          <h1 className="text-white text-5xl md:text-6xl font-mon-university text-center px-4 tracking-wide leading-relaxed">
+          <h1 className="text-white tracking-widest text-5xl md:text-7xl font-[Mon_University] text-center px-4 tracking-wide leading-relaxed">
             Хамгийн амттай шилдэг<br />хоол, төгс уур амьсгалтай<br />бүгд нэг дор
           </h1>
         </div>
@@ -70,7 +70,7 @@ const Home = () => {
 
       {/* Restaurant Grid Section */}
       <div className="container mx-auto px-3 py-4">
-        <h2 className="text-[20px] font-mon-futuris mb-3 text-white uppercase tracking-wider">ИТАЛИ РЕСТОРАН</h2>
+        <h2 className="text-[20px] font-Futuris mb-3 text-white uppercase tracking-wider">ИТАЛИ РЕСТОРАН</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
           {restaurants.map((restaurant) => (
             <RestaurantCard key={restaurant.id} restaurant={restaurant} />
@@ -80,7 +80,7 @@ const Home = () => {
 
       {/* Second Restaurant Grid Section */}
       <div className="container mx-auto px-3 py-4">
-        <h2 className="text-[10px] font-mon-futuris mb-3 text-white uppercase tracking-wider">ИТАЛИ РЕСТОРАН</h2>
+        <h2 className="text-[20px] font-Futuris mb-3 text-white uppercase tracking-wider">ИТАЛИ РЕСТОРАН</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
           {restaurants.map((restaurant) => (
             <RestaurantCard 

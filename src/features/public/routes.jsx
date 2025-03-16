@@ -14,4 +14,4 @@ const PublicRoutes = () => {
   );
 };
 
-export default PublicRoutes; 
+export default PublicRoutes;
