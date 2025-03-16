@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { loginUser } from "../redux/authSlice";
@@ -7,7 +7,14 @@ import { Link, useNavigate } from "react-router-dom";
 const LoginPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { loading, error } = useSelector((state) => state.auth);
+  const { loading, error, token } = useSelector((state) => state.auth);
+
+  // If the user is already logged in, redirect them to the homepage
+  useEffect(() => {
+    if (token) {
+      navigate("/"); // Redirect to homepage or dashboard
+    }
+  }, [token, navigate]);
 
   const {
     register,
@@ -18,7 +25,7 @@ const LoginPage = () => {
   const onSubmit = async (data) => {
     const result = await dispatch(loginUser(data));
     if (result.meta.requestStatus === "fulfilled") {
-      navigate("/dashboard"); // Redirect after successful login
+      navigate("/"); // Redirect after successful login
     }
   };
 
@@ -70,6 +77,7 @@ const LoginPage = () => {
           </Link>
         </p>
       </div>
+      <Link to={"/"}>test</Link>
     </div>
   );
 };

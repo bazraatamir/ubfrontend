@@ -11,23 +11,22 @@ import TextAreaComponent from "../shared/TextAreaComponent";
 import ImageIcon from "../shared/icons/ImageIcon";
 import LocationSection from "../shared/LocationSection";
 import InputDesign from "../modules/RestaurantOwner/components/InputDesign";
-import Neriinhool from "../modules/RestaurantOwner/components/neriinhool";
 
 // Register FilePond plugins
 registerPlugin(FilePondPluginImagePreview, FilePondPluginFileValidateType);
 
 const RestaurantPage = () => {
   return (
-    <div className="min-h-screen w-full bg-[#1A1B1E] p-4 sm:p-6 md:p-8">
-      <div className="container mx-auto max-w-7xl relative">
+    <div className="min-h-screen w-full bg-[#1A1B1E] p-4 ">
+      <div className="container ml-[300px] relative">
         {/* Sidebar */}
         <SideBar></SideBar>
 
-        <div className="md:pl-16  w-[1400px]">
+        <div className="w-[1500px]">
           {/* Header Search */}
           <Search></Search>
 
-          <div className="grid md:grid-cols-2 gap-4 md:gap-6">
+          <div className="grid md:grid-cols-2 gap-9">
             <div className="space-y-4 md:space-y-6">
               {/* taniltsuulga nemeh  */}
               <div className="w-[170px] h-10 bg-[#2F323C] rounded-[5px] shadow-inner">
@@ -84,8 +83,8 @@ const RestaurantPage = () => {
               </div>
 
               {/* Image Grid Section */}
-              <div className="w-[550px] bg-[#0E131D] rounded-[10px] md:p-12">
-                <div className="grid grid-cols-3 gap-3 md:gap-4">
+              <div className="w-[690px] max-h-[580px] bg-[#0E131D] rounded-[10px] md:p-12">
+                <div className="grid grid-cols-3 md:gap-12">
                   {[1, 2, 3, 4, 5, 6].map((item) => (
                     <IUpload
                       key={item}
@@ -94,7 +93,6 @@ const RestaurantPage = () => {
                   ))}
                 </div>
               </div>
-              <Neriinhool></Neriinhool>
             </div>
           </div>
         </div>
