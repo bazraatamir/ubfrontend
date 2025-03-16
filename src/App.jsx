@@ -1,7 +1,5 @@
 import React from "react";
-<<<<<<< HEAD
 import RestaurantPage from "./features/restaurantOwner/pages/RestaurantPage";
-import AddRestaurantPage from "./features/restaurantOwner/pages/AddRestaurantPage";
 
 
 
