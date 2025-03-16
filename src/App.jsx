@@ -1,8 +1,8 @@
 import React from "react";
-import PublicRoutes from "./features/public/routes";
+import RestaurantPage from "./features/restaurantOwner/pages/RestaurantPage";
 
 const App = () => {
-  return <PublicRoutes />;
+  return <RestaurantPage></RestaurantPage>
 };
 
 export default App;
