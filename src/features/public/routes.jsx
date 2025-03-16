@@ -6,7 +6,7 @@ import RestaurantPage from "../../pages/RestaurantPage";
 import AuthPage from "../../pages/authPage";
 import LoginPage from "../../pages/LoginPage";
 import SignupPage from "../../pages/SignupPage";
-import HomePage from "../../pages/HomePage";
+import HomePage from "./RestaurantPage/pages/HomePage";
 
 const PublicRoutes = () => {
   return (

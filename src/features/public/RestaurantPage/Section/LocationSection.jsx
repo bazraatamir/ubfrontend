@@ -1,5 +1,4 @@
 import LocationCard from "../Card/LocationCard";
-import "../Font.css";
 export default function LocationSection() {
   const locations = [
     "WVF8+5V8 Ard Ayush Ave, BGD - 13 khoroo, Ulaanbaatar 16091",

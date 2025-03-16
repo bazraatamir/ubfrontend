@@ -1,11 +1,10 @@
 import React from "react";
-import MenuSection from "../modules/Home/components/Section/MenuSection";
-import "../App.css";
-import GirdImg from "../modules/Home/components/Section/ImgSection";
-import ReviewsSection from "../modules/Home/components/Section/ReviewsSection";
-import LocationSection from "../modules/Home/components/Section/LocationSection";
-import AboutSection from "../modules/Home/components/Section/aboutSection";
-import ImgSection from "../modules/Home/components/Section/ImgSection";
+import MenuSection from "../Section/MenuSection";
+import ImgSection from "../Section/ImgSection";
+import AboutSection from "../Section/aboutSection";
+import ReviewsSection from "../Section/ReviewsSection";
+import LocationSection from "../Section/LocationSection";
+import MenuButton from "../button/MenuButton";
 
 function HomePage() {
   return (
@@ -19,6 +18,7 @@ function HomePage() {
         <main className="w-full text-white">
           <AboutSection></AboutSection>
           <MenuSection />
+          <MenuButton></MenuButton>
           <ImgSection></ImgSection>
           <ReviewsSection></ReviewsSection>
           <LocationSection></LocationSection>
