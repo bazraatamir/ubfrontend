@@ -1,7 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import RestaurantCard from "../components/RestaurantCard";
+import Sidebar from "../components/Sidebar";
+import { IoMenuOutline } from "react-icons/io5";
 
 const Home = () => {
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const restaurants = [
     {
       id: 1,
@@ -31,6 +34,15 @@ const Home = () => {
 
   return (
     <div className='min-h-screen bg-[#111315]'>
+      <button 
+        onClick={() => setIsSidebarOpen(true)}
+        className="fixed top-[57px] right-[58px] z-50 text-white hover:text-[#7CFF6B] transition-colors"
+      >
+        <IoMenuOutline size={40} />
+      </button>
+      
+      {isSidebarOpen && <Sidebar onClose={() => setIsSidebarOpen(false)} />}
+
       {/* Hero Section */}
       <div className='relative h-screen'>
         {/* Background image with overlay */}

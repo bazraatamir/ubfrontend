@@ -14,7 +14,7 @@ import Neriinhool from "../components/neriinhool";
 // Register FilePond plugins
 registerPlugin(FilePondPluginImagePreview, FilePondPluginFileValidateType);
 
-const RestaurantPage = () => {
+const OwnerRestaurantPage = () => {
   return (
     <Layout>
       <div className="min-h-screen w-full bg-[#1A1B1E] p-4 sm:p-6 md:p-8">
@@ -111,4 +111,4 @@ const RestaurantPage = () => {
   );
 };
 
-export default RestaurantPage;
+export default OwnerRestaurantPage;

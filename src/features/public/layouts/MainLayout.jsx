@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { Outlet } from 'react-router-dom';
+// import { Outlet } from 'react-router-dom';
 import { IoMenuOutline } from 'react-icons/io5';
 import Sidebar from '../components/Sidebar';
 
-const MainLayout = () => {
+const MainLayout = ({children}) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   return (
@@ -29,7 +29,8 @@ const MainLayout = () => {
 
       {/* Main Content */}
       <main>
-        <Outlet />
+        {/* <Outlet /> */}
+        {children}
       </main>
     </div>
   );

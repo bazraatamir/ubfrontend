@@ -15,8 +15,6 @@ function SideBar() {
 
         {/* Navigation */}
         <nav className="flex flex-col items-center gap-1 bg-[#2F323C] rounded-2xl py-0 px-4 text-lg w-[150px] ml-4">
-
-
           <NavItem
             imgSrc="https://cdn.builder.io/api/v1/image/assets/4f560f3098894f68b3412840c0587797/711fe2b8d03f38d29166207ff82d46cc3ac8782826736691343a1135295e645a?placeholderIfAbsent=true"
             text="Нүүр"

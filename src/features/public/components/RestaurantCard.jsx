@@ -1,15 +1,14 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { IoLocationOutline } from 'react-icons/io5';
 
 const RestaurantCard = ({ restaurant }) => {
-  const { id, name, image, location } = restaurant;
+  const { name, image, location } = restaurant;
 
   return (
-    <div className="w-[370px] rounded-lg overflow-hidden h-[528px] flex flex-col relative">
+    <div className="w-[370px] rounded-lg overflow-hidden h-[528px] flex flex-col relative cursor-pointer">
       <div className="absolute inset-0 bg-gradient-to-b from-[#0D1B21] to-[#101E25]"></div>
       <div className="absolute inset-0 bg-[#13252D] [clip-path:polygon(0_70%,100%_0,100%_100%,0_100%)]"></div>
-      <Link to={`/restaurant/${id}`} className="relative z-10">
+      <div className="relative z-10">
         <div className="p-4">
           <h3 className="text-white text-2xl font-medium">{name} ресторан</h3>
         </div>
@@ -33,7 +32,7 @@ const RestaurantCard = ({ restaurant }) => {
             <button className="px-3 py-1 text-xs rounded bg-[#2A2F33] text-white hover:bg-[#3A3F43]">Jazz хөгжим</button>
           </div>
         </div>
-      </Link>
+      </div>
     </div>
   );
 };
