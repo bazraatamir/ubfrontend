@@ -1,10 +1,18 @@
-import React, { useState } from "react";
+import React, {useState, useRef} from "react";
 import RestaurantCard from "../components/RestaurantCard";
 import Sidebar from "../components/Sidebar";
-import { IoMenuOutline } from "react-icons/io5";
+import {IoMenuOutline} from "react-icons/io5";
+import {Swiper, SwiperSlide} from "swiper/react";
+import "swiper/css";
+import "swiper/css/free-mode";
+import "swiper/css/pagination";
+import "swiper/css/navigation";
+import {FreeMode, Pagination, Navigation} from "swiper/modules";
+import styles from "./Home.module.css";
 
 const Home = () => {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  // const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const swiperRef = useRef(null);
   const restaurants = [
     {
       id: 1,
@@ -30,18 +38,29 @@ const Home = () => {
       image: "/images/restaurant1.png",
       location: "Баянзүрх дүүрэг",
     },
+    {
+      id: 5,
+      name: "Modern Nomads",
+      image: "/images/restaurant1.png",
+      location: "Баянзүрх дүүрэг",
+    },
+    {
+      id: 6,
+      name: "Modern Nomads",
+      image: "/images/restaurant1.png",
+      location: "Баянзүрх дүүрэг",
+    },
   ];
 
   return (
     <div className='min-h-screen bg-[#111315]'>
-      <button 
+      {/* <button
         onClick={() => setIsSidebarOpen(true)}
-        className="fixed top-[57px] right-[58px] z-50 text-white hover:text-[#7CFF6B] transition-colors"
-      >
+        className='fixed top-[57px] right-[58px] z-50 text-white hover:text-[#7CFF6B] transition-colors'>
         <IoMenuOutline size={40} />
-      </button>
-      
-      {isSidebarOpen && <Sidebar onClose={() => setIsSidebarOpen(false)} />}
+      </button> */}
+
+      {/* {isSidebarOpen && <Sidebar onClose={() => setIsSidebarOpen(false)} />} */}
 
       {/* Hero Section */}
       <div className='relative h-screen'>
@@ -55,9 +74,13 @@ const Home = () => {
           <div className='absolute inset-0 bg-black/60' />
         </div>
 
-        <div className="relative z-10 flex items-center justify-center h-full">
-          <h1 className="text-white text-5xl md:text-8xl font-[Mon_University] text-center px-4 tracking-wide leading-relaxed">
-            Хамгийн амттай шилдэг<br />хоол, төгс уур амьсгалтай<br />бүгд нэг дор
+        <div className='relative z-10 flex items-center justify-center h-full'>
+          <h1 className='text-white text-5xl md:text-8xl font-[Mon_University] text-center px-4 tracking-wide leading-relaxed'>
+            Хамгийн амттай шилдэг
+            <br />
+            хоол, төгс уур амьсгалтай
+            <br />
+            бүгд нэг дор
           </h1>
         </div>
 
@@ -84,26 +107,25 @@ const Home = () => {
       </div>
 
       {/* Restaurant Grid Section */}
-      <div className="container mx-auto px-3 py-4 mt-[40px]">
-        <h2 className="text-[20px] font-[Futuris] mb-3 text-white uppercase tracking-wider ml-[5px]">ИТАЛИ РЕСТОРАН</h2>
-        <div className="flex flex-wrap gap-24 justify-center">
-          {restaurants.map((restaurant) => (
-            <div key={restaurant.id} className="w-[304px]">
-              <RestaurantCard restaurant={restaurant} />
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* Second Restaurant Grid Section */}
-      <div className="container mx-auto px-3 py-4 mt-[25px]">
-        <h2 className="text-[20px] font-[Futuris] mb-3 text-white uppercase tracking-wider ml-[5px]">ИТАЛИ РЕСТОРАН</h2>
-        <div className="flex flex-wrap gap-24 justify-center">
-          {restaurants.map((restaurant) => (
-            <div key={`second-${restaurant.id}`} className="w-[304px]">
-              <RestaurantCard restaurant={{...restaurant, id: restaurant.id + 4}} />
-            </div>
-          ))}
+      <div className='w-[100%]  px-10 py-4  box-border '>
+        <h2 className='text-[20px] font-[Futuris] mb-3 text-white uppercase tracking-wider ml-[5px]'>
+          ИТАЛИ РЕСТОРАН
+        </h2>
+        <div className='flex  gap-6 justify-start  relative group '>
+          <Swiper
+            slidesPerView={"auto"}
+            spaceBetween={16}
+            freeMode={true}
+            grabCursor={true}
+            navigation={true}
+            modules={[FreeMode, Navigation]}
+            className={`w-full `}>
+            {restaurants.map((restaurant) => (
+              <SwiperSlide key={restaurant.id} className='flex-1 w-[370px]'>
+                <RestaurantCard restaurant={restaurant} />
+              </SwiperSlide>
+            ))}
+          </Swiper>
         </div>
       </div>
     </div>

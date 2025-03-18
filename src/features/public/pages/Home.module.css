@@ -1,0 +1,36 @@
+/* Style the default Swiper navigation buttons */
+.swiper-button-next,
+.swiper-button-prev {
+  color: white !important; /* Change button color */
+  background: rgba(0, 0, 0, 0.6); /* Add background */
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.3s ease-in-out;
+}
+
+/* Hide buttons by default, show on hover */
+.swiper-button-next,
+.swiper-button-prev {
+  opacity: 0;
+}
+
+.swiper:hover .swiper-button-next,
+.swiper:hover .swiper-button-prev {
+  opacity: 1;
+}
+
+/* Increase button size on hover */
+.swiper-button-next:hover,
+.swiper-button-prev:hover {
+  transform: scale(1.1);
+}
+
+/* Change arrows */
+.swiper-button-next::after,
+.swiper-button-prev::after {
+  font-size: 20px !important;
+}

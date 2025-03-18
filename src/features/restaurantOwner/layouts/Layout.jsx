@@ -1,14 +1,17 @@
 // Layout.js
-import React from 'react';
-// import Footer from './Footer';
-import SideBar from './SideBar';
-import MainContent from './MainContent';
+import React from "react";
+import {Outlet} from "react-router-dom";
+import SideBar from "./SideBar";
+import MainContent from "./MainContent";
 
-const Layout = ({ children }) => {
+const Layout = () => {
   return (
     <div>
       <SideBar />
-      <MainContent />
+
+      <main>
+        <Outlet />
+      </main>
     </div>
   );
 };

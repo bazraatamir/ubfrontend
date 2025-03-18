@@ -1,9 +1,15 @@
 import React from "react";
-import RestaurantPage from "./features/public/pages/RestaurantPage";
-import Home from "./features/public/pages/Home";
-
+import appRoutes from "./routes/appRoutes";
+import {BrowserRouter as Router, useRoutes} from "react-router";
+const AppRoutes = () => {
+  return useRoutes([...appRoutes]); // Load public & owner routes
+};
 
 const App = () => {
-  return <Home/>
-}
+  return (
+    <Router>
+      <AppRoutes />
+    </Router>
+  );
+};
 export default App;
