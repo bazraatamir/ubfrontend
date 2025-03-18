@@ -2,11 +2,11 @@ import React from "react";
 
 const MenuButton = () => {
   return (
-    <div className="flex justify-center mt-7 relative top-[-20px] mt-[200px]">
-      <div className="h-[109px] w-[431px] flex items-center justify-center">
-        <div className="relative h-[77px] w-[400px] border-2 border-[#ad9066] flex items-center justify-center">
+    <div className="flex justify-center mt-7 relative top-[-20px] mt-[200px] mb">
+      <div className="h-[10vh] w-[431px] flex items-center justify-center">
+        <div className="relative text-[32px] h-[90px] w-[600px] border-2 border-[#ad9066] flex items-center justify-center">
           <svg
-            className="absolute left-[-20px] rotate-180 top-[60px]"
+            className="absolute left-[-20px] rotate-180 top-[70px]"
             xmlns="http://www.w3.org/2000/svg"
             width="43"
             height="38"

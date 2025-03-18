@@ -11,7 +11,7 @@ function MenuSection() {
       image:
         "https://cdn.builder.io/api/v1/image/assets/TEMP/34793b6e06935a346a24f52fd022e3a238f91f66",
       altText: "Steak dish",
-      reversed: false,
+      reversed: true,
     },
     {
       id: 2,
@@ -21,7 +21,7 @@ function MenuSection() {
       image:
         "https://cdn.builder.io/api/v1/image/assets/TEMP/9a1687c430392050cdab903a5397cbc1d7b31f41",
       altText: "Chicken dish",
-      reversed: true,
+      reversed: false,
     },
     {
       id: 3,
@@ -31,7 +31,7 @@ function MenuSection() {
       image:
         "https://cdn.builder.io/api/v1/image/assets/TEMP/9a1687c430392050cdab903a5397cbc1d7b31f41",
       altText: "Chicken dish",
-      reversed: false,
+      reversed: true,
     },
   ];
 
@@ -45,14 +45,14 @@ function MenuSection() {
   return (
     <div className="w-full bg-[#0e1b21] ">
       <section className="px-4 sm:px-8 md:px-12 bg-transparent w-full relative min-h-screen">
-        <div className="bg-white w-[1px] h-full absolute left-[170px] hidden md:block"></div>
-        <div className="bg-white w-[1px] h-full absolute left-[1720px] hidden md:block"></div>
+        <div className="bg-white w-[1px] h-full absolute left-[3%] hidden md:block"></div>
+        <div className="bg-white w-[1px] h-full absolute left-[98%] hidden md:block"></div>
         <header className="flex flex-col sm:flex-row gap-3 sm:gap-5 justify-center items-center mb-10 md:mb-20">
           <h2 className="text-4xl sm:text-5xl md:text-6xl text-center text-stone-400 font-bold">
             Анзаар
           </h2>
         </header>
-        <div className="flex flex-col gap-1 w-full max-w-[1179px] mx-auto">
+        <div className="flex flex-col gap-1 w-full max-w-[80%] mx-auto">
           {menuItems.map((item, index) => (
             <React.Fragment key={item.id}>
               <MenuItem
@@ -64,7 +64,7 @@ function MenuSection() {
               />
               {index < menuItems.length - 1 && (
                 <div
-                  className="w-full bg-[#AD9066] h-[3px] "
+                  className="w-full bg-[#AD9066] h-[3px] mt-5 mb-5 "
                   aria-hidden="true"
                 />
               )}
