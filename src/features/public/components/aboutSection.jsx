@@ -13,7 +13,7 @@ const AboutSection = () => {
           <div className="absolute inset-0"></div>
         </div>
         <article className="relative w-full max-w-[1179px] px-4 sm:px-6 md:px-8 my-8 md:my-16">
-          <p className="text-2xl sm:text-3xl md:text-4xl text-center mb-8 md:mb-[50px] mt-4 md:mt-[20px] text-white font-bold">
+          <p className="text-2xl sm:text-3xl md:text-4xl text-center mb-8 md:mb-[50px] mt-4 md:mt-[20px] text-white font-bold ">
             Манай Тухай
           </p>
           <p className="text-base sm:text-lg md:text-xl leading-snug text-gray-200">

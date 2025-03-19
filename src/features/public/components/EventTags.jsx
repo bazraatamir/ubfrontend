@@ -1,16 +1,9 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import EventTag from "./EventTag";
 
-const EventTags = () => {
-  const [activeStates, setActiveStates] = useState({
-    wedding: true,
-    date: false,
-    newYear: false,
-    event: true,
-  });
-
+const EventTags = ({ activeStates, setActiveStates }) => {
   const handleTagClick = (tagKey) => {
     setActiveStates((prev) => ({
       ...prev,
@@ -20,7 +13,7 @@ const EventTags = () => {
 
   return (
     <nav
-      className="flex flex-wrap gap-3 items-start py-0  h-20 mt-10"
+      className="flex flex-wrap gap-3 items-start py-0 h-20 mt-10"
       role="region"
       aria-label="Event filters"
     >
