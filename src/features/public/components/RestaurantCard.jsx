@@ -22,7 +22,7 @@ const RestaurantCard = ({restaurant}) => {
           <img
             src={image}
             alt={name}
-            className='w-[304px] h-[200px] object-cover'
+            className='w-[370px] h-[250px] object-cover'
           />
         </div>
 
