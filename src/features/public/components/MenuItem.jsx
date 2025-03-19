@@ -3,15 +3,15 @@ import React from "react";
 function MenuItem({ name, description, image, altText, reversed }) {
   return (
     <div
-      className={`flex flex-col md:flex-row gap-6 items-center ${
+      className={`flex flex-col md:flex-row gap-25 items-center ${
         reversed ? "md:flex-row-reverse" : ""
       }`}
     >
-      <div className="w-full md:w-1/2">
+      <div className="w-full md:w-1/2 ">
         <img
           src={image}
           alt={altText}
-          className="w-full h-auto object-cover rounded-lg"
+          className="w-full h-[43vh] object-cover rounded-lg"
         />
       </div>
       <div className="w-full md:w-1/2 text-white">

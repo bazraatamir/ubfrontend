@@ -6,11 +6,9 @@ import "filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css";
 import FilePondPluginFileValidateType from "filepond-plugin-file-validate-type";
 registerPlugin(FilePondPluginImagePreview, FilePondPluginFileValidateType);
 import "../App.css";
-const IUpload = () => {
-  const [files, setFiles] = useState([]);
-  const [uploadedImageUrl, setUploadedImageUrl] = useState(null);
 
-  // Optional: Handle the file upload completion
+const IUpload = ({ onImageUpload }) => {
+  const [files, setFiles] = useState([]);
 
   return (
     <FilePond
@@ -24,10 +22,12 @@ const IUpload = () => {
         if (fileItems.length > 0) {
           const file = fileItems[0].file;
           const reader = new FileReader();
-          reader.onload = (e) => setUploadedImageUrl(e.target.result);
+          reader.onload = (e) => {
+            if (onImageUpload) {
+              onImageUpload(e.target.result);
+            }
+          };
           reader.readAsDataURL(file);
-        } else {
-          setUploadedImageUrl(null);
         }
       }}
       allowMultiple={false}

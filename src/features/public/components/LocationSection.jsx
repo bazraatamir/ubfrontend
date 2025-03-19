@@ -7,7 +7,7 @@ export default function LocationSection() {
   ];
 
   return (
-    <div className="w-full  h-[600px] flex items-center justify-center bg-gradient-to-b from-[#0e1b21] to-[#1A2E38] transition-all duration-1000 ease-in-out">
+    <div className="w-full  h-[600px] flex items-center justify-center">
       <section className="w-full max-w-[1920px] px-4">
         <h2 className="salbar text-4xl text-center text-lime-500 font-bold max-md:mt-10 font-['Mon_University']">
           Салбар байршил
