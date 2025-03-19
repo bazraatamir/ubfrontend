@@ -1,10 +1,9 @@
 import {Navigate} from "react-router-dom";
 import Layout from "./layouts/Layout";
 import AddRestaurantPage from "./pages/AddRestaurantPage";
-import OwnerRestaurantPage from "./pages/RestaurantPage";
+import OwnerRestaurantPage from "./pages/AdminPanelPage";
 import AddSalbar from "./pages/AddSalbar";
 import Nemsensalbar from "./pages/Nemsensalbar";
-
 
 const ownerRoutes = [
   {
