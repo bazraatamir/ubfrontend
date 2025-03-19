@@ -5,7 +5,7 @@ const RestaurantCard = ({ restaurant }) => {
   const { name, image, location } = restaurant;
 
   return (
-    <div className="w-[370px] h-[50vh] rounded-lg overflow-hidden flex flex-col relative cursor-pointer">
+    <div className="w-[370px] rounded-lg overflow-hidden flex flex-col relative cursor-pointer">
       <div className="absolute inset-0 bg-gradient-to-b from-[#0D1B21] to-[#101E25]"></div>
       <div className="absolute inset-0 bg-[#13252D] [clip-path:polygon(0_70%,100%_0,100%_100%,0_100%)]"></div>
       <div className="relative z-10">
