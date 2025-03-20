@@ -6,10 +6,10 @@ import MainContent from "./MainContent";
 
 const Layout = () => {
   return (
-    <div>
+    <div className="flex bg-[#0E1B21]">
       <SideBar />
 
-      <main>
+      <main className="flex-1">
         <Outlet />
       </main>
     </div>
