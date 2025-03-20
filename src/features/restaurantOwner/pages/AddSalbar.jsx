@@ -53,10 +53,6 @@ const AddSalbar = () => {
 
   return (
     <div className="min-h-screen bg-[#0E1B21]">
-      {/* Left Sidebar */}
-      <div className="fixed left-0 top-0 bottom-0">
-        <SideBar />
-      </div>
 
       {/* Main Content */}
       <div className="ml-[80px] p-11">

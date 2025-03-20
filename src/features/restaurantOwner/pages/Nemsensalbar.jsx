@@ -4,10 +4,6 @@ import SideBar from "../layouts/SideBar";
 const Nemsensalbar = () => {
   return (
     <div className="min-h-screen bg-[#0E1B21] bg-opacity-95">
-      {/* Left Sidebar */}
-      <div className="fixed left-0 top-0 bottom-0">
-        <SideBar />
-      </div>
 
       {/* Main Content */}
       <div className="ml-[80px] p-8">

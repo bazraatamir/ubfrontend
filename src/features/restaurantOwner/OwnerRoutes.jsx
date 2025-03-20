@@ -1,9 +1,10 @@
 import {Navigate} from "react-router-dom";
 import Layout from "./layouts/Layout";
 import AddRestaurantPage from "./pages/AddRestaurantPage";
-import OwnerRestaurantPage from "./pages/RestaurantPage";
+import OwnerRestaurantPage from "./pages/AdminPanelPage";
 import AddSalbar from "./pages/AddSalbar";
 import Nemsensalbar from "./pages/Nemsensalbar";
+import Face from "./pages/face";
 
 
 const ownerRoutes = [
@@ -16,6 +17,7 @@ const ownerRoutes = [
       {path: "managerestaurant", element: <OwnerRestaurantPage />}, // "/owner/manage-restaurant"
       {path: "addsalbar", element: <AddSalbar />}, // "/owner/add-salbar"
       {path: "nemsensalbar", element: <Nemsensalbar />}, // "/owner/nemsensalbar"
+      {path: "face", element: <Face />}, // "/owner/face"
     ],
   },
 ];
