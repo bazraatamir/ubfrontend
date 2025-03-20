@@ -1,9 +1,8 @@
-// SideFilter.jsx
 import React from "react";
-import EventTags from "./EventTags";
-import FilterList from "./filterList";
+import EventTags from "./EventTags"; // Update import
+import FilterList from "./FilterList"; // Ensure correct casing
 
-const SideFilter = () => {
+const SideFilter = ({ filters, setFilters, activeStates, setActiveStates }) => {
   return (
     <div className="p-6 bg-gradient-to-b from-[rgba(23,57,72,0.2)] to-[rgba(13,26,32,0.1)] h-screen pl-17">
       <svg
@@ -44,9 +43,11 @@ const SideFilter = () => {
           />
         </svg>
       </div>
-
-      <FilterList />
-      <EventTags />
+      <FilterList /> {/* Pass filters/setFilters if needed */}
+      <EventTags
+        activeStates={activeStates}
+        setActiveStates={setActiveStates}
+      />
     </div>
   );
 };

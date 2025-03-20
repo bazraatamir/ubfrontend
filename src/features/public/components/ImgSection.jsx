@@ -2,7 +2,7 @@ import React from "react";
 
 const ImgSection = () => {
   return (
-    <div className="w-full bg-[#0e1b21] relative mt-30">
+    <div className="w-full bg-[#0e1b21] relative mt-30" data-aos="fade-up">
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 text-white max-w-[1180px] mx-auto p-4">
         {/* Image 1 */}
         <img

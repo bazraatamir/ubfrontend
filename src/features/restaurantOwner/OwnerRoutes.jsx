@@ -6,7 +6,6 @@ import AddSalbar from "./pages/AddSalbar";
 import Nemsensalbar from "./pages/Nemsensalbar";
 import Face from "./pages/face";
 
-
 const ownerRoutes = [
   {
     path: "/owner",
