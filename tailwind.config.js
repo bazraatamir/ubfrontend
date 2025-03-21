@@ -3,6 +3,11 @@ export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {
+      screens: {
+        'custom': '800px', 
+        'custom-1600': '1600px',  
+        'custom-400':"400px"
+      },
       animation: {
         marquee: "marquee 25s linear infinite",
       },

@@ -2,7 +2,7 @@
 "use client";
 
 import React, { useState } from "react";
-import FilterItem from "./filterItem";
+import FilterItem from "./FilterItem";
 
 const FilterList = () => {
   const cuisines = ["Үндэсний", "Хятад", "Солонгос", "Итали", "Lounge"];
@@ -25,7 +25,7 @@ const FilterList = () => {
 
   return (
     <nav
-      className="flex flex-col gap-6 items-start mt-10 w-[210px]"
+      className="flex flex-col gap-4 sm:gap-6 items-start mt-6 sm:mt-10 w-full max-w-[210px]"
       aria-label="Cuisine selection"
     >
       {cuisines.map((cuisine) => (
