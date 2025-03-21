@@ -5,6 +5,7 @@ import OwnerRestaurantPage from "./pages/AdminPanelPage";
 import AddSalbar from "./pages/AddSalbar";
 import Nemsensalbar from "./pages/Nemsensalbar";
 import Face from "./pages/face";
+import SuperAdminPanel from "./pages/SuperAdminPanel";
 
 const ownerRoutes = [
   {
@@ -17,6 +18,7 @@ const ownerRoutes = [
       {path: "addsalbar", element: <AddSalbar />}, // "/owner/add-salbar"
       {path: "nemsensalbar", element: <Nemsensalbar />}, // "/owner/nemsensalbar"
       {path: "face", element: <Face />}, // "/owner/face"
+      {path: "superadmin", element: <SuperAdminPanel />}, // "/owner/superadmin"
     ],
   },
 ];

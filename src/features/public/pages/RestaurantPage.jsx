@@ -13,8 +13,8 @@ function RestaurantPage() {
     AOS.init({
       duration: 1000, // Animation duration (in ms)
       easing: "ease-in-out", // Animation easing
-      once: false, // Ensures animation runs only once
-      offset: 50, // Offset (in px) before animation starts
+      once: false,
+      offset: 50,
     });
   }, []);
   return (

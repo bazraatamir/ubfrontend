@@ -1,13 +1,11 @@
-
 import React, { useState } from "react";
-import SideBar from "../layouts/SideBar";
 
 const PaymentModal = ({ isOpen, onClose }) => {
   if (!isOpen) return null;
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <div className="bg-[#0E1B21] rounded-xl p-6 w-[600px] relative">
+      <div className="bg-[#0E1B21] rounded-xl p-6 w-[90%] sm:w-[600px] relative">
         {/* Close Button */}
         <button 
           onClick={onClose}
@@ -18,7 +16,7 @@ const PaymentModal = ({ isOpen, onClose }) => {
 
         {/* Content */}
         <div className="text-white space-y-4">
-          <p className="text-[15px] leading-relaxed">
+          <p className="text-sm sm:text-[15px] leading-relaxed">
             Та салбарын мэдээлэлээ бөглөхийн өмнө{" "}
             <span className="font-bold text-white">Хаан банк</span>{" "}
             <span className="font-bold text-white">5133198163 Нармандах Түвшин</span>{" "}
@@ -55,13 +53,13 @@ const AddSalbar = () => {
     <div className="min-h-screen bg-[#0E1B21]">
 
       {/* Main Content */}
-      <div className="ml-[80px] p-11">
+      <div className="ml-[20px] p-5 sm:p-11">
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-white text-2xl font-bold mb-3">
+          <h1 className="text-white text-2xl sm:text-3xl font-bold mb-3">
             Салбарын мэдээлэл засах
           </h1>
-          <p className="text-white text-base max-w-[923px]">
+          <p className="text-white text-base sm:text-lg max-w-[923px]">
             Энэхүү хэсэгт та салбарын мэдээлэл нэмэх, засах, устгах боломжтой. 
             Хэрвээ та салбар нэмэх бол <span className="font-bold">салбар нэмэх</span> товчин дээр дарна уу.
           </p>

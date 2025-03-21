@@ -1,17 +1,13 @@
 import React from "react";
-import SideBar from "../layouts/SideBar";
 
 const Nemsensalbar = () => {
   return (
     <div className="min-h-screen bg-[#0E1B21] bg-opacity-95">
-
       {/* Main Content */}
-      <div className="ml-[80px] p-8">
+      <div className="ml-[80px] p-8 sm:ml-0">
         {/* Header */}
         <div className="mb-6">
-          <h1 className="text-white text-xl font-bold mb-2">
-            Салбарын мэдээлэл засах
-          </h1>
+          <h1 className="text-white text-xl font-bold mb-2">Салбарын мэдээлэл засах</h1>
           <p className="text-white text-sm max-w-[800px] opacity-90">
             Энэхүү хэсэгт та салбарын мэдээлэл нэмэх, засах, устгах боломжтой.
           </p>
@@ -25,17 +21,17 @@ const Nemsensalbar = () => {
 
         {/* Form Section */}
         <div className="bg-[#0E131D] bg-opacity-90 rounded-lg p-6">
-          <div className="grid grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-4 gap-8">
             {/* Image Upload */}
-            <div className="col-span-1">
+            <div className="sm:col-span-1">
               <div className="bg-[#1E2530] rounded-lg aspect-square flex flex-col items-center justify-center cursor-pointer hover:bg-opacity-80 relative">
                 {/* Preview Image */}
-                <img 
+                <img
                   src="https://news.mn/wp-content/archive1/news/photo/2015/5/8/4b55a8ddb7dfcac61852cfcc819f5a4coriginal.jpg"
                   alt="Branch"
                   className="w-full h-full object-cover rounded-lg absolute inset-0"
                 />
-                
+
                 {/* Upload Overlay */}
                 <div className="absolute inset-0 bg-black bg-opacity-40 rounded-lg flex items-center justify-center group-hover:bg-opacity-50 transition-all">
                   <div className="text-[#8CC63F]">
@@ -48,13 +44,13 @@ const Nemsensalbar = () => {
             </div>
 
             {/* Form Fields */}
-            <div className="col-span-3">
-              <div className="grid grid-cols-2 gap-6">
+            <div className="sm:col-span-3">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 {/* Branch Name */}
                 <div>
                   <label className="text-gray-400 text-sm mb-2 block">Салбарын нэр</label>
-                  <input 
-                    type="text" 
+                  <input
+                    type="text"
                     placeholder="Салбарын нэр оруулах..."
                     className="w-full bg-[#1E2530] text-white rounded-md px-4 py-2.5 text-sm border border-transparent focus:border-[#8CC63F] focus:outline-none"
                   />
@@ -74,8 +70,8 @@ const Nemsensalbar = () => {
                 {/* Branch Address */}
                 <div className="col-span-2">
                   <label className="text-gray-400 text-sm mb-2 block">Байршил</label>
-                  <input 
-                    type="text" 
+                  <input
+                    type="text"
                     placeholder="Байршил оруулах..."
                     className="w-full bg-[#1E2530] text-white rounded-md px-4 py-2.5 text-sm border border-transparent focus:border-[#8CC63F] focus:outline-none"
                   />
@@ -109,9 +105,9 @@ const Nemsensalbar = () => {
               <tbody>
                 <tr className="text-white text-sm hover:bg-[#1E2530] transition-colors">
                   <td className="py-4 px-4">
-                    <img 
-                      src="https://news.mn/wp-content/archive1/news/photo/2015/5/8/4b55a8ddb7dfcac61852cfcc819f5a4coriginal.jpg" 
-                      alt="Branch" 
+                    <img
+                      src="https://news.mn/wp-content/archive1/news/photo/2015/5/8/4b55a8ddb7dfcac61852cfcc819f5a4coriginal.jpg"
+                      alt="Branch"
                       className="w-12 h-12 object-cover rounded-md"
                     />
                   </td>

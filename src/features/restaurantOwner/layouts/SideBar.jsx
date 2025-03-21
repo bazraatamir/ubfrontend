@@ -2,41 +2,30 @@ import React from "react";
 
 function SideBar() {
   return (
-    <div className="left-0 top-0 bottom-0 w-77 bg-[#132025] text-white shadow-lg flex flex-col justify-between py-2 px-2 z-20 border-r border-[#1E2A38]">
+    <div className="sticky top-0 left-0 bottom-0 w-[250px] sm:w-[200px] bg-[#132025] text-white shadow-lg flex flex-col justify-between py-6 px-6 z-20 border-r border-[#1E2A38] h-screen">
       {/* Header */}
-      <div className="fixed flex flex-col h-screen text-sm text-lime-50 whitespace-nowrap max-md:mt-5">
-        <div className="flex flex-col items-center px-0 pt-6 w-full pb-[50px] max-md:px-5 max-md:pb-5">
-          <img
-            src="https://cdn.builder.io/api/v1/image/assets/4f560f3098894f68b3412840c0587797/96e23556c599a4c63754cbf31aac9d5fe15ff941a73db90cd8b27e09e692f152?placeholderIfAbsent=true"
-            alt="Logo header"
-            className="object-contain self-stretch w-[200px] ml-[40px] aspect-[2.63]"
-          />
-        </div>
+      <div className="flex flex-col items-center text-sm text-lime-50">
+        <img
+          src="https://cdn.builder.io/api/v1/image/assets/4f560f3098894f68b3412840c0587797/96e23556c599a4c63754cbf31aac9d5fe15ff941a73db90cd8b27e09e692f152?placeholderIfAbsent=true"
+          alt="Logo header"
+          className="object-contain w-[150px] mb-6"
+        />
+      </div>
 
-        {/* Navigation */}
-        <nav className="flex flex-col items-center gap-[36px] bg-[#2F323C] rounded-2xl py-10 px-4 text-lg w-[150px] ml-18">
-          <NavItem
-            icon={<HomeIcon />}
-            text="Нүүр"
-          />
-          <NavItem
-            icon={<SettingsIcon />}
-            text="Засвар"
-          />
-          <NavItem
-            icon={<LocationIcon />}
-            text="Салбар"
-          />
-        </nav>
+      {/* Navigation */}
+      <nav className="flex flex-col gap-7 bg-[#2F323C] rounded-xl py-5 px-4 sm:px-3 text-lg w-full">
+        <NavItem icon={<HomeIcon />} text="Нүүр" />
+        <NavItem icon={<SettingsIcon />} text="Засвар" />
+        <NavItem icon={<LocationIcon />} text="Салбар" />
+      </nav>
 
-        {/* Logout Button */}
-        <div className="mt-auto pb-6">
-          <img
-            src="https://cdn.builder.io/api/v1/image/assets/4f560f3098894f68b3412840c0587797/6c26e885fa661b99c7b81afea694bd445c17746b58ae2aad8387056ffa550295?placeholderIfAbsent=true"
-            alt="Footer logo" 
-            className="object-contain max-w-full rounded-none aspect-[2.4] w-[110px] ml-[85px]"
-          />
-        </div>
+      {/* Logout */}
+      <div className="mt-auto pb-6 flex justify-center">
+        <img
+          src="https://cdn.builder.io/api/v1/image/assets/4f560f3098894f68b3412840c0587797/6c26e885fa661b99c7b81afea694bd445c17746b58ae2aad8387056ffa550295?placeholderIfAbsent=true"
+          alt="Footer logo"
+          className="object-contain w-[100px]"
+        />
       </div>
     </div>
   );
@@ -46,7 +35,7 @@ const NavItem = ({ icon, text }) => {
   return (
     <div className="flex items-center gap-3 px-4 py-2 rounded-xl cursor-pointer text-base font-medium transition-all duration-300 text-gray-400 hover:text-white hover:bg-[#2A2F38]">
       <div className="w-5 h-5">{icon}</div>
-      <span>{text}</span>
+      <span className="text-sm sm:text-base">{text}</span>
     </div>
   );
 };
