@@ -7,7 +7,6 @@ import {
   Popup,
   useMapEvents,
 } from "react-leaflet";
-import SaveButton from "./icons/SaveButton";
 import PlusIcon from "./icons/PlusIcon";
 import "leaflet/dist/leaflet.css";
 
