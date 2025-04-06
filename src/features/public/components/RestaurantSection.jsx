@@ -8,8 +8,8 @@ import {FreeMode, Navigation} from "swiper/modules";
 
 const RestaurantSection = ({restaurants}) => {
   return (
-    <div className='w-[100%] px-[56px] py-4 box-border' data-aos='fade-up'>
-      <h2 className='text-[20px] font-[Futuris] mb-3 text-white uppercase tracking-wider ml-[5px]'>
+    <div className='w-[100%] px-[56px] py-12 box-border' data-aos='fade-up'>
+      <h2 className='text-[32px] font-[Futuris] mb-3 text-white uppercase tracking-wider ml-[5px] py-[30px] font-[Mon_University]'>
         ИТАЛИ РЕСТОРАН
       </h2>
       <div className='flex gap-6 justify-start relative group'>

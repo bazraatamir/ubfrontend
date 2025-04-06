@@ -97,19 +97,21 @@ const Home = () => {
           {/* UBFOODZONE Line - Тасралтгүй хөдлөх текст */}
           <div className='absolute bottom-0 w-full bg-[#F5F7DC] overflow-hidden'>
             <motion.div
-              className='flex '
+              className='flex p-[25px]'
               variants={textVariants}
               animate='visible'>
               {Array(20) // 20 удаа давтаж UBFOODZONE текстийг гаргана
                 .fill(0)
                 .map((_, index) => (
-                  <span
-                    key={index}
-                    className='text-[36px] font-[Godber-3lxoz] mx-5'
-                    style={{color: colors[index % 2]}} // 2 өнгийг ээлжлүүлэх
-                  >
-                    UBFOODZONE
-                  </span>
+                  <div className='flex gap-[10px]  mx-10'>
+                    <p
+                      key={index}
+                      className='text-[40px] font-[Godber-3lxoz]   '
+                      style={{color: colors[index % 2]}} // 2 өнгийг ээлжлүүлэх
+                    >
+                      UBFOODZONE
+                    </p>
+                  </div>
                 ))}
             </motion.div>
           </div>
