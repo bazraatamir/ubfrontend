@@ -3,6 +3,7 @@ import { IoSearchOutline, IoCloseOutline } from 'react-icons/io5';
 
 const Sidebar = ({onClose}) => {
   return (
+    <motion.div>
     <div className="fixed inset-0 bg-[#0E1B21] text-white z-50">
       <div className="h-full flex">
         {/* Left Content */}
@@ -64,7 +65,8 @@ const Sidebar = ({onClose}) => {
           </div>
         </div>
       </div>
-    </div>
+      </div>
+    </motion.div>
   );
 };
 

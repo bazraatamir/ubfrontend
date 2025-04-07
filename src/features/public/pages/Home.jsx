@@ -1,7 +1,10 @@
 import React, {useRef, useEffect} from "react";
 import RestaurantSection from "../components/RestaurantSection";
+import Sidebar from "../components/Sidebar";
+import {IoMenuOutline} from "react-icons/io5";
 import AOS from "aos";
 import "aos/dist/aos.css";
+import {motion} from "framer-motion";
 const textVariants = {
   hidden: {x: "100%"}, // Start position (offscreen right)
   visible: {
