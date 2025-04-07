@@ -64,7 +64,7 @@ const Sidebar = ({onClose}) => {
           </div>
         </div>
       </div>
-    </motion.div>
+    </div>
   );
 };
 
