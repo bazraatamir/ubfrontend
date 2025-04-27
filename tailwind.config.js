@@ -21,6 +21,10 @@ export default {
         mon_futuris: ["Futuris", "sans-serif"],
         mon_university: ["Mon_University", "sans-serif"],
       },
+      colors: {
+        gradientStart: "rgba(56, 113, 139, 0.1)", // #38718B with 10% opacity
+        gradientEnd: "rgba(15, 30, 37, 0.1)", // #0F1E25 with 10% opacity
+      },
     },
   },
   plugins: [],

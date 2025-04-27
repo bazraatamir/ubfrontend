@@ -1,5 +1,5 @@
 import React from "react";
-
+import {Link} from "react-router";
 function SideBar() {
   return (
     <div className='sticky top-0 left-0 bottom-0 w-[250px] sm:w-[200px] bg-[#132025] text-white shadow-lg flex flex-col justify-between py-6 px-6 z-20 border-r border-[#1E2A38] h-screen'>
@@ -14,9 +14,30 @@ function SideBar() {
 
       {/* Navigation */}
       <nav className='flex flex-col gap-7 bg-[#2F323C] rounded-xl py-5 px-4 sm:px-3 text-lg w-full'>
-        <NavItem icon={<HomeIcon />} text='Нүүр' />
-        <NavItem icon={<SettingsIcon />} text='Ресторан' />
-        <NavItem icon={<LocationIcon />} text='Тусгай' />
+        <Link to={"/admin/dashboard"}>
+          <div className='flex items-center gap-3 px-4 py-2 rounded-xl cursor-pointer text-base font-medium transition-all duration-300 text-gray-400 hover:text-white hover:bg-[#2A2F38]'>
+            <div className='w-5 h-5'>
+              <HomeIcon />
+            </div>
+            <span className='text-sm sm:text-base'>Нүүр</span>
+          </div>
+        </Link>
+        <Link to={"restaurants"}>
+          <div className='flex items-center gap-3 px-4 py-2 rounded-xl cursor-pointer text-base font-medium transition-all duration-300 text-gray-400 hover:text-white hover:bg-[#2A2F38]'>
+            <div className='w-5 h-5'>
+              <SettingsIcon />
+            </div>
+            <span className='text-sm sm:text-base'>Ресторан</span>
+          </div>
+        </Link>
+        <Link to={"special"}>
+          <div className='flex items-center gap-3 px-4 py-2 rounded-xl cursor-pointer text-base font-medium transition-all duration-300 text-gray-400 hover:text-white hover:bg-[#2A2F38]'>
+            <div className='w-5 h-5'>
+              <LocationIcon />
+            </div>
+            <span className='text-sm sm:text-base'>Онцлох</span>
+          </div>
+        </Link>
       </nav>
 
       {/* Logout */}
@@ -31,14 +52,11 @@ function SideBar() {
   );
 }
 
-const NavItem = ({icon, text}) => {
-  return (
-    <div className='flex items-center gap-3 px-4 py-2 rounded-xl cursor-pointer text-base font-medium transition-all duration-300 text-gray-400 hover:text-white hover:bg-[#2A2F38]'>
-      <div className='w-5 h-5'>{icon}</div>
-      <span className='text-sm sm:text-base'>{text}</span>
-    </div>
-  );
-};
+// const NavItem = ({icon, text}) => {
+//   return (
+
+//   );
+// };
 
 // Icons
 const HomeIcon = () => (

@@ -5,6 +5,8 @@ import {IoMenuOutline} from "react-icons/io5";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import {motion} from "framer-motion";
+import {toast} from "react-toastify";
+import {Link} from "react-router";
 const textVariants = {
   hidden: {x: "100%"}, // Start position (offscreen right)
   visible: {
@@ -42,30 +44,49 @@ const Home = () => {
       name: "Modern Nomads",
       image: "/images/restaurant1.png",
       location: "Баянзүрх дүүрэг",
+      eventTags: ["wedding", "event"],
     },
     {
       id: 3,
-      name: "Modern Nomads",
+      name: "City Bistro",
       image: "/images/restaurant1.png",
-      location: "Баянзүрх дүүрэг",
+      location: "Сүхбаатар дүүрэг",
+      eventTags: ["date", "newYear"],
     },
     {
       id: 4,
-      name: "Modern Nomads",
+      name: "City Bistro",
       image: "/images/restaurant1.png",
-      location: "Баянзүрх дүүрэг",
+      location: "Сүхбаатар дүүрэг",
+      eventTags: ["event"],
     },
     {
       id: 5,
-      name: "Modern Nomads",
+      name: "City Bistro",
       image: "/images/restaurant1.png",
-      location: "Баянзүрх дүүрэг",
+      location: "Сүхбаатар дүүрэг",
+      eventTags: ["wedding", "date"],
     },
     {
       id: 6,
-      name: "Modern Nomads",
+      name: "City Bistro",
       image: "/images/restaurant1.png",
-      location: "Баянзүрх дүүрэг",
+      location: "Сүхбаатар дүүрэг",
+      eventTags: ["wedding", "date"],
+    },
+    {
+      id: 7,
+      name: "City Bistro",
+      image: "/images/restaurant1.png",
+      location: "Сүхбаатар дүүрэг",
+      eventTags: ["wedding", "date"],
+    },
+    {
+      id: 8,
+      name: "City Bistro",
+      image: "/images/restaurant1.png",
+      location: "Сүхбаатар дүүрэг",
+      eventTags: ["wedding", "date"],
     },
   ];
   const colors = ["#8CBC01", "#FDDD2C"];
@@ -118,7 +139,16 @@ const Home = () => {
         </div>
       </div>
       {/* Restaurant Section */}
-      <RestaurantSection restaurants={restaurants} />
+      <RestaurantSection sectionTitle={"ОНЦЛОХ РЕСТОРАН"} />
+      <RestaurantSection sectionTitle={"Караоке"} />
+      <RestaurantSection sectionTitle={"Хүүхдэд зориулсан арга хэмжээ"} />
+      <RestaurantSection sectionTitle={"Болзоо"} />
+      <RestaurantSection sectionTitle={"Төрсөн өдөр"} />
+      <RestaurantSection sectionTitle={"Шинэ жил"} />
+      <RestaurantSection sectionTitle={"Хурим"} />
+      <RestaurantSection sectionTitle={"Буяны арга хэмжээ"} />
+      <RestaurantSection sectionTitle={"Ургийн баяр"} />
+      <RestaurantSection sectionTitle={"Хонхны баяр"} />
     </div>
   );
 };

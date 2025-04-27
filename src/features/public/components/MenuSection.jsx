@@ -36,7 +36,7 @@ function MenuSection() {
   ];
 
   return (
-    <div className='w-full bg-[#0e1b21]'>
+    <div className='container m-auto bg-[#0e1b21]'>
       <section className='px-4 sm:px-6 md:px-8 lg:px-12 bg-transparent w-full relative min-h-screen'>
         {/* Vertical lines */}
         <div className='bg-white w-[1px] sm:w-[1.5px] md:w-[2px] h-full absolute left-[3%] hidden md:block'></div>
@@ -45,7 +45,7 @@ function MenuSection() {
         {/* Header */}
         <header className='flex flex-col gap-2 sm:gap-3 md:gap-4 justify-center items-center mb-6 sm:mb-8 md:mb-12 lg:mb-20'>
           <h2 className='text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-center text-stone-400 font-bold'>
-            Анзаар
+            Анзаар...
           </h2>
         </header>
 
@@ -61,7 +61,6 @@ function MenuSection() {
                 image={item.image}
                 altText={item.altText}
                 reversed={item.reversed}
-                data-aos='fade-up'
               />
               {index < menuItems.length - 1 && (
                 <div

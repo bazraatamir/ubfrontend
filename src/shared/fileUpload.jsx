@@ -1,13 +1,15 @@
 import {useState} from "react";
 import {FilePond, registerPlugin} from "react-filepond";
-import "filepond/dist/filepond.min.css"; // FilePond styles
+import "filepond/dist/filepond.min.css";
 import FilePondPluginImagePreview from "filepond-plugin-image-preview";
 import "filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css";
 import FilePondPluginFileValidateType from "filepond-plugin-file-validate-type";
+import axiosInstance from "./axios";
+import axios from "axios";
 registerPlugin(FilePondPluginImagePreview, FilePondPluginFileValidateType);
 import "../App.css";
 
-const IUpload = ({onImageUpload, getfile, text}) => {
+const FileUpload = ({onImageUpload, text, url}) => {
   const [files, setFiles] = useState([]);
 
   return (
@@ -15,28 +17,68 @@ const IUpload = ({onImageUpload, getfile, text}) => {
       <FilePond
         className='custom-filepond w-full'
         files={files}
-        stylePanelLayout='compact'
-        stylePanelAspectRatio='1:1'
-        styleButtonRemoveItemPosition='right'
         onupdatefiles={(fileItems) => {
-          getfile(fileItems);
           setFiles(fileItems);
-          if (fileItems.length > 0) {
-            const file = fileItems[0].file;
-            const reader = new FileReader();
-            reader.onload = (e) => {
-              if (onImageUpload) {
-                onImageUpload(e.target.result);
-              }
-            };
-            reader.readAsDataURL(file);
-          }
         }}
         allowMultiple={false}
         maxFiles={1}
         acceptedFileTypes={["image/*", "video/*"]}
         credits={false}
         imagePreviewHeight={160}
+        server={{
+          process: (
+            fieldName,
+            file,
+            metadata,
+            load,
+            error,
+            progress,
+            abort
+          ) => {
+            const formData = new FormData();
+            formData.append("file", file);
+
+            const source = axios.CancelToken.source();
+
+            axiosInstance
+              .post(`http://localhost:3000/${url}`, formData, {
+                cancelToken: source.token,
+                headers: {
+                  "Content-Type": "multipart/form-data",
+                },
+                onUploadProgress: (e) => {
+                  progress(true, e.loaded, e.total);
+                },
+              })
+              .then((res) => {
+                const {url, id} = res.data;
+                if (onImageUpload) onImageUpload(url);
+                load(id); // return this id to use later in revert
+              })
+              .catch((err) => {
+                console.error("Upload error:", err);
+                error("Upload failed");
+              });
+
+            return {
+              abort: () => {
+                source.cancel("Upload cancelled");
+              },
+            };
+          },
+
+          revert: (uniqueFileId, load, error) => {
+            axiosInstance
+              .delete(`http://localhost:5000/delete/${uniqueFileId}`)
+              .then(() => {
+                load(); // success
+              })
+              .catch((err) => {
+                console.error("Delete error:", err);
+                error("Delete failed");
+              });
+          },
+        }}
         labelIdle={`
           <div style="
             display: flex; 
@@ -70,4 +112,4 @@ const IUpload = ({onImageUpload, getfile, text}) => {
   );
 };
 
-export default IUpload;
+export default FileUpload;

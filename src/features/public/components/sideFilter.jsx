@@ -17,7 +17,6 @@ const SideFilter = ({
     window.addEventListener("resize", checkMobile);
     return () => window.removeEventListener("resize", checkMobile);
   }, []);
-
   return (
     <div
       className={`fixed inset-y-0 left-0 w-3/4 sm:w-2/3 md:w-64 lg:w-80 bg-gradient-to-b from-[rgba(23,57,72,0.2)] to-[rgba(13,26,32,0.1)] h-full 
@@ -71,7 +70,7 @@ const SideFilter = ({
 
       {/* Filter content */}
       <div className='mt-4 sm:mt-6 md:mt-8 space-y-3 sm:space-y-4 md:space-y-6'>
-        <FilterList />
+        {/* <FilterList /> */}
         <EventTags
           activeStates={activeStates}
           setActiveStates={setActiveStates}

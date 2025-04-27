@@ -1,9 +1,12 @@
 import React, {useState} from "react";
 import RestaurantfilterCard from "../components/restaurantsfilterCard";
-import SideFilter from "../components/SideFilter";
+import SideFilter from "../components/sideFilter";
 import EventTags from "../components/EventTags";
 import RestaurantCard from "../components/RestaurantCard";
 const WebFilterRestaurant = () => {
+  const queryParams = new URLSearchParams(location.search);
+  const categoryParam = queryParams.get("category");
+  console.log(categoryParam);
   const [filters, setFilters] = useState({
     bayanzurkh: false,
     sukhbaatar: false,
@@ -11,10 +14,16 @@ const WebFilterRestaurant = () => {
   });
 
   const [activeStates, setActiveStates] = useState({
-    wedding: true,
-    date: false,
-    newYear: false,
-    event: true,
+    wedding: true, // Хурим
+    charity: false, // Буяны арга хэмжээ
+    karaoke: false, // Караоке
+    birthday: false, // Төрсөн өдөр
+    familyReunion: false, // Ургийн баяр
+    engagement: false, // Хонхны баяр
+    newYear: false, // Шинэ жил
+    date: false, // Болзоо
+    kidsEvent: false, // Хүүхдэд зориулсан арга хэмжээ
+    specialEvent: false, // Онцлох арга хэмжээ
   });
 
   const [isFilterOpen, setIsFilterOpen] = useState(false); // State for mobile filter toggle
@@ -162,8 +171,8 @@ const WebFilterRestaurant = () => {
       <div className='flex-1 relative px-4 sm:px-6 lg:px-8'>
         {/* Logo */}
         <img
-          className='relative left-1/2 top-4 -translate-x-1/2 w-32 h-16 sm:w-40 sm:h-20 md:w-[200px] md:h-[100px]'
-          src='/images/restaurant1.png'
+          className='relative left-1/2 top-4 -translate-x-1/2 w-32 h-16 sm:w-40 sm:h-20 md:w-[300px] md:h-[100px] object-contain'
+          src='https://cdn.builder.io/api/v1/image/assets/4f560f3098894f68b3412840c0587797/96e23556c599a4c63754cbf31aac9d5fe15ff941a73db90cd8b27e09e692f152?placeholderIfAbsent=true'
           alt='logo'
         />
 
@@ -247,7 +256,7 @@ const WebFilterRestaurant = () => {
         </div>
 
         {/* Restaurant Cards Grid */}
-        <div className='pt-20 sm:pt-24 md:pt-32 lg:pt-36 pb-6'>
+        {/* <div className='pt-20 sm:pt-24 md:pt-32 lg:pt-36 pb-6'>
           {filteredRestaurants.length === 0 ? (
             <div className='text-white text-center text-base sm:text-lg md:text-xl'>
               No restaurants found with current filters
@@ -259,7 +268,7 @@ const WebFilterRestaurant = () => {
               ))}
             </div>
           )}
-        </div>
+        </div> */}
       </div>
     </div>
   );
