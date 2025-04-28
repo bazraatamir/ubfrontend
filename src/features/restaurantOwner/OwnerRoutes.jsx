@@ -9,6 +9,7 @@ import SuperAdminPanel from "../admin/pages/SuperAdminPanel";
 import AddMoreInfo from "./pages/moreInfo";
 import AddMenu from "./pages/Menu";
 import CommentsPage from "./pages/CommentsPage";
+import VideoPage from "./pages/VideoPage";
 
 const ownerRoutes = [
   {
@@ -22,6 +23,7 @@ const ownerRoutes = [
       {path: "addMoreInfo", element: <AddMoreInfo />}, // "/owner/face"
       {path: "addMenu", element: <AddMenu />}, // "/owner/face"
       {path: "comments", element: <CommentsPage />}, // "/owner/comments"
+      {path: "videos", element: <VideoPage />}, // "/owner/videos"
     ],
   },
 ];
