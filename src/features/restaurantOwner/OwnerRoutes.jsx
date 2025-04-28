@@ -8,6 +8,7 @@ import Face from "./pages/face";
 import SuperAdminPanel from "../admin/pages/SuperAdminPanel";
 import AddMoreInfo from "./pages/moreInfo";
 import AddMenu from "./pages/Menu";
+import CommentsPage from "./pages/CommentsPage";
 
 const ownerRoutes = [
   {
@@ -20,6 +21,7 @@ const ownerRoutes = [
       {path: "face", element: <Face />}, // "/owner/face"
       {path: "addMoreInfo", element: <AddMoreInfo />}, // "/owner/face"
       {path: "addMenu", element: <AddMenu />}, // "/owner/face"
+      {path: "comments", element: <CommentsPage />}, // "/owner/comments"
     ],
   },
 ];

@@ -54,6 +54,14 @@ function SideBar() {
             <span className='text-sm sm:text-base'>Салбар</span>
           </div>
         </Link>
+        <Link to={"comments"}>
+          <div className='flex items-center gap-3 px-4 py-2 rounded-xl cursor-pointer text-base font-medium transition-all duration-300 text-gray-400 hover:text-white hover:bg-[#2A2F38]'>
+            <div className='w-5 h-5'>
+              <CommentIcon />
+            </div>
+            <span className='text-sm sm:text-base'>Сэтгэгдэл</span>
+          </div>
+        </Link>
       </nav>
 
       {/* Logout */}
@@ -135,5 +143,11 @@ const MoreInfo = () => {
     <line x1='12' x2='12.01' y1='8' y2='8' />
   </svg>;
 };
+
+const CommentIcon = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
+    <path strokeLinecap="round" strokeLinejoin="round" d="M7.5 21h9a2.25 2.25 0 0 0 2.25-2.25v-11.5A2.25 2.25 0 0 0 16.5 5.25h-9A2.25 2.25 0 0 0 5.25 7.25v11.5A2.25 2.25 0 0 0 7.5 21Zm0 0V5.25m0 15.75V5.25" />
+  </svg>
+);
 
 export default SideBar;
