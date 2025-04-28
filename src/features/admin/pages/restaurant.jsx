@@ -1,4 +1,5 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
+import axiosInstance from "../../../shared/axios";
 
 const restaurants = new Array(6).fill({
   name: "Modern Nomads",
@@ -8,17 +9,21 @@ const restaurants = new Array(6).fill({
 
 const RestaurantPage = () => {
   const [activeTab, setActiveTab] = useState("all");
+  const [restaurants, setRestaurants] = useState();
+  useEffect(() => {
+    const fetchRestaurants = async () => {
+      const response = await axiosInstance.get("/restaurants");
+      setRestaurants(response.data);
+    };
+    fetchRestaurants();
+  }, []);
 
-  const restaurants = [
-    {name: "Modern Nomads", status: "approved"},
-    {name: "Pizza & Pasta", status: "pending"},
-    {name: "Korean BBQ", status: "approved"},
-    {name: "Nomads Express", status: "pending"},
-  ];
-  const filteredRestaurants = restaurants.filter((r) => {
-    if (activeTab === "all") return true;
-    return r.status === activeTab;
-  });
+  const filteredRestaurants =
+    restaurants?.filter((r) => {
+      if (activeTab === "all") return true;
+      return r.status === activeTab;
+    }) || [];
+
   return (
     <div className='w-full h-full bg-gradient-to-b from-[#38718B1A] to-[#0F1E251A] p-6 text-white'>
       {/* Page Header */}
@@ -43,9 +48,9 @@ const RestaurantPage = () => {
           Бүх ресторан
         </button>
         <button
-          onClick={() => setActiveTab("pending")}
+          onClick={() => setActiveTab("PENDING")}
           className={`px-6 py-2 rounded font-semibold transition-all duration-200 ${
-            activeTab === "pending"
+            activeTab === "PENDING"
               ? "bg-lime-500 text-black"
               : "bg-[#2E3C49] text-white"
           }`}>
@@ -59,7 +64,6 @@ const RestaurantPage = () => {
           <div
             key={index}
             className='flex items-center justify-between py-3 border-b border-gray-600 last:border-0'>
-            {/* Restaurant Info */}
             <div className='flex items-center gap-4'>
               <img
                 src={restaurant.image}
@@ -72,7 +76,6 @@ const RestaurantPage = () => {
               </div>
             </div>
 
-            {/* Buttons */}
             <div className='flex items-center gap-2'>
               <button className='bg-lime-500 text-black px-3 py-1 rounded font-semibold'>
                 Онцлох
@@ -82,7 +85,6 @@ const RestaurantPage = () => {
               </button>
             </div>
 
-            {/* Actions */}
             <div className='flex gap-2'>
               <button className='bg-[#1E2A31] p-2 rounded'>
                 <svg

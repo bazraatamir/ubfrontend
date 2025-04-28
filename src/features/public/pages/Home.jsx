@@ -32,63 +32,7 @@ const Home = () => {
   }, []);
   // const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   // const swiperRef = useRef(null);
-  const restaurants = [
-    {
-      id: 1,
-      name: "Modern Nomads",
-      image: "/images/restaurant1.png",
-      location: "Баянзүрх дүүрэг",
-    },
-    {
-      id: 2,
-      name: "Modern Nomads",
-      image: "/images/restaurant1.png",
-      location: "Баянзүрх дүүрэг",
-      eventTags: ["wedding", "event"],
-    },
-    {
-      id: 3,
-      name: "City Bistro",
-      image: "/images/restaurant1.png",
-      location: "Сүхбаатар дүүрэг",
-      eventTags: ["date", "newYear"],
-    },
-    {
-      id: 4,
-      name: "City Bistro",
-      image: "/images/restaurant1.png",
-      location: "Сүхбаатар дүүрэг",
-      eventTags: ["event"],
-    },
-    {
-      id: 5,
-      name: "City Bistro",
-      image: "/images/restaurant1.png",
-      location: "Сүхбаатар дүүрэг",
-      eventTags: ["wedding", "date"],
-    },
-    {
-      id: 6,
-      name: "City Bistro",
-      image: "/images/restaurant1.png",
-      location: "Сүхбаатар дүүрэг",
-      eventTags: ["wedding", "date"],
-    },
-    {
-      id: 7,
-      name: "City Bistro",
-      image: "/images/restaurant1.png",
-      location: "Сүхбаатар дүүрэг",
-      eventTags: ["wedding", "date"],
-    },
-    {
-      id: 8,
-      name: "City Bistro",
-      image: "/images/restaurant1.png",
-      location: "Сүхбаатар дүүрэг",
-      eventTags: ["wedding", "date"],
-    },
-  ];
+
   const colors = ["#8CBC01", "#FDDD2C"];
 
   return (
