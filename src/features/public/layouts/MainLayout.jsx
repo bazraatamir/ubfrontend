@@ -33,7 +33,7 @@ const MainLayout = () => {
   }, []);
 
   // Өнгөний class: скролл хийсэн эсэхээс хамаарна
-  const bgColorClass = isScrolled ? "bg-black" : "bg-transparent";
+  const bgColorClass = isScrolled ? "bg-lime-500" : "bg-transparent";
   const heightClass = isScrolled ? "h-12" : "h-24";
 
   return (

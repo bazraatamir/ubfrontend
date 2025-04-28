@@ -1,6 +1,12 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import {Link} from "react-router";
+
 function SideBar() {
+  const [restaurantId, setRestaurantId] = useState();
+  useEffect(() => {
+    setRestaurantId(localStorage.getItem("restaurantId"));
+  }, []);
+
   return (
     <div className='sticky top-0 left-0 bottom-0 w-[250px] sm:w-[200px] bg-[#132025] text-white shadow-lg flex flex-col justify-between py-6 px-6 z-20 border-r border-[#1E2A38] h-screen'>
       {/* Header */}
@@ -14,7 +20,7 @@ function SideBar() {
 
       {/* Navigation */}
       <nav className='flex flex-col gap-7 bg-[#2F323C] rounded-xl py-5 px-4 sm:px-3 text-lg w-full'>
-        <Link to={"/owner/face"}>
+        <Link to={`/owner/face`}>
           <div className='flex items-center gap-3 px-4 py-2 rounded-xl cursor-pointer text-base font-medium transition-all duration-300 text-gray-400 hover:text-white hover:bg-[#2A2F38]'>
             <div className='w-5 h-5'>
               <HomeIcon />
@@ -145,8 +151,17 @@ const MoreInfo = () => {
 };
 
 const CommentIcon = () => (
-  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
-    <path strokeLinecap="round" strokeLinejoin="round" d="M7.5 21h9a2.25 2.25 0 0 0 2.25-2.25v-11.5A2.25 2.25 0 0 0 16.5 5.25h-9A2.25 2.25 0 0 0 5.25 7.25v11.5A2.25 2.25 0 0 0 7.5 21Zm0 0V5.25m0 15.75V5.25" />
+  <svg
+    xmlns='http://www.w3.org/2000/svg'
+    fill='none'
+    viewBox='0 0 24 24'
+    strokeWidth={1.5}
+    stroke='currentColor'>
+    <path
+      strokeLinecap='round'
+      strokeLinejoin='round'
+      d='M7.5 21h9a2.25 2.25 0 0 0 2.25-2.25v-11.5A2.25 2.25 0 0 0 16.5 5.25h-9A2.25 2.25 0 0 0 5.25 7.25v11.5A2.25 2.25 0 0 0 7.5 21Zm0 0V5.25m0 15.75V5.25'
+    />
   </svg>
 );
 
