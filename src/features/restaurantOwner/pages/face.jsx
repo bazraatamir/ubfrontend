@@ -1,7 +1,8 @@
 import React, {useEffect, useState} from "react";
 import Layout from "../layouts/Layout";
-import RestaurantPage from "../../public/pages/RestaurantPage";
+import FaceRestaurantPage from "../components/faceRestaurant";
 import axiosInstance from "../../../shared/axios";
+import RestaurantPage from "../components/faceRestaurant";
 
 const Face = () => {
   const [restaurantData, setRestaurantData] = useState("");
@@ -13,11 +14,11 @@ const Face = () => {
       const response = await axiosInstance.get(`/restaurants/${savedId}`);
       // const Heroresponse = await axiosInstance.get(`/heros/${savedId}`);
 
-      setRestaurantData(response.data);
+      setRestaurantData(response);
     };
     fetchdistrict();
   }, []);
-  return restaurantData && <RestaurantPage text={restaurantData.description} />;
+  return restaurantData && <FaceRestaurantPage restaurant={restaurantData} />;
 };
 
 export default Face;

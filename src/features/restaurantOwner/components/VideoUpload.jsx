@@ -17,9 +17,9 @@ const VideoUpload = () => {
           id: Date.now() + Math.random(),
           name: file.name,
           size: file.size,
+          file: file, // Store the actual file object
           url: URL.createObjectURL(file),
-          uploadDate: new Date().toISOString(),
-          file: file // Store the actual file object
+          uploadDate: new Date().toISOString()
         }));
         
         setVideos(prev => [...prev, ...newVideos]);
@@ -47,39 +47,24 @@ const VideoUpload = () => {
         formData.append(`videoNames[${index}]`, video.name);
       });
 
-      // Log the data being sent
-      console.log('Sending videos to backend:', {
-        videoCount: videos.length,
-        videoNames: videos.map(v => v.name),
-        videoSizes: videos.map(v => v.size)
-      });
-
-      // Simulate API call
-      setTimeout(() => {
-        console.log('Videos saved successfully');
-        setSaving(false);
-        // Clear the videos after successful save
-        setVideos([]);
-      }, 2000);
-
-      // Actual API call would look like this:
-      /*
+      // Send to backend
       const response = await fetch('YOUR_BACKEND_API_ENDPOINT', {
         method: 'POST',
         body: formData,
       });
-      
+
       if (!response.ok) {
         throw new Error('Failed to save videos');
       }
-      
+
       const result = await response.json();
-      console.log('Save result:', result);
-      setSaving(false);
+      console.log('Videos saved successfully:', result);
+      
+      // Clear videos after successful save
       setVideos([]);
-      */
     } catch (error) {
       console.error('Error saving videos:', error);
+    } finally {
       setSaving(false);
     }
   };
@@ -155,7 +140,7 @@ const VideoUpload = () => {
           <button
             onClick={handleSaveVideos}
             disabled={saving}
-            className="bg-lime-500 hover:bg-lime-600 text-white px-6 py-2 rounded-lg flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+            className="bg-lime-500 hover:bg-lime-600 text-white px-4 py-2 rounded-lg flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {saving ? (
               <>
