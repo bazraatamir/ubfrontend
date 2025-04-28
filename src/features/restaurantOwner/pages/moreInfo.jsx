@@ -24,8 +24,10 @@ const AddMoreInfo = () => {
   const [districts, setDistricts] = useState(null);
   const [selectedDistrict, setSelectedDistrict] = useState(null);
   const [selectedDistrictId, setSelectedDistrictId] = useState(null);
+  const [noticeImages, setNoticeImages] = useState([]);
+
   const handleClick = (districtName, id) => {
-    setSelectedDistrict(districtName); // зөвхөн нэг сонгох
+    setSelectedDistrict(districtName);
     setSelectedDistrictId(id);
   };
 
@@ -39,23 +41,25 @@ const AddMoreInfo = () => {
 
   const handleSave = async () => {
     if (file.length > 0) {
-      formData.append("file", file[0].file); // FilePond-оос авсан файлыг илгээж байна
+      formData.append("file", file[0].file);
     }
 
-    // Axios-ийг ашиглан серверт хүсэлт илгээх
     try {
       const response = await axiosInstance.post("/restaurants", formData, {
         headers: {
-          "Content-Type": "multipart/form-data", // Файл илгээж байгаа тул multipart/form-data тохиргоо
+          "Content-Type": "multipart/form-data",
         },
       });
       console.log("Response: ", response.data);
-      // Хариу авах бол даруй дараах үйлдлийг хийнэ:
       alert("Мэдээллийг амжилттай хадгаллаа!");
     } catch (error) {
       console.error("Error: ", error);
       alert("Хадгалах үед алдаа гарлаа!");
     }
+  };
+
+  const handleNoticeImageUpload = (url) => {
+    setNoticeImages(prev => [...prev, url]);
   };
 
   return (
@@ -100,6 +104,20 @@ const AddMoreInfo = () => {
 
             <div className='w-full md:w-[210px] h-12 bg-[#2F323C] rounded-lg shadow-inner flex items-center px-4'>
               <span className='text-white text-base font-bold'>АНХААР</span>
+            </div>
+
+            <div className='w-full bg-[#0E131D] rounded-xl p-6 md:p-12'>
+              <div className='grid grid-cols-3 gap-4 md:gap-5'>
+                {[1, 2, 3].map((item) => (
+                  <FileUpload
+                    key={item}
+                    className='aspect-square bg-[#2F323C] rounded-lg flex items-center justify-center hover:bg-[#3a3e4a] transition-colors duration-300'
+                    text='зураг оруулна уу?'
+                    url='api/notices'
+                    onImageUpload={handleNoticeImageUpload}
+                  />
+                ))}
+              </div>
             </div>
 
             <Neriinhool />
