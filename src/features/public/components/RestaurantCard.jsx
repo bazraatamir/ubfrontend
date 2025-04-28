@@ -23,7 +23,7 @@ const RestaurantCard = ({restaurant}) => {
 
           <div className='flex justify-center items-center '>
             <img
-              src={`http://localhost:3000/uploads/${restaurant.hero[0].imageUrl}`}
+              src={`http://localhost:3000/uploads/${restaurant.hero[0]?.imageUrl}`}
               alt={name}
               className='w-[370px] h-[250px] object-cover'
             />

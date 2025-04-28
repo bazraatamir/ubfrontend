@@ -31,11 +31,13 @@ function FaceRestaurantPage({restaurant}) {
               rel='stylesheet'
               href='https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap'
             />
-
+            <button className='bg-[#8CC63F] text-black px-8 py-2.5 self-end rounded-md text-sm font-medium hover:bg-opacity-90 transition-all my-[24px] max-w-[300px] '>
+              Онцлох ресторан болгох
+            </button>
             <main className='w-full text-white'>
               <AboutSection
                 text={restaurant.data.description}
-                image={restaurant.data.hero[0].imageUrl}
+                image={restaurant.data.hero[0]?.imageUrl}
               />
 
               <MenuSection />

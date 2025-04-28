@@ -37,7 +37,7 @@ const ImgSection = ({image}) => {
           />
 
           <img
-            src={`http://localhost:3000/uploads/${image[5].imageUrl}`}
+            src={`http://localhost:3000/uploads/${image[4].imageUrl}`}
             alt='Image 4'
             className='w-full h-auto object-cover border border-gray-700 aspect-[1/1] md:aspect-[363/310] hover:scale-104 duration-200 cursor-pointer'
           />

@@ -58,7 +58,7 @@ function RestaurantPage() {
               <MenuButton />
               <ImgSection image={restaurant.data.environment} />
               <ReviewsSection></ReviewsSection>
-              <ContactForm />
+              <ContactForm id={id} />
               <LocationSection></LocationSection>
             </main>
           </div>

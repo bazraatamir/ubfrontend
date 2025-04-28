@@ -1,7 +1,9 @@
 import React, {useState} from "react";
+import axiosInstance from "../../../shared/axios";
 
-const ContactForm = () => {
+const ContactForm = ({id}) => {
   const [formData, setFormData] = useState({
+    restaurantId: id,
     name: "",
     email: "",
     message: "",
@@ -15,17 +17,21 @@ const ContactForm = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Form submitted:", formData);
+
     // Form submission logic here
 
     // Reset form after submission
     setFormData({
+      restaurantId: id,
       name: "",
       email: "",
       message: "",
     });
+    console.log(formData);
+    const res = await axiosInstance.post("/feedback", formData);
+    console.log(res);
   };
 
   return (
