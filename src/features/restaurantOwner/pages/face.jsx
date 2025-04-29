@@ -6,10 +6,9 @@ import RestaurantPage from "../components/faceRestaurant";
 
 const Face = () => {
   const [restaurantData, setRestaurantData] = useState("");
-  const [hero, setHero] = useState();
+  
   useEffect(() => {
     const savedId = localStorage.getItem("restaurantId");
-
     const fetchdistrict = async () => {
       const response = await axiosInstance.get(`/restaurants/${savedId}`);
       // const Heroresponse = await axiosInstance.get(`/heros/${savedId}`);

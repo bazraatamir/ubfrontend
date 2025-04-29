@@ -26,16 +26,18 @@ const OwnerRestaurantPage = () => {
   const [selectTags, setSelectTag] = useState([]);
   const [selectTagId, setSelectTagId] = useState([]);
   const [tags, setTags] = useState(null);
+
   const handleClick = (districtName, id) => {
-    setSelectedDistrict(districtName); // зөвхөн нэг сонгох
+    setSelectedDistrict(districtName);
     setSelectedDistrictId(id);
   };
+
   const handleTag = (tag, id) => {
     setSelectTag(
       (prev) =>
         prev.includes(tag)
-          ? prev.filter((t) => t !== tag) // already selected → remove
-          : [...prev, tag] // not selected → add
+          ? prev.filter((t) => t !== tag)
+          : [...prev, tag]
     );
 
     setSelectTagId((prev) =>
@@ -44,49 +46,71 @@ const OwnerRestaurantPage = () => {
   };
 
   useEffect(() => {
-    const fetchdistrict = async () => {
-      const response = await axiosInstance.get("/districts");
-   
-      setDistricts([...response.data]);
-      const tagresponse = await axiosInstance.get("/tags");
-      setTags([...tagresponse.data]);
+    const fetchData = async () => {
+      try {
+        const [districtsResponse, tagsResponse] = await Promise.all([
+          axiosInstance.get("/districts"),
+          axiosInstance.get("/tags")
+        ]);
+        
+        setDistricts(districtsResponse.data);
+        setTags(tagsResponse.data);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+        alert("Өгөгдөл ачаалахад алдаа гарлаа!");
+      }
     };
-    fetchdistrict();
+    fetchData();
   }, []);
 
   const handleSave = async () => {
-    // Хүсэлтийн өгөгдлийг бэлтгэх
+    if (!name || !locationName) {
+      alert("Байгууллагын нэр болон байршил заавал оруулах шаардлагатай!");
+      return;
+    }
+
     const formData = new FormData();
     formData.append("name", name);
     formData.append("description", text);
     formData.append("location", locationName);
-    formData.append("districtId", selectedDistrictId);
-    formData.append("tags", selectTagId);
+    
+    // Only append districtId if one is selected
+    if (selectedDistrictId) {
+      formData.append("districtId", selectedDistrictId);
+    }
+    
+    // Only append tags if any are selected
+    if (selectTagId.length > 0) {
+      formData.append("tags", selectTagId.join(","));
+    }
+    
     if (file.length > 0) {
-      formData.append("file", file[0].file); // FilePond-оос авсан файлыг илгээж байна
+      formData.append("file", file[0].file);
     }
 
-    // Axios-ийг ашиглан серверт хүсэлт илгээх
     try {
       const response = await axiosInstance.post("/restaurants", formData, {
         headers: {
-          "Content-Type": "multipart/form-data", // Файл илгээж байгаа тул multipart/form-data тохиргоо
+          "Content-Type": "multipart/form-data",
         },
       });
+      
       console.log("Response: ", response.data);
       localStorage.setItem("restaurantId", response.data.id);
-      // Хариу авах бол даруй дараах үйлдлийг хийнэ:
       alert("Мэдээллийг амжилттай хадгаллаа!");
     } catch (error) {
       console.error("Error: ", error);
-      alert("Хадгалах үед алдаа гарлаа!");
+      if (error.response?.data?.message) {
+        alert(error.response.data.message);
+      } else {
+        alert("Хадгалах үед алдаа гарлаа!");
+      }
     }
   };
 
   return (
     <div className='min-h-screen w-full bg-[#0E1B21] px-4 sm:px-6 md:px-12 py-8 overflow-x-hidden'>
       <div className='max-w-[1300px] mx-auto'>
-        {/* Header Section */}
         <header className='mb-10 sm:mb-8'>
           <h1 className='mb-4 text-2xl font-bold text-white sm:text-xl'>
             Салбарын мэдээлэл засах
@@ -99,32 +123,25 @@ const OwnerRestaurantPage = () => {
           </p>
         </header>
 
-        {/* Main Content */}
-        <div className='grid grid-cols-1 md:grid-cols-1 gap-6 md:gap-8 bg-[#0E131D] p-[24px] rounded-xl '>
-          {/* Left Column */}
+        <div className='grid grid-cols-1 md:grid-cols-1 gap-6 md:gap-8 bg-[#0E131D] p-[24px] rounded-xl'>
           <div className='space-y-5 md:space-y-6'>
-            {/* Танилцуулга нэмэх */}
             <div className='w-full md:w-[210px] h-12 bg-[#2F323C] rounded-lg shadow-inner flex items-center px-4'>
               <span className='text-white text-base font-bold'>
                 Танилцуулга нэмэх
               </span>
             </div>
 
-            {/* Байгууллагын лого */}
             <div className='w-full flex flex-col bg-[#0E131D] rounded-xl shadow-md p-6 md:p-7'>
               <div className='flex flex-col md:flex-row items-center gap-5'>
                 <div className='w-full max-w-[260px]'>
                   <IUpload getfile={setFile} text={"Лого оруулах"} />
                 </div>
-                {/* Байгууллага нэр текст */}
                 <div className='w-full space-y-5'>
                   <div className='w-full h-12 bg-[#2F323C] rounded-lg'>
                     <input
                       type='text'
                       placeholder='Байгууллагын нэр'
-                      onChange={(e) => {
-                        setName(e.target.value);
-                      }}
+                      onChange={(e) => setName(e.target.value)}
                       className='w-full h-full bg-transparent text-white px-4 placeholder-gray-400 focus:outline-none text-base'
                     />
                   </div>
@@ -134,81 +151,45 @@ const OwnerRestaurantPage = () => {
                 </div>
               </div>
 
-              {/* Бичлэг оруулах */}
-              {/* <div className='w-full bg-[#2F323C] rounded-lg shadow-md p-6 md:p-7  mt-5 flex items-center'>
-                <IUpload getfile={setFile} text={"Зураг бичлэг оруулах"} />
-              </div> */}
               <LocationSection locations={setLocation} />
 
-              <div className='flex flex-wrap gap-2 my-[24px] h-28 overflow-auto  scrollbar-thin scrollbar-thumb-gray-600 scrollbar-track-gray-800 rounded-lg p-3 bg-gray-800 shadow-md'>
-                {districts &&
-                  districts.map((el, index) => {
-                    const isSelected = selectedDistrict === el.name;
-
-                    const bgColor = isSelected
-                      ? "bg-[#8CC63F]"
-                      : "bg-[#0E1B21]";
-                    return (
-                      <div
-                        key={index}
-                        onClick={() => handleClick(el.name, el.id)}
-                        className={`cursor-pointer flex items-center h-[40px] ${bgColor} rounded px-3 py-1 text-xs font-medium shadow-sm transition-colors`}>
-                        <span className='text-white'>{el.name}</span>
-                      </div>
-                    );
-                  })}
+              <div className='flex flex-wrap gap-2 my-[24px] h-28 overflow-auto scrollbar-thin scrollbar-thumb-gray-600 scrollbar-track-gray-800 rounded-lg p-3 bg-gray-800 shadow-md'>
+                {districts && districts.map((el, index) => {
+                  const isSelected = selectedDistrict === el.name;
+                  const bgColor = isSelected ? "bg-[#8CC63F]" : "bg-[#0E1B21]";
+                  return (
+                    <div
+                      key={index}
+                      onClick={() => handleClick(el.name, el.id)}
+                      className={`cursor-pointer flex items-center h-[40px] ${bgColor} rounded px-3 py-1 text-xs font-medium shadow-sm transition-colors`}>
+                      <span className='text-white'>{el.name}</span>
+                    </div>
+                  );
+                })}
               </div>
-              <div className='flex flex-wrap gap-2 my-[24px] h-28 overflow-auto  scrollbar-thin scrollbar-thumb-gray-600 scrollbar-track-gray-800 rounded-lg p-3 bg-gray-800 shadow-md'>
-                {tags &&
-                  tags.map((el, index) => {
-                    const isSelected = selectTags.includes(el.name);
 
-                    const bgColor = isSelected
-                      ? "bg-[#8CC63F]"
-                      : "bg-[#0E1B21]";
-                    return (
-                      <div
-                        key={index}
-                        onClick={() => handleTag(el.name, el.id)}
-                        className={`cursor-pointer flex items-center h-[40px] ${bgColor} rounded px-3 py-1 text-xs font-medium shadow-sm transition-colors`}>
-                        <span className='text-white'>{el.name}</span>
-                      </div>
-                    );
-                  })}
+              <div className='flex flex-wrap gap-2 my-[24px] h-28 overflow-auto scrollbar-thin scrollbar-thumb-gray-600 scrollbar-track-gray-800 rounded-lg p-3 bg-gray-800 shadow-md'>
+                {tags && tags.map((el, index) => {
+                  const isSelected = selectTags.includes(el.name);
+                  const bgColor = isSelected ? "bg-[#8CC63F]" : "bg-[#0E1B21]";
+                  return (
+                    <div
+                      key={index}
+                      onClick={() => handleTag(el.name, el.id)}
+                      className={`cursor-pointer flex items-center h-[40px] ${bgColor} rounded px-3 py-1 text-xs font-medium shadow-sm transition-colors`}>
+                      <span className='text-white'>{el.name}</span>
+                    </div>
+                  );
+                })}
               </div>
+
               <button
-                className='bg-[#8CC63F] text-black px-8 py-2.5 self-end rounded-md text-sm font-medium hover:bg-opacity-90 transition-all my-[24px] max-w-[150px] '
+                className='bg-[#8CC63F] text-black px-8 py-2.5 self-end rounded-md text-sm font-medium hover:bg-opacity-90 transition-all my-[24px] max-w-[150px]'
                 onClick={handleSave}>
                 Хадгалах
               </button>
             </div>
           </div>
-
-          {/* Right Column */}
-          {/* <div className='space-y-5 md:space-y-6'>
-            <div className='w-full md:w-[210px] h-12 bg-[#2F323C] rounded-lg shadow-inner flex items-center px-4'>
-              <span className='text-white font-bold text-base'>
-                Орчны зураг нэмэх
-              </span>
-            </div>
-
-            <div className='w-full max-w-[600px] bg-[#0E131D] rounded-xl p-6 md:p-12'>
-              <div className='grid grid-cols-3 gap-4 md:gap-5'>
-                {[1, 2, 3, 4, 5, 6].map((item) => (
-                  <IUpload
-                    key={item}
-                    className='aspect-square bg-[#2F323C] rounded-lg flex items-center justify-center hover:bg-[#3a3e4a] transition-colors duration-300'
-                  />
-                ))}
-              </div>
-            </div>
-
-            <div className='w-full md:w-[210px] h-12 bg-[#2F323C] rounded-lg shadow-inner flex items-center px-4'>
-              <span className='text-white text-base font-bold'>АНХААР</span>
-            </div>
-
-            <Neriinhool />
-          </div> */}
         </div>
       </div>
     </div>

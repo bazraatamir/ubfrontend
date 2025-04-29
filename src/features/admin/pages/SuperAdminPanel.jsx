@@ -20,6 +20,18 @@ const SuperAdminPanel = () => {
     console.log(response);
   };
 
+  const handleDelete = async (id) => {
+    try {
+      const response = await axiosInstance.delete(`/restaurants/${id}`);
+      console.log(response);
+      // Refresh the restaurants list after deletion
+      const updatedResponse = await axiosInstance.get("/restaurants");
+      setRestaurants(updatedResponse.data);
+    } catch (error) {
+      console.error("Error deleting restaurant:", error);
+    }
+  };
+
   return (
     <div className='h-screen w-full  text-white font-sans flex flex-col  '>
       <div className='flex-1 p-6 flex flex-col h-full'>
@@ -125,7 +137,9 @@ const SuperAdminPanel = () => {
                             />
                           </svg>
                         </button>
-                        <button className='bg-orange-600 p-2 rounded-full text-white hover:bg-orange-700 transition-colors'>
+                        <button 
+                          className='bg-orange-600 p-2 rounded-full text-white hover:bg-orange-700 transition-colors'
+                          onClick={() => handleDelete(restaurant.id)}>
                           <svg
                             xmlns='http://www.w3.org/2000/svg'
                             className='w-5 h-5 text-white'
@@ -195,7 +209,9 @@ const SuperAdminPanel = () => {
                             />
                           </svg>
                         </button>
-                        <button className='bg-orange-600 p-2 rounded-full text-white hover:bg-orange-700 transition-colors'>
+                        <button 
+                          className='bg-orange-600 p-2 rounded-full text-white hover:bg-orange-700 transition-colors'
+                          onClick={() => handleDelete(restaurant.id)}>
                           <svg
                             xmlns='http://www.w3.org/2000/svg'
                             className='w-5 h-5 text-white'
@@ -261,7 +277,9 @@ const SuperAdminPanel = () => {
                             />
                           </svg>
                         </button>
-                        <button className='bg-orange-600 p-2 rounded-full text-white hover:bg-orange-700 transition-colors'>
+                        <button 
+                          className='bg-orange-600 p-2 rounded-full text-white hover:bg-orange-700 transition-colors'
+                          onClick={() => handleDelete(restaurant.id)}>
                           <svg
                             xmlns='http://www.w3.org/2000/svg'
                             className='w-5 h-5 text-white'

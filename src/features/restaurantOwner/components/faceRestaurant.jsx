@@ -12,6 +12,8 @@ import axiosInstance from "../../../shared/axios";
 import ContactForm from "../../public/components/contact";
 
 function FaceRestaurantPage({restaurant}) {
+  const [isHighlighted, setIsHighlighted] = useState(false);
+
   useEffect(() => {
     AOS.init({
       duration: 1000, // Animation duration (in ms)
@@ -20,6 +22,23 @@ function FaceRestaurantPage({restaurant}) {
       offset: 50,
     });
   }, []);
+
+  const handleHighlight = async () => {
+    try {
+      const response = await axiosInstance.post(`/highlights/`, {
+        restaurantId: restaurant.data.id
+      });
+      
+      if (response.status === 200, 201, 202 , 203, 204) {
+        setIsHighlighted(true);
+        alert("Ресторан амжилттай онцлох ресторан болголоо!");
+      }
+    } catch (error) {
+      console.error("Error highlighting restaurant:", error);
+      alert("Ресторан онцлох үед алдаа гарлаа!");
+    }
+  };
+
   return (
     <>
       {restaurant ? (
@@ -31,8 +50,11 @@ function FaceRestaurantPage({restaurant}) {
               rel='stylesheet'
               href='https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap'
             />
-            <button className='bg-[#8CC63F] text-black px-8 py-2.5 self-end rounded-md text-sm font-medium hover:bg-opacity-90 transition-all my-[24px] max-w-[300px] '>
-              Онцлох ресторан болгох
+            <button 
+              onClick={handleHighlight}
+              disabled={isHighlighted}
+              className={`bg-[#8CC63F] text-black px-8 py-2.5 self-end rounded-md text-sm font-medium hover:bg-opacity-90 transition-all my-[24px] max-w-[300px] ${isHighlighted ? 'opacity-50 cursor-not-allowed' : ''}`}>
+              {isHighlighted ? 'Онцлох ресторан болгосон' : 'Онцлох ресторан болгох'}
             </button>
             <main className='w-full text-white'>
               <AboutSection
