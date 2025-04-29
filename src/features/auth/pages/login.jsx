@@ -28,9 +28,11 @@ const Login = () => {
     <div className='min-h-screen flex items-center justify-center bg-[#0A171F] text-white'>
       <div className='w-full max-w-md px-6 py-8 bg-[#0A171F]'>
         <div className='text-center mb-8'>
-          <h1 className='text-2xl font-bold mb-2'>
-            UBZoog сайтанд тавтай морил
-          </h1>
+          <img
+            src='https://cdn.builder.io/api/v1/image/assets/4f560f3098894f68b3412840c0587797/96e23556c599a4c63754cbf31aac9d5fe15ff941a73db90cd8b27e09e692f152?placeholderIfAbsent=true'
+            alt='Logo header'
+            className='object-contain w-[250px] mx-auto'
+          />
         </div>
         <form onSubmit={handleSubmit} className='space-y-4'>
           <div>
