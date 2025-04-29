@@ -38,7 +38,11 @@ export default function RegisterForm() {
     <div>
       <ToastContainer />
       <div className='text-center mb-6'>
-        <img src='/logo.svg' alt='UBZoog Logo' className='mx-auto mb-4 w-24' />
+        <img
+          src='https://cdn.builder.io/api/v1/image/assets/4f560f3098894f68b3412840c0587797/96e23556c599a4c63754cbf31aac9d5fe15ff941a73db90cd8b27e09e692f152?placeholderIfAbsent=true'
+          alt='UBZoog Logo'
+          className='mx-auto mb-4 w-[250px]'
+        />
         <h1 className='text-2xl font-bold'>UBZoog сайтад тавтай морил</h1>
         <p className='text-sm text-gray-400 mt-2'>
           Бүртгэл үүсгэхийн тулд доорх мэдээллийг бөглөнө үү
