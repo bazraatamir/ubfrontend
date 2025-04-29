@@ -2,7 +2,7 @@
 import axios from "axios";
 
 const axiosInstance = axios.create({
-  baseURL: "http://localhost:3000/api",
+  baseURL: "https://azjargaliinsodsolongo.com/backend/api",
   withCredentials: true,
 });
 
