@@ -10,6 +10,7 @@ const restaurants = new Array(6).fill({
 const RestaurantPage = () => {
   const [activeTab, setActiveTab] = useState("all");
   const [restaurants, setRestaurants] = useState();
+  
   useEffect(() => {
     const fetchRestaurants = async () => {
       const response = await axiosInstance.get("/restaurants");
@@ -17,6 +18,17 @@ const RestaurantPage = () => {
     };
     fetchRestaurants();
   }, []);
+
+  const handleStatusChange = async (restaurantId) => {
+    try {
+      await axiosInstance.post(`/restaurants/${restaurantId}/approve`);
+      // Refresh the restaurants list after status change
+      const response = await axiosInstance.get("/restaurants");
+      setRestaurants(response.data);
+    } catch (error) {
+      console.error("Error changing restaurant status:", error);
+    }
+  };
 
   const filteredRestaurants =
     restaurants?.filter((r) => {
@@ -48,9 +60,9 @@ const RestaurantPage = () => {
           Бүх ресторан
         </button>
         <button
-          onClick={() => setActiveTab("PENDING")}
+          onClick={() => setActiveTab("REJECTED")}
           className={`px-6 py-2 rounded font-semibold transition-all duration-200 ${
-            activeTab === "PENDING"
+            activeTab === "REJECTED"
               ? "bg-lime-500 text-black"
               : "bg-[#2E3C49] text-white"
           }`}>
@@ -66,7 +78,7 @@ const RestaurantPage = () => {
             className='flex items-center justify-between py-3 border-b border-gray-600 last:border-0'>
             <div className='flex items-center gap-4'>
               <img
-                src={restaurant.image}
+                src={`http://192.168.88.125:3000/uploads/${restaurant.imageUrl}`}
                 alt='restaurant'
                 className='w-12 h-12 rounded-full object-cover'
               />
@@ -78,15 +90,17 @@ const RestaurantPage = () => {
 
             <div className='flex items-center gap-2'>
               <button className='bg-lime-500 text-black px-3 py-1 rounded font-semibold'>
-                Онцлох
+                Бүртгэгдсэн
               </button>
               <button className='bg-[#1E2A31] px-3 py-1 rounded text-white'>
-                Тусгай
+              Хүлээгдэж буй
               </button>
             </div>
 
             <div className='flex gap-2'>
-              <button className='bg-[#1E2A31] p-2 rounded'>
+              <button 
+                onClick={() => handleStatusChange(restaurant.id)}
+                className='bg-[#1E2A31] p-2 rounded'>
                 <svg
                   className='w-6 h-6'
                   fill='none'

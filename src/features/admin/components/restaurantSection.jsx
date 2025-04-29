@@ -48,7 +48,7 @@ export default function RestaurantSection({title, type, status}) {
       </div>
       <div className='space-y-4'>
         {visible.map((r, i) => (
-          <RestaurantCard key={i} restaurant={r} />
+          <RestaurantCard key={i} restaurant={r}/>
         ))}
       </div>
     </div>
