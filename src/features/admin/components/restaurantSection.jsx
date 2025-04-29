@@ -1,40 +1,36 @@
-import {useState} from "react";
+import {useState, useEffect} from "react";
 import RestaurantCard from "./RestaurantCard";
+import axiosInstance from "../../../shared/axios";
 
 export default function RestaurantSection({title, type, status}) {
   const [showAll, setShowAll] = useState(false);
+  const [restaurantData, setRestaurantData] = useState([]);
 
-  const allRestaurants = [
-    {
-      name: "Modern Nomads",
-      type: "featured",
-      status: "approved",
-      image: "/img.jpg",
-    },
-    {
-      name: "Modern Nomads",
-      type: "featured",
-      status: "pending",
-      image: "/img.jpg",
-    },
-    {
-      name: "Modern Nomads",
-      type: "special",
-      status: "approved",
-      image: "/img.jpg",
-    },
-    {
-      name: "Modern Nomads",
-      type: "special",
-      status: "pending",
-      image: "/img.jpg",
-    },
-  ];
+  useEffect(() => {
+    const fetchHighlights = async () => {
+      try {
+        const response = await axiosInstance.get("/highlights/");
+        const filtered = response.data
+          .filter(h => h.status.toLowerCase() === status.toLowerCase())
+          .map(h => ({
+            id: h.restaurant.id,
+            name: h.restaurant.name,
+            type: type,
+            status: h.status,
+            image: h.restaurant.imageUrl,
+            location: h.restaurant.location,
+            description: h.restaurant.description
+          }));
+        setRestaurantData(filtered);
+      } catch (error) {
+        console.error("Error fetching highlights:", error);
+      }
+    };
 
-  const filtered = allRestaurants.filter(
-    (r) => r.type === type && r.status === status
-  );
-  const visible = showAll ? filtered : filtered.slice(0, 4);
+    fetchHighlights();
+  }, [type, status]);
+
+  const visible = showAll ? restaurantData : restaurantData.slice(0, 4);
 
   return (
     <div className='bg-[#2E3C49] rounded p-4'>
