@@ -10,18 +10,24 @@ const restaurants = new Array(6).fill({
 const RestaurantPage = () => {
   const [activeTab, setActiveTab] = useState("all");
   const [restaurants, setRestaurants] = useState();
+  const [searchTerm, setSearchTerm] = useState("");
   
   useEffect(() => {
     const fetchRestaurants = async () => {
       const response = await axiosInstance.get("/restaurants");
+      console.log("Restaurants data:", response.data); // Debug log
       setRestaurants(response.data);
     };
     fetchRestaurants();
   }, []);
 
-  const handleStatusChange = async (restaurantId) => {
+  const handleStatusChange = async (restaurantId, currentStatus) => {
     try {
-      await axiosInstance.post(`/restaurants/${restaurantId}/approve`);
+      if (currentStatus === "PENDING") {
+        await axiosInstance.post(`/restaurants/${restaurantId}/approve`);
+      } else if (currentStatus === "APPROVED") {
+        await axiosInstance.post(`/restaurants/${restaurantId}/approve`);
+      }
       // Refresh the restaurants list after status change
       const response = await axiosInstance.get("/restaurants");
       setRestaurants(response.data);
@@ -30,11 +36,22 @@ const RestaurantPage = () => {
     }
   };
 
-  const filteredRestaurants =
-    restaurants?.filter((r) => {
-      if (activeTab === "all") return true;
-      return r.status === activeTab;
-    }) || [];
+  const handleDelete = async (restaurantId) => {
+    try {
+      await axiosInstance.delete(`/restaurants/${restaurantId}`);
+      // Refresh the restaurants list after deletion
+      const response = await axiosInstance.get("/restaurants");
+      setRestaurants(response.data);
+    } catch (error) {
+      console.error("Error deleting restaurant:", error);
+    }
+  };
+
+  const filteredRestaurants = restaurants?.filter((r) => {
+    const matchesSearch = r.name.toLowerCase().includes(searchTerm.toLowerCase());
+    if (activeTab === "all") return matchesSearch;
+    return r.status === activeTab && matchesSearch;
+  }) || [];
 
   return (
     <div className='w-full h-full bg-gradient-to-b from-[#38718B1A] to-[#0F1E251A] p-6 text-white'>
@@ -45,6 +62,8 @@ const RestaurantPage = () => {
           type='text'
           placeholder='Хайх...'
           className='px-4 py-2 rounded bg-white text-black w-[250px]'
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
         />
       </div>
 
@@ -60,9 +79,9 @@ const RestaurantPage = () => {
           Бүх ресторан
         </button>
         <button
-          onClick={() => setActiveTab("REJECTED")}
+          onClick={() => setActiveTab("PENDING")}
           className={`px-6 py-2 rounded font-semibold transition-all duration-200 ${
-            activeTab === "REJECTED"
+            activeTab === "PENDING"
               ? "bg-lime-500 text-black"
               : "bg-[#2E3C49] text-white"
           }`}>
@@ -75,31 +94,39 @@ const RestaurantPage = () => {
         {filteredRestaurants.map((restaurant, index) => (
           <div
             key={index}
-            className='flex items-center justify-between py-3 border-b border-gray-600 last:border-0'>
-            <div className='flex items-center gap-4'>
+            className='grid grid-cols-3 items-center py-3 border-b border-gray-600 last:border-0'>
+            <div className='flex items-center gap-4 min-w-0'>
               <img
-                src={`http://192.168.88.125:3000/uploads/${restaurant.imageUrl}`}
+                src={restaurant.imageUrl ? `http://localhost:3000/uploads/${restaurant.imageUrl.split('\\').pop()}` : 'https://via.placeholder.com/40'}
                 alt='restaurant'
-                className='w-12 h-12 rounded-full object-cover'
+                className='w-12 h-12 rounded-full object-cover flex-shrink-0'
               />
-              <div>
-                <div className='font-semibold'>{restaurant.name}</div>
+              <div className='min-w-0'>
+                <div className='font-semibold truncate'>{restaurant.name}</div>
                 <div className='text-sm text-gray-300'>{restaurant.type}</div>
               </div>
             </div>
 
-            <div className='flex items-center gap-2'>
-              <button className='bg-lime-500 text-black px-3 py-1 rounded font-semibold'>
+            <div className='flex items-center justify-center gap-2'>
+              <button className={`px-3 py-1 rounded font-semibold ${
+                restaurant.status === "APPROVED" 
+                  ? "bg-lime-500 text-black" 
+                  : "bg-[#1E2A31] text-white"
+              }`}>
                 Бүртгэгдсэн
               </button>
-              <button className='bg-[#1E2A31] px-3 py-1 rounded text-white'>
-              Хүлээгдэж буй
+              <button className={`px-3 py-1 rounded font-semibold ${
+                restaurant.status === "PENDING" 
+                  ? "bg-lime-500 text-black" 
+                  : "bg-[#1E2A31] text-white"
+              }`}>
+                Хүлээгдэж буй
               </button>
             </div>
 
-            <div className='flex gap-2'>
+            <div className='flex items-center justify-end gap-2'>
               <button 
-                onClick={() => handleStatusChange(restaurant.id)}
+                onClick={() => handleStatusChange(restaurant.id, restaurant.status)}
                 className='bg-[#1E2A31] p-2 rounded'>
                 <svg
                   className='w-6 h-6'
@@ -114,7 +141,9 @@ const RestaurantPage = () => {
                   />
                 </svg>
               </button>
-              <button className='bg-[#E27928] p-2 rounded'>
+              <button 
+                className='bg-[#E27928] p-2 rounded'
+                onClick={() => handleDelete(restaurant.id)}>
                 <svg
                   xmlns='http://www.w3.org/2000/svg'
                   className='w-5 h-5 text-white'

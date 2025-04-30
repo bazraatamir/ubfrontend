@@ -97,6 +97,7 @@ const OwnerRestaurantPage = () => {
       
       console.log("Response: ", response.data);
       localStorage.setItem("restaurantId", response.data.id);
+      console.log("Restaurant ID: ", response.data.id);
       alert("Мэдээллийг амжилттай хадгаллаа!");
     } catch (error) {
       console.error("Error: ", error);
