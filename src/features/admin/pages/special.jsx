@@ -55,6 +55,16 @@ function SpecialRestaurant() {
             status='pending'
             restaurants={specialPending}
           />
+          <RestaurantSection
+            title='Хүлээгдэж буй видеонууд'
+            type='video'
+            status='pending'
+          />
+          <RestaurantSection
+            title='Баталгаажсан видеонууд'
+            type='video'
+            status='approved'
+          />
         </div>
       </div>
     </div>

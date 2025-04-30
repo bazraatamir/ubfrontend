@@ -194,7 +194,7 @@ const SuperAdminPanel = () => {
                         <img
                           src={restaurant.imageUrl ? `http://localhost:3000/uploads/${restaurant.imageUrl.split('\\').pop()}` : 'https://via.placeholder.com/40'}
                           alt=''
-                          className='w-14 h-14 rounded-full mr-4 border-2 border-gray-600'
+                          className='w-14 h-14 rounded-full mr-4 border-2 border-gray-600 object-cover'
                         />
                         <div className='text-gray-100 text-base font-medium'>
                           {restaurant.name}
@@ -262,7 +262,7 @@ const SuperAdminPanel = () => {
                         <img
                           src={restaurant.imageUrl ? `http://localhost:3000/uploads/${restaurant.imageUrl.split('\\').pop()}` : 'https://via.placeholder.com/40'}
                           alt=''
-                          className='w-14 h-14 rounded-full mr-4 border-2 border-gray-600'
+                          className='w-14 h-14 rounded-full mr-4 border-2 border-gray-600 object-cover'
                         />
                         <div className='text-gray-100 text-base font-medium'>
                           {restaurant.name}

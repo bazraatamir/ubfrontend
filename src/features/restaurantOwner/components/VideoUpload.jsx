@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { FaUpload, FaTrash, FaSave } from 'react-icons/fa';
+import axiosInstance from '../../../shared/axios';
+import { toast } from 'react-toastify';
 
 const VideoUpload = () => {
   const [videos, setVideos] = useState([]);
@@ -34,7 +36,7 @@ const VideoUpload = () => {
 
   const handleSaveVideos = async () => {
     if (videos.length === 0) {
-      console.log('No videos to save');
+      toast.error('Видео оруулаагүй байна');
       return;
     }
 
@@ -43,27 +45,24 @@ const VideoUpload = () => {
       // Create FormData to send files
       const formData = new FormData();
       videos.forEach((video, index) => {
-        formData.append(`videos[${index}]`, video.file);
-        formData.append(`videoNames[${index}]`, video.name);
+        formData.append("video", video.file);
       });
 
       // Send to backend
-      const response = await fetch('YOUR_BACKEND_API_ENDPOINT', {
-        method: 'POST',
-        body: formData,
+      const response = await axiosInstance.post('/home/', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
       });
 
-      if (!response.ok) {
-        throw new Error('Failed to save videos');
+      if (response.data) {
+        toast.success('Видео амжилттай орууллаа');
+        // Clear videos after successful save
+        setVideos([]);
       }
-
-      const result = await response.json();
-      console.log('Videos saved successfully:', result);
-      
-      // Clear videos after successful save
-      setVideos([]);
     } catch (error) {
       console.error('Error saving videos:', error);
+      toast.error('Видео оруулахад алдаа гарлаа');
     } finally {
       setSaving(false);
     }
