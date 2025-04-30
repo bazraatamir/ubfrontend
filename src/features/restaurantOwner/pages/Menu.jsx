@@ -1,7 +1,8 @@
-import React, {useState, useEffect} from "react";
+import React, {useState, useEffect, useCallback} from "react";
 import AddSalbar from "../components/AddSalbar";
 import IUpload from "../../../shared/ImageUpload";
 import axiosInstance from "../../../shared/axios";
+import { FaEdit, FaTrash } from "react-icons/fa";
 
 // Placeholder for backend base URL - adjust if needed
 const backendBaseUrl = "http://localhost:3000";
@@ -29,84 +30,65 @@ const AddMenu = () => {
   const [editingItemId, setEditingItemId] = useState(null);
 
   // Fetch menu items and available menus on component mount
-  useEffect(() => {
-    const fetchData = async () => {
-      setLoading(true);
-      setLoadingMenus(true);
-      setError(null);
-      try {
-        const [menuItemsResponse, availableMenusResponse] = await Promise.all([
-          axiosInstance.get("/menuitems"),
-          axiosInstance.get("/menus")
-        ]);
+  const fetchAvailableMenus = useCallback(async () => {
+    setLoadingMenus(true);
+    try {
+      const response = await axiosInstance.get("/menus");
+      setAvailableMenus(response.data || []);
+    } catch (err) {
+      console.error("Error fetching available menus:", err);
+      setError("Цэсний төрлүүдийг ачааллахад алдаа гарлаа.");
+      setAvailableMenus([]); // Ensure it's an array on error
+    } finally {
+      setLoadingMenus(false);
+    }
+  }, []);
 
-        setMenuItems(menuItemsResponse.data);
-        setAvailableMenus(availableMenusResponse.data);
-
-        if (availableMenusResponse.data.length > 0 && !type) {
-          setType(availableMenusResponse.data[0].id.toString());
-        }
-
-      } catch (err) {
-        setError("Мэдээлэл татахад алдаа гарлаа.");
-        console.error("Fetch data error:", err);
-      } finally {
-        setLoading(false);
-        setLoadingMenus(false);
-      }
-    };
-
-    fetchData();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []); // Add type to dependency array if needed, but initial load seems intended
-
-  const fetchMenuItems = async () => { // Keep this separate if needed for refresh
+  const fetchMenuItems = useCallback(async () => {
     setLoading(true);
     setError(null);
     try {
       const response = await axiosInstance.get("/menuitems");
-      setMenuItems(response.data);
+      setMenuItems(response.data || []);
     } catch (err) {
-      setError("Цэсний мэдээлэл татахад алдаа гарлаа.");
-      console.error("Fetch menu items error:", err);
+      console.error("Error fetching menu items:", err);
+      setError("Цэсний жагсаалтыг ачааллахад алдаа гарлаа.");
+      setMenuItems([]); // Ensure it's an array on error
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
 
-  const handleImageChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      setImageFile(file);
-      setPreviewImage(URL.createObjectURL(file));
-    }
-  };
+  useEffect(() => {
+    fetchAvailableMenus();
+    fetchMenuItems();
+  }, [fetchAvailableMenus, fetchMenuItems]);
 
   const resetForm = () => {
     setName("");
-    setType(availableMenus.length > 0 ? availableMenus[0].id.toString() : "");
+    setType("");
     setDescription("");
     setPrice("");
     setImageFile(null);
     setPreviewImage("https://news.mn/wp-content/archive1/news/photo/2015/5/8/4b55a8ddb7dfcac61852cfcc819f5a4coriginal.jpg");
-    setEditingItemId(null); // Reset editing state
+    setEditingItemId(null);
     const fileInput = document.getElementById('imageUploadInput');
     if (fileInput) {
       fileInput.value = "";
     }
-    setError(null); // Clear previous errors
+    setError(null);
   };
 
   const handleEditClick = (item) => {
-      setEditingItemId(item.id);
-      setName(item.name);
-      setType(item.menuId.toString()); // Ensure it's a string for select value
-      setDescription(item.description || "");
-      setPrice(item.price?.toString() || ""); // Ensure it's a string for input value
-      setPreviewImage(item.imageUrl ? `${backendBaseUrl}${item.imageUrl}` : "https://news.mn/wp-content/archive1/news/photo/2015/5/8/4b55a8ddb7dfcac61852cfcc819f5a4coriginal.jpg");
-      setImageFile(null); // Reset image file, user must re-select to change
-      window.scrollTo(0, 0); // Scroll to top to see the form
-      setError(null);
+    setEditingItemId(item.id);
+    setName(item.name);
+    setType(item.menuId.toString());
+    setDescription(item.description || "");
+    setPrice(item.price?.toString() || "");
+    setPreviewImage(item.imageUrl ? `${backendBaseUrl}${item.imageUrl}` : "https://news.mn/wp-content/archive1/news/photo/2015/5/8/4b55a8ddb7dfcac61852cfcc819f5a4coriginal.jpg");
+    setImageFile(null);
+    window.scrollTo(0, 0);
+    setError(null);
   };
 
   const handleDelete = async (itemId) => {
@@ -125,6 +107,9 @@ const AddMenu = () => {
         });
         // Remove the item from the list
         setMenuItems(menuItems.filter(item => item.id !== itemId));
+        if(editingItemId === itemId) { // If deleting the item currently being edited, reset form
+            resetForm();
+        }
     } catch (err) {
         setError("Цэс устгахад алдаа гарлаа.");
         console.error("Delete menu item error:", err.response ? err.response.data : err);
@@ -144,19 +129,15 @@ const AddMenu = () => {
         return;
     }
 
-    const formData = new FormData();
-    formData.append("name", name);
-    formData.append("menuId", type);
-    formData.append("description", description);
-    formData.append("price", price);
+    const menuItemData = {
+      name,
+      description,
+      price: price,
+      menuId: type,
+    };
 
-    // For UPDATE: Only append image if a new one was selected
-    // For CREATE: Append image if selected
-    if (imageFile) {
-        // Backend expects 'imageUrl' for update, 'media' for create.
-        // Send 'media' for create, 'imageUrl' for update.
-        const imageKey = editingItemId ? 'imageUrl' : 'media';
-        formData.append(imageKey, imageFile);
+    if (!menuItemData.description) {
+        delete menuItemData.description;
     }
 
     try {
@@ -165,9 +146,8 @@ const AddMenu = () => {
 
       if (editingItemId) {
         // --- UPDATE --- 
-        response = await axiosInstance.put(`/menuitems/${editingItemId}`, formData, {
+        response = await axiosInstance.put(`/menuitems/${editingItemId}`, menuItemData, {
           headers: {
-            'Content-Type': 'multipart/form-data',
             'Authorization': `Bearer ${token}`
           },
         });
@@ -176,9 +156,8 @@ const AddMenu = () => {
 
       } else {
         // --- CREATE --- 
-        response = await axiosInstance.post("/menuitems", formData, {
+        response = await axiosInstance.post("/menuitems", menuItemData, {
           headers: {
-            'Content-Type': 'multipart/form-data',
             'Authorization': `Bearer ${token}`
           },
         });
@@ -237,7 +216,12 @@ const AddMenu = () => {
                     <p className='text-xs text-gray-500'>PNG, JPG, GIF</p> {/* Removed size limit display */}
                   </div>
                 </div>
-                 <input id="imageUploadInput" name="media" type="file" className="sr-only" onChange={handleImageChange} accept="image/png, image/jpeg, image/gif"/>
+                 <input id="imageUploadInput" name="media" type="file" className="sr-only" onChange={(e) => {
+                   if (e.target.files && e.target.files[0]) {
+                     setImageFile(e.target.files[0]);
+                     setPreviewImage(URL.createObjectURL(e.target.files[0]));
+                   }
+                 }} accept="image/png, image/jpeg, image/gif"/>
               </label>
             </div>
 
@@ -367,10 +351,10 @@ const AddMenu = () => {
                     <td className='px-4 text-gray-400'>{item.price?.toLocaleString()}₮</td>
                     <td className='px-4 text-right space-x-2'>
                       <button className='text-[#8CC63F] hover:text-[#7AB52F] transition-colors' onClick={() => handleEditClick(item)} disabled={loading}>
-                        <svg xmlns='http://www.w3.org/2000/svg' className='h-5 w-5 inline' fill='none' viewBox='0 0 24 24' stroke='currentColor'><path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z'/></svg>
+                        <FaEdit />
                       </button>
-                      <button className='text-red-500 hover:text-red-600 transition-colors' onClick={() => handleDelete(item.id)} disabled={loading}>
-                        <svg xmlns='http://www.w3.org/2000/svg' className='h-5 w-5 inline' fill='none' viewBox='0 0 24 24' stroke='currentColor'><path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16'/></svg>
+                      <button className='text-red-500 hover:text-red-700 transition-colors' onClick={() => handleDelete(item.id)} disabled={loading}>
+                        <FaTrash />
                       </button>
                     </td>
                   </tr>
