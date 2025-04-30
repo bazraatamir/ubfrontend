@@ -15,7 +15,7 @@ const AddMenu = () => {
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState("");
   const [imageFile, setImageFile] = useState(null);
-  const [previewImage, setPreviewImage] = useState("https://news.mn/wp-content/archive1/news/photo/2015/5/8/4b55a8ddb7dfcac61852cfcc819f5a4coriginal.jpg");
+  const [previewImage, setPreviewImage] = useState(null);
 
   // Menu items list state
   const [menuItems, setMenuItems] = useState([]);
@@ -70,7 +70,7 @@ const AddMenu = () => {
     setDescription("");
     setPrice("");
     setImageFile(null);
-    setPreviewImage("https://news.mn/wp-content/archive1/news/photo/2015/5/8/4b55a8ddb7dfcac61852cfcc819f5a4coriginal.jpg");
+    setPreviewImage(null);
     setEditingItemId(null);
     const fileInput = document.getElementById('imageUploadInput');
     if (fileInput) {
@@ -85,7 +85,7 @@ const AddMenu = () => {
     setType(item.menuId.toString());
     setDescription(item.description || "");
     setPrice(item.price?.toString() || "");
-    setPreviewImage(item.imageUrl ? `${backendBaseUrl}${item.imageUrl}` : "https://news.mn/wp-content/archive1/news/photo/2015/5/8/4b55a8ddb7dfcac61852cfcc819f5a4coriginal.jpg");
+    setPreviewImage(item.imageUrl ? `${backendBaseUrl}${item.imageUrl}` : null);
     setImageFile(null);
     window.scrollTo(0, 0);
     setError(null);
@@ -202,18 +202,28 @@ const AddMenu = () => {
             {/* Image Upload */}
             <div className='sm:col-span-1'>
               <label htmlFor="imageUploadInput" className='bg-[#1E2530] rounded-lg aspect-square flex flex-col items-center justify-center cursor-pointer hover:bg-opacity-80 relative group'>
-                <img
-                  src={previewImage}
-                  alt='Menu Item Preview'
-                  className='w-full h-full object-cover rounded-lg absolute inset-0'
-                />
+                {previewImage ? (
+                  <img
+                    src={previewImage}
+                    alt='Menu Item Preview'
+                    className='w-full h-full object-cover rounded-lg absolute inset-0'
+                  />
+                ) : (
+                  <div className='text-center p-4'>
+                     <svg className="mx-auto h-12 w-12 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48" aria-hidden="true">
+                      <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                    <p className='mt-1 text-sm text-gray-400'>Зураг сонгох</p>
+                    <p className='text-xs text-gray-500'>PNG, JPG, GIF</p>
+                  </div>
+                )}
                 <div className='absolute inset-0 bg-black bg-opacity-40 rounded-lg flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity'>
                   <div className='text-center'>
                      <svg className="mx-auto h-12 w-12 text-gray-300" stroke="currentColor" fill="none" viewBox="0 0 48 48" aria-hidden="true">
                       <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                     </svg>
-                    <p className='mt-1 text-sm text-gray-400'>Зураг сонгох</p>
-                    <p className='text-xs text-gray-500'>PNG, JPG, GIF</p> {/* Removed size limit display */}
+                    <p className='mt-1 text-sm text-gray-400'>Зураг {previewImage ? 'солих' : 'сонгох'}</p>
+                    <p className='text-xs text-gray-500'>PNG, JPG, GIF</p>
                   </div>
                 </div>
                  <input id="imageUploadInput" name="media" type="file" className="sr-only" onChange={(e) => {
@@ -302,7 +312,7 @@ const AddMenu = () => {
             </div>
           </div>
 
-          {/* Submit and Cancel Buttons */}
+
           <div className='flex justify-end mt-8 space-x-4'>
             {editingItemId && (
                 <button type="button" onClick={resetForm} className='bg-gray-600 text-white px-8 py-2.5 rounded-md text-sm font-medium hover:bg-gray-700 transition-all disabled:opacity-50' disabled={loading}>

@@ -1,116 +1,91 @@
 import React, {useState, useRef, useEffect} from "react";
-
-const menuData = [
-  {
-    category: "Хоол",
-    items: [
-      {
-        id: "tsuyvan",
-        title: "Цуйван",
-        image:
-          "https://images.pexels.com/photos/1640772/pexels-photo-1640772.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-        description: "Амтат гоймонгийн шөлтэй хоол.",
-        textColor: "text-blue-600",
-      },
-      {
-        id: "banshtai",
-        title: "Банштай шөл",
-        image:
-          "https://images.pexels.com/photos/842571/pexels-photo-842571.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-        description: "Махтай банш орсон халуун шөл.",
-        textColor: "text-red-600",
-      },
-      {
-        id: "huushuur",
-        title: "Хуушуур",
-        image: "/images/food3.jpg",
-        description: "Шарсан махтай гурилан хоол.",
-        textColor: "text-orange-500",
-      },
-      {
-        id: "banshtai",
-        title: "Банштай шөл",
-        image:
-          "https://images.pexels.com/photos/842571/pexels-photo-842571.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-        description: "Махтай банш орсон халуун шөл.",
-        textColor: "text-red-600",
-      },
-    ],
-  },
-  {
-    category: "Уух зүйлс",
-    items: [
-      {
-        id: "smoothie",
-        title: "Ногоон смүүти",
-        image: "/images/drink1.jpg",
-        description: "Шинэхэн ногооны амтат смүүти.",
-        textColor: "text-green-500",
-      },
-      {
-        id: "coffee",
-        title: "Амтат кофе",
-        image: "/images/drink2.jpg",
-        description: "Сэргээх амтат кофены ундаа.",
-        textColor: "text-yellow-700",
-      },
-    ],
-  },
-  {
-    category: "Дессерт",
-    items: [
-      {
-        id: "cake",
-        title: "Шоколадтай бялуу",
-        image: "/images/dessert1.jpg",
-        description: "Чихэрлэг шоколадтай амтат бялуу.",
-        textColor: "text-purple-600",
-      },
-    ],
-  },
-];
+import axiosInstance from "../../../shared/axios";
 
 export default function Menu() {
-  const [activeCategory, setActiveCategory] = useState(0);
+  const [menuData, setMenuData] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [activeCategoryIndex, setActiveCategoryIndex] = useState(0);
   const scrollerRef = useRef(null);
   const containerRef = useRef(null);
   const textWrapRef = useRef(null);
   const panelWrapRef = useRef(null);
   const [scrollY, setScrollY] = useState(0);
 
-  // Текст панелууд болон зургийн панелууд
   const [textPanels, setTextPanels] = useState([]);
   const [imagePanels, setImagePanels] = useState([]);
 
+  useEffect(() => {
+    const fetchData = async () => {
+      setLoading(true);
+      setError(null);
+      try {
+        const [menusRes, menuItemsRes] = await Promise.all([
+          axiosInstance.get("/menus"),
+          axiosInstance.get("/menuitems"),
+        ]);
+
+        const menus = menusRes.data;
+        const menuItems = menuItemsRes.data;
+        const formattedMenuData = menus.map((menu) => {
+          const items = menuItems
+            .filter((item) => item.menuId === menu.id)
+            .map((item) => ({
+              id: item.id,
+              title: item.name,
+              image: item.imageUrl || "/images/placeholder.jpg",
+              description: item.description,
+              textColor: menu.name === "Хоол" ? "text-white" :
+                         menu.name === "Уух зүйлс" ? "text-white" :
+                         menu.name === "Дессерт" ? "text-white" :
+                         "text-white",
+            }));
+
+          return {
+            category: menu.name,
+            items: items,
+          };
+        });
+
+        setMenuData(formattedMenuData);
+      } catch (err) {
+        console.error("Failed to fetch menu data:", err);
+        setError("Мэдээллийг татахад алдаа гарлаа. Та дараа дахин оролдоно уу."); // Set error message
+      } finally {
+        setLoading(false); // Stop loading
+      }
+    };
+
+    fetchData();
+  }, []); // Empty dependency array means run once on mount
+
   // Компонент ачаалагдах үед refs тохируулах
   useEffect(() => {
-    // Текст панелуудыг олж авах
-    if (textWrapRef.current) {
+    // Ensure menuData is loaded and refs are available
+    if (!loading && menuData.length > 0 && textWrapRef.current && panelWrapRef.current) {
+      // Update panels based on active category's items
+      const currentItems = menuData[activeCategoryIndex]?.items || [];
+
       setTextPanels(
         Array.from(textWrapRef.current.querySelectorAll(".panel-text"))
       );
-    }
-
-    // Зургийн панелуудыг олж авах
-    if (panelWrapRef.current) {
       setImagePanels(
         Array.from(panelWrapRef.current.querySelectorAll(".panel"))
       );
-    }
 
-    // Z-индекс тохируулах
-    if (textPanels.length > 0) {
-      textPanels.forEach((panel, i) => {
-        panel.style.zIndex = textPanels.length - i;
-      });
-    }
+       // Re-apply z-index when panels change
+       const currentTextPanels = Array.from(textWrapRef.current.querySelectorAll(".panel-text"));
+       currentTextPanels.forEach((panel, i) => {
+         panel.style.zIndex = currentTextPanels.length - i;
+       });
 
-    if (imagePanels.length > 0) {
-      imagePanels.forEach((panel, i) => {
-        panel.style.zIndex = imagePanels.length - i;
-      });
+       const currentImagePanels = Array.from(panelWrapRef.current.querySelectorAll(".panel"));
+       currentImagePanels.forEach((panel, i) => {
+         panel.style.zIndex = currentImagePanels.length - i;
+       });
     }
-  }, [activeCategory, textPanels.length, imagePanels.length]);
+     // Add dependencies: loading, menuData, activeCategoryIndex
+  }, [loading, menuData, activeCategoryIndex, textPanels.length, imagePanels.length]); // Rerun when data or category changes
 
   // Скролл мөшгөгч
   useEffect(() => {
@@ -133,7 +108,7 @@ export default function Menu() {
         scroller.removeEventListener("scroll", handleScroll);
       }
     };
-  }, [activeCategory]);
+  }, [activeCategoryIndex]); // Depend on activeCategoryIndex
 
   // Текст панелууд болон зургийн панелуудын анимэйшн
   useEffect(() => {
@@ -196,8 +171,8 @@ export default function Menu() {
   }, [scrollY, textPanels, imagePanels]);
 
   const handleCategoryClick = (index) => {
-    if (index !== activeCategory) {
-      setActiveCategory(index);
+    if (index !== activeCategoryIndex) {
+      setActiveCategoryIndex(index);
 
       // Скролл байрлалыг эхлэлд нь авчрах
       if (scrollerRef.current) {
@@ -206,119 +181,128 @@ export default function Menu() {
     }
   };
 
+  // Show loading indicator
+  if (loading) {
+    return <div className="h-screen flex items-center justify-center bg-[#0e1b21] text-white">Ачааллаж байна...</div>;
+  }
+
+  // Show error message
+  if (error) {
+    return <div className="h-screen flex items-center justify-center bg-[#0e1b21] text-white text-red-500">{error}</div>;
+  }
+
+  // Ensure menuData has loaded and has content for the active category
+  if (!menuData || menuData.length === 0 || !menuData[activeCategoryIndex]) {
+     return <div className="h-screen flex items-center justify-center bg-[#0e1b21] text-white">Цэс олдсонгүй.</div>;
+  }
+
   return (
     <div className='h-screen flex bg-[#0e1b21] text-white font-serif overflow-hidden'>
-      {/* Side Menu */}
+      {/* Side Menu - Updated to use menuData length and index */}
       <div className='flex flex-col'>
         <div className='flex flex-col h-screen fixed justify-center gap-[10px] left-0 z-50'>
-          <button
-            onClick={() => handleCategoryClick(0)}
-            className={`${
-              activeCategory === 0 ? "bg-lime-500" : "bg-[#1d2d34]"
-            } text-white py-2 px-2 rounded-r-xl h-[170px] transition-all duration-300 hover:bg-lime-400 active:scale-95`}
-            style={{writingMode: "vertical-rl", textOrientation: "mixed"}}>
-            Хоол
-          </button>
-          <button
-            onClick={() => handleCategoryClick(1)}
-            className={`${
-              activeCategory === 1 ? "bg-lime-500" : "bg-[#1d2d34]"
-            } px-2 rounded-r-xl h-[170px] transition-all duration-300 hover:bg-lime-400 active:scale-95`}
-            style={{writingMode: "vertical-rl", textOrientation: "mixed"}}>
-            Уух зүйлс
-          </button>
-          <button
-            onClick={() => handleCategoryClick(2)}
-            className={`${
-              activeCategory === 2 ? "bg-lime-500" : "bg-[#1d2d34]"
-            } px-2 rounded-r-xl h-[170px] transition-all duration-300 hover:bg-lime-400 active:scale-95`}
-            style={{writingMode: "vertical-rl", textOrientation: "mixed"}}>
-            Дессерт
-          </button>
+          {menuData.map((menu, index) => (
+            <button
+              key={menu.category}
+              onClick={() => handleCategoryClick(index)}
+              className={`${
+                activeCategoryIndex === index ? "bg-lime-500" : "bg-[#1d2d34]"
+              } text-white py-2 px-2 rounded-r-xl h-[170px] transition-all duration-300 hover:bg-lime-400 active:scale-95`}
+              style={{writingMode: "vertical-rl", textOrientation: "mixed"}}>
+              {menu.category}
+            </button>
+          ))}
         </div>
       </div>
 
       {/* Main Content with Scroll */}
       <div ref={containerRef} className='w-full h-screen'>
         <div ref={scrollerRef} className='h-screen w-full overflow-y-auto'>
-          <div className='black-section flex '>
-            {/* Текст панелуудын хэсэг */}
-            <div ref={textWrapRef} className='text-wrap flex-2'>
-              {menuData[activeCategory].items.map((item, index) => (
-                <div
-                  key={`text-${item.id}`}
-                  className={`panel-text text-[#fff]`}
-                  style={{
-                    position: "absolute",
-                    left: "0",
-                    top: "0",
-                    right: "0",
-                    bottom: "0",
-                    width: "100%",
-                    height: "100%",
-                    fontSize: "40px",
-                    textTransform: "uppercase",
-                    fontWeight: "900",
-                    textAlign: "center",
-                    transform:
-                      index === 0 ? "translateY(0)" : "translateY(100%)",
-                    opacity: 0,
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    justifyContent: "center",
-                    transition:
-                      "opacity 0.6s ease-out, transform 0.6s ease-out",
-                  }}>
-                  {item.title}
-                </div>
-              ))}
-            </div>
-
-            {/* Зураг панелууд */}
-            <div ref={panelWrapRef} className='p-wrap flex-1 mx-4  h-screen'>
-              {menuData[activeCategory].items.map((item, index) => (
-                <div
-                  key={`panel-${item.id}`}
-                  className='panel'
-                  style={{
-                    position: "absolute",
-                    left: "0",
-                    top: "0",
-                    right: "0",
-                    bottom: "0",
-                    width: "100%",
-                    height: "100%",
-                    transition: "height 0.5s ease-out",
-                    overflow: "hidden",
-                  }}>
-                  <div className='w-full h-full flex flex-col items-center  relative justify-center  bg-gray-900'>
-                    <div className='w-full h-screen h-full mb-4'>
-                      <img
-                        src={item.image}
-                        alt={item.title}
-                        className='w-full h-full object-cover rounded-lg '
-                      />
+          {/* Render content only if items exist for the active category */}
+          {menuData[activeCategoryIndex].items && menuData[activeCategoryIndex].items.length > 0 ? (
+            <>
+              <div className='black-section flex '>
+                {/* Текст панелуудын хэсэг */}
+                <div ref={textWrapRef} className='text-wrap flex-2'>
+                  {menuData[activeCategoryIndex].items.map((item, index) => (
+                    <div
+                      key={`text-${item.id}-${index}`} // Use index for unique key if ids repeat
+                      className={`panel-text text-[#fff] ${item.textColor || 'text-white'}`} // Apply textColor
+                      style={{
+                        position: "absolute",
+                        left: "0",
+                        top: "0",
+                        right: "0",
+                        bottom: "0",
+                        width: "100%",
+                        height: "100%",
+                        fontSize: "40px",
+                        textTransform: "uppercase",
+                        fontWeight: "900",
+                        textAlign: "center",
+                        transform:
+                          index === 0 ? "translateY(0)" : "translateY(100%)",
+                        opacity: 0,
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        justifyContent: "center",
+                        transition:
+                          "opacity 0.6s ease-out, transform 0.6s ease-out",
+                      }}>
+                      {item.title}
                     </div>
-                    <div className=' bg-gray-800 p-4 rounded-lg absolute bottom-[50px] left-[40px] right-[40px] '>
-                      <h3 className='text-xl font-bold mb-2'>{item.title}</h3>
-                      <p className='text-sm text-gray-300'>
-                        {item.description}
-                      </p>
-                    </div>
-                  </div>
+                  ))}
                 </div>
-              ))}
-            </div>
-          </div>
 
-          {/* Скролл хийх хоосон хэсгүүд */}
-          {menuData[activeCategory].items.map((item, index) => (
-            <div
-              key={`section-${item.id}`}
-              className='scroll-section h-screen'
-            />
-          ))}
+                {/* Зураг панелууд */}
+                <div ref={panelWrapRef} className='p-wrap flex-1 mx-4  h-screen'>
+                  {menuData[activeCategoryIndex].items.map((item, index) => (
+                    <div
+                      key={`panel-${item.id}-${index}`} // Use index for unique key if ids repeat
+                      className='panel'
+                      style={{
+                        position: "absolute",
+                        left: "0",
+                        top: "0",
+                        right: "0",
+                        bottom: "0",
+                        width: "100%",
+                        height: "100%",
+                        transition: "height 0.5s ease-out",
+                        overflow: "hidden",
+                      }}>
+                      <div className='w-full h-full flex flex-col items-center  relative justify-center  bg-gray-900'>
+                        <div className='w-full h-screen h-full mb-4'>
+                          <img
+                            src={item.image}
+                            alt={item.title}
+                            className='w-full h-full object-cover rounded-lg '
+                          />
+                        </div>
+                        <div className=' bg-gray-800 p-4 rounded-lg absolute bottom-[50px] left-[40px] right-[40px] '>
+                          <h3 className='text-xl font-bold mb-2'>{item.title}</h3>
+                          <p className='text-sm text-gray-300'>
+                            {item.description}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Скролл хийх хоосон хэсгүүд */}
+              {menuData[activeCategoryIndex].items.map((item, index) => (
+                <div
+                  key={`section-${item.id}-${index}`} // Use index for unique key if ids repeat
+                  className='scroll-section h-screen'
+                />
+              ))}
+            </>
+          ) : (
+             <div className="h-screen flex items-center justify-center text-gray-400">Энэ ангилалд хоол/ундаа олдсонгүй.</div>
+          )}
         </div>
       </div>
 
