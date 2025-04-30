@@ -83,17 +83,16 @@ const Home = () => {
           {/* UBFOODZONE Line - Тасралтгүй хөдлөх текст */}
           <div className='absolute bottom-0 w-full bg-[#F5F7DC] overflow-hidden'>
             <motion.div
-              className='flex p-[25px]'
+              className='flex p-4 sm:p-6 md:p-[25px]'
               variants={textVariants}
               animate='visible'>
               {Array(20) // 20 удаа давтаж UBFOODZONE текстийг гаргана
                 .fill(0)
                 .map((_, index) => (
-                  <div className='flex gap-[10px]  mx-10'>
+                  <div className='flex gap-[10px] mx-4 sm:mx-6 md:mx-10' key={index}>
                     <p
-                      key={index}
-                      className='text-[40px] font-[Godber-3lxoz]   '
-                      style={{color: colors[index % 2]}} // 2 өнгийг ээлжлүүлэх
+                      className='text-2xl sm:text-3xl md:text-[40px] mt-10 font-[Godber-3lxoz] whitespace-nowrap'
+                      style={{color: colors[index % 2]}}
                     >
                       UBFOODZONE
                     </p>

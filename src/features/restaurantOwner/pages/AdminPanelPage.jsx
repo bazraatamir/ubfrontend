@@ -85,7 +85,12 @@ const OwnerRestaurantPage = () => {
     }
     
     if (file.length > 0) {
+      // Log the file state structure
+      console.log("File state before appending:", file);
+      // Assuming IUpload provides an array of FilePond file item objects
+      // Access the actual file object via file[0].file
       formData.append("file", file[0].file);
+      // formData.append("file", file[0]); // Incorrect: appends the FilePond object
     }
 
     try {

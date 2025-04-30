@@ -103,7 +103,7 @@ export default function RegisterForm() {
         <p className='text-center text-sm mt-4 text-gray-400'>
           Бүртгэлтэй хэрэглэгч үү?{" "}
           <Link
-            to='/auth/login'
+            to='/login'
             className='text-white font-semibold hover:underline'>
             Нэвтрэх
           </Link>

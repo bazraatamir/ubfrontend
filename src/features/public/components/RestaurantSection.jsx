@@ -20,19 +20,19 @@ const RestaurantSection = ({sectionTitle}) => {
     fetchRestaurants();
   }, []);
   return (
-    <div className='w-[100%] px-[56px] py-12 box-border' data-aos='fade-up'>
+    <div className='w-[100%] px-4 sm:px-8 md:px-[56px] py-8 sm:py-10 md:py-12 box-border' data-aos='fade-up'>
       <div
         className='flex items-center gap-[10px] '
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}>
-        <h2 className='text-[32px] font-[Futuris] mb-3 text-white uppercase tracking-wider ml-[5px] py-[30px] font-[Mon_University]'>
+        <h2 className='text-xl sm:text-2xl md:text-[32px] font-[Futuris] mb-3 text-white uppercase tracking-wider ml-[5px] py-4 sm:py-6 md:py-[30px] font-[Mon_University]'>
           {sectionTitle}
         </h2>
         {isHovered && (
           <Link
             to={`/restaurants_filter?category=${sectionTitle}`} // Modify the route as needed
             className='flex items-center text-white font-medium hover:underline'>
-            <span className='text-lime-500 text-[18px] items-center'>
+            <span className='text-lime-500 text-sm sm:text-base md:text-[18px] items-center'>
               Бүгдийг үзэх
             </span>
             <span className='ml-2 text-lime-500 '>{">"}</span>
