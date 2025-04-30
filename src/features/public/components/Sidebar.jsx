@@ -34,8 +34,30 @@ const Sidebar = ({onClose}) => {
       exit='exit'
       variants={sidebarVariants}>
       <div className='h-full flex flex-col sm:flex-row'>
+        {/* Mobile Search Section - Only visible on mobile */}
+        <div className='sm:hidden px-12 pt-8 pb-4'>
+          <div className='relative w-full'>
+            <input
+              type='text'
+              placeholder='Хайх...'
+              className='w-full bg-[white] text-black text-sm py-2 pl-4 pr-10 rounded-lg focus:outline-none'
+            />
+            <IoSearchOutline
+              className='absolute right-3 top-1/2 -translate-y-1/2 text-gray-400'
+              size={18}
+            />
+          </div>
+        </div>
+
+        {/* Mobile Close Button */}
+        <button
+          onClick={onClose}
+          className='sm:hidden fixed top-8 right-4 text-gray-400 hover:text-white z-50'>
+          <IoCloseOutline size={28} />
+        </button>
+
         {/* Left Content */}
-        <div className='flex-1 flex flex-col sm:ml-12 md:ml-16 lg:ml-24 pt-6 sm:pt-8 lg:pt-12 px-4 sm:px-6 lg:px-0'>
+        <div className='flex-1 flex flex-col sm:ml-12 md:ml-16 lg:ml-24 pt-4 sm:pt-8 lg:pt-12 px-4 sm:px-6 lg:px-0'>
           {/* Menu Items */}
           <nav className='flex-1 flex flex-col justify-start space-y-4 sm:space-y-6 md:space-y-8 lg:space-y-11'>
             {districts.map((district) => (
@@ -51,8 +73,8 @@ const Sidebar = ({onClose}) => {
         {/* Vertical Divider - Only show on sm screens and up */}
         <div className='hidden sm:block w-[1px] sm:w-[2px] h-[820px] self-center bg-white/10 mx-4 sm:mx-8 lg:mr-[200px]' />
 
-        {/* Right Content */}
-        <div className='w-full sm:w-[400px] md:w-[450px] lg:w-[550px] pt-6 sm:pt-8 lg:pt-15 px-4 sm:px-6 lg:pr-15 flex flex-col'>
+        {/* Right Content - Desktop Search and Contact Info */}
+        <div className='hidden sm:flex w-full sm:w-[400px] md:w-[450px] lg:w-[550px] pt-6 sm:pt-8 lg:pt-15 px-4 sm:px-6 lg:pr-15 flex-col'>
           <div className='flex items-center justify-between sm:justify-end'>
             <div className='relative w-full sm:w-[300px] md:w-[350px] lg:w-[450px] sm:mr-4 lg:mr-8'>
               <input
@@ -82,6 +104,18 @@ const Sidebar = ({onClose}) => {
               <p className='text-[18px] sm:text-[20px] lg:text-[25px] mt-3 sm:mt-4'>Холбоо барих :</p>
               <p className='text-[14px] sm:text-[16px] lg:text-[20px]'>+97690009810 +97680731017</p>
             </div>
+          </div>
+        </div>
+
+        {/* Mobile Contact Info */}
+        <div className='sm:hidden px-4 mt-auto pb-6 font-[Mon_University]'>
+          <div className='space-y-1 text-white/60'>
+            <p className='text-[18px]'>Хаяг :</p>
+            <p className='text-[14px] leading-relaxed'>
+              WY75+7V5 Ard Ayush Ave, БЦД - 13 Microcc, Ulaanbaatar 16091
+            </p>
+            <p className='text-[18px] mt-3'>Холбоо барих :</p>
+            <p className='text-[14px]'>+97690009810 +97680731017</p>
           </div>
         </div>
       </div>

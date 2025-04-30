@@ -38,6 +38,14 @@ function SideBar() {
             <span className='text-sm sm:text-base'>Онцлох</span>
           </div>
         </Link>
+        <Link to={"contacts"}>
+          <div className='flex items-center gap-3 px-4 py-2 rounded-xl cursor-pointer text-base font-medium transition-all duration-300 text-gray-400 hover:text-white hover:bg-[#2A2F38]'>
+            <div className='w-5 h-5'>
+              <ContactIcon />
+            </div>
+            <span className='text-sm sm:text-base'>Харилцах</span>
+          </div>
+        </Link>
       </nav>
 
       {/* Logout */}
@@ -105,6 +113,21 @@ const LocationIcon = () => (
       strokeLinecap='round'
       strokeLinejoin='round'
       d='M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z'
+    />
+  </svg>
+);
+
+const ContactIcon = () => (
+  <svg
+    xmlns='http://www.w3.org/2000/svg'
+    fill='none'
+    viewBox='0 0 24 24'
+    strokeWidth={1.5}
+    stroke='currentColor'>
+    <path
+      strokeLinecap='round'
+      strokeLinejoin='round'
+      d='M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75'
     />
   </svg>
 );
