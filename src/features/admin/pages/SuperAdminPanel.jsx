@@ -13,11 +13,21 @@ const SuperAdminPanel = () => {
     };
     fetchRestaurants();
   }, []);
-  const handelStatus = async (id, status) => {
-    console.log(id);
 
-    const response = await axiosInstance.post(`/restaurants/${id}/approve`);
-    console.log(response);
+  const filteredRestaurants = restaurants?.filter(restaurant => 
+    restaurant.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  const handelStatus = async (id) => {
+    try {
+      const response = await axiosInstance.post(`/restaurants/${id}/approve`);
+      console.log(response);
+      // Refresh the restaurants list after status change
+      const updatedResponse = await axiosInstance.get("/restaurants");
+      setRestaurants(updatedResponse.data);
+    } catch (error) {
+      console.error("Error changing restaurant status:", error);
+    }
   };
 
   const handleDelete = async (id) => {
@@ -101,7 +111,7 @@ const SuperAdminPanel = () => {
                   background:
                     "linear-gradient(to bottom, rgba(56, 113, 139, 0.1), rgba(15, 30, 37, 0.1))",
                 }}>
-                {restaurants
+                {filteredRestaurants
                   ?.filter((restaurant) => restaurant.status === "APPROVED")
                   .slice(0, 4)
                   .map((restaurant, index) => (
@@ -110,9 +120,9 @@ const SuperAdminPanel = () => {
                       className='flex items-center justify-between p-5  rounded-lg   hover:shadow-lg transition-all'>
                       <div className='flex items-center'>
                         <img
-                          src={restaurant.image}
+                          src={restaurant.imageUrl ? `http://localhost:3000/uploads/${restaurant.imageUrl.split('\\').pop()}` : 'https://via.placeholder.com/40'}
                           alt=''
-                          className='w-14 h-14 rounded-full mr-4 border-2 border-gray-600'
+                          className='w-14 h-14 rounded-full object-cover mr-4 border-2 border-gray-600'
                         />
                         <div className='text-gray-100 text-base font-medium'>
                           {restaurant.name}
@@ -122,7 +132,7 @@ const SuperAdminPanel = () => {
                         <button
                           className='text-gray-400 hover:text-blue-400 p-2 rounded-full hover:bg-gray-600 transition-colors'
                           onClick={() => {
-                            handelStatus(restaurant.id, restaurant.status);
+                            handelStatus(restaurant.id);
                           }}>
                           <svg
                             className='w-6 h-6'
@@ -173,7 +183,7 @@ const SuperAdminPanel = () => {
                   background:
                     "linear-gradient(to bottom, rgba(56, 113, 139, 0.1), rgba(15, 30, 37, 0.1))",
                 }}>
-                {restaurants
+                {filteredRestaurants
                   ?.filter((restaurant) => restaurant.status === "PENDING")
                   .slice(0, 3)
                   .map((restaurant, index) => (
@@ -182,7 +192,7 @@ const SuperAdminPanel = () => {
                       className='flex items-center justify-between p-4  hover:shadow-lg transition-all'>
                       <div className='flex items-center'>
                         <img
-                          src={restaurant.image}
+                          src={restaurant.imageUrl ? `http://localhost:3000/uploads/${restaurant.imageUrl.split('\\').pop()}` : 'https://via.placeholder.com/40'}
                           alt=''
                           className='w-14 h-14 rounded-full mr-4 border-2 border-gray-600'
                         />
@@ -194,7 +204,7 @@ const SuperAdminPanel = () => {
                         <button
                           className='bg-green-600 p-2 rounded-full text-white hover:bg-green-700 transition-colors'
                           onClick={() => {
-                            handelStatus(restaurant.id, restaurant.status);
+                            handelStatus(restaurant.id);
                           }}>
                           <svg
                             className='w-5 h-5'
@@ -241,7 +251,7 @@ const SuperAdminPanel = () => {
                   background:
                     "linear-gradient(to bottom, rgba(56, 113, 139, 0.1), rgba(15, 30, 37, 0.1))",
                 }}>
-                {restaurants
+                {filteredRestaurants
                   ?.filter((restaurant) => restaurant.status === "REJECTED")
                   .slice(0, 3)
                   .map((restaurant, index) => (
@@ -250,7 +260,7 @@ const SuperAdminPanel = () => {
                       className='flex items-center justify-between p-4  hover:shadow-lg transition-all'>
                       <div className='flex items-center'>
                         <img
-                          src={restaurant.image}
+                          src={restaurant.imageUrl ? `http://localhost:3000/uploads/${restaurant.imageUrl.split('\\').pop()}` : 'https://via.placeholder.com/40'}
                           alt=''
                           className='w-14 h-14 rounded-full mr-4 border-2 border-gray-600'
                         />
@@ -262,7 +272,7 @@ const SuperAdminPanel = () => {
                         <button
                           className='bg-green-600 p-2 rounded-full text-white hover:bg-green-700 transition-colors'
                           onClick={() => {
-                            handelStatus(restaurant.id, restaurant.status);
+                            handelStatus(restaurant.id);
                           }}>
                           <svg
                             className='w-5 h-5'

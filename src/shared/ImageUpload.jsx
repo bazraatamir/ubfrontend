@@ -1,13 +1,15 @@
-import {useState} from "react";
-import {FilePond, registerPlugin} from "react-filepond";
-import "filepond/dist/filepond.min.css"; // FilePond styles
+// IUpload.js
+import { useState } from "react";
+import { FilePond, registerPlugin } from "react-filepond";
+import "filepond/dist/filepond.min.css";
 import FilePondPluginImagePreview from "filepond-plugin-image-preview";
 import "filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css";
 import FilePondPluginFileValidateType from "filepond-plugin-file-validate-type";
-registerPlugin(FilePondPluginImagePreview, FilePondPluginFileValidateType);
 import "../App.css";
 
-const IUpload = ({onImageUpload, getfile, text}) => {
+registerPlugin(FilePondPluginImagePreview, FilePondPluginFileValidateType);
+
+const IUpload = ({ onImageUpload, getfile, text }) => {
   const [files, setFiles] = useState([]);
 
   return (
@@ -16,27 +18,38 @@ const IUpload = ({onImageUpload, getfile, text}) => {
         className='custom-filepond w-full'
         files={files}
         stylePanelLayout='compact'
-        stylePanelAspectRatio='1:1'
+        stylePanelAspectRatio={window.innerWidth < 640 ? '1:1' : '16:9'}
         styleButtonRemoveItemPosition='right'
+        imagePreviewHeight={160}
+        imagePreviewAlt="File preview"
         onupdatefiles={(fileItems) => {
-          getfile(fileItems);
           setFiles(fileItems);
+          getfile(fileItems);
+
           if (fileItems.length > 0) {
             const file = fileItems[0].file;
             const reader = new FileReader();
             reader.onload = (e) => {
-              if (onImageUpload) {
-                onImageUpload(e.target.result);
-              }
+              onImageUpload?.(e.target.result);
             };
             reader.readAsDataURL(file);
           }
         }}
+        onremovefile={() => {
+          setFiles([]);
+          getfile([]);
+          onImageUpload?.(null);
+        }}
         allowMultiple={false}
         maxFiles={1}
-        acceptedFileTypes={["image/*", "video/*"]}
+        acceptedFileTypes={[
+          "image/jpeg",
+          "image/png",
+          "image/gif",
+          "video/mp4",
+          "video/quicktime"
+        ]}
         credits={false}
-        imagePreviewHeight={160}
         labelIdle={`
           <div style="
             display: flex; 
@@ -62,7 +75,7 @@ const IUpload = ({onImageUpload, getfile, text}) => {
               <circle cx="8.5" cy="8.5" r="1.5"></circle>
               <polyline points="21 15 16 10 5 21"></polyline>
             </svg>
-            <p class="filepond--label-action" style="margin: 0;">${text} </p>
+            <p class="filepond--label-action" style="margin: 0;">${text}</p>
           </div>
         `}
       />
